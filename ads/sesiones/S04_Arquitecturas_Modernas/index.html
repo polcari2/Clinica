@@ -1,0 +1,4524 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Entorno integrado de desarrollo academico para construir modulos ERP con ADS, BD2 y LP2.">
+      
+      
+        <meta name="author" content="UPeU">
+      
+      
+      
+        <link rel="prev" href="../S03_Diseno_Estructural_Principios_SOLID/">
+      
+      
+        <link rel="next" href="../S05_Evaluacion_Unidad_1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  
+    <title>BOM ERP - S4 - Arquitecturas modernas</title>
+  
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#s4-arquitecturas-modernas" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="BOM ERP" class="md-header__button md-logo" aria-label="BOM ERP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            BOM ERP
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              S4 - Arquitecturas modernas
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/262ciclo4/bomerp" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    262ciclo4/bomerp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../proyecto-integrador/" class="md-tabs__link">
+          
+  
+  
+  Guía del Proyecto Integrador
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  ADS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../bd2/" class="md-tabs__link">
+          
+  
+  
+  BD2
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../lp2/" class="md-tabs__link">
+          
+  
+  
+  LP2
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="BOM ERP" class="md-nav__button md-logo" aria-label="BOM ERP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    BOM ERP
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/262ciclo4/bomerp" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    262ciclo4/bomerp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Proyecto Integrador
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guía del Proyecto Integrador
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alineamiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/brief/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brief técnico (plantilla)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Diseño técnico, motor transaccional y backend inicial
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Diseño técnico, motor transaccional y backend inicial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/lp2-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Demo U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Modelado UML, administración Oracle y SPA segura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Modelado UML, administración Oracle y SPA segura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/lp2-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Demo U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Diseño consolidado, operación Oracle y Full-Stack integrado
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Diseño consolidado, operación Oracle y Full-Stack integrado
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/lp2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/checklist-final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checklist final
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/guia-sustentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de sustentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ADS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../silabo_ads_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../silabo_ads_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Arquitectura y Diseño Estructural
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Arquitectura y Diseño Estructural
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S01_Fundamentos_Arquitectura_Software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - Fundamentos de arquitectura de software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S02_Modelo_C4_Vistas_Arquitectonicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - Modelo C4 y vistas arquitectónicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S03_Diseno_Estructural_Principios_SOLID/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Diseño estructural y principios SOLID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Arquitecturas modernas
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Arquitecturas modernas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-presentacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Presentación de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-proposito-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Propósito de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-producto-de-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Producto de sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Metodología
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-motivacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Motivación de la sesión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Motivación de la sesión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-caso-la-decision-que-se-tomo-demasiado-rapido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Caso: la decisión que se tomó demasiado rápido
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-ubicacion-en-el-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Ubicación en el curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-arquitectura-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Arquitectura de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-estilos-arquitectonicos-y-sus-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Estilos arquitectónicos y sus trade-offs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-arquitectura-en-capas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Arquitectura en capas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-arquitectura-hexagonal-puertos-y-adaptadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Arquitectura hexagonal (puertos y adaptadores)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-clean-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Clean Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-monolito-modular" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Monolito modular
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-microservicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Microservicios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-serverless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Serverless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29-microfrontend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.9 Microfrontend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#210-escalabilidad-horizontal-y-diseno-stateless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.10 Escalabilidad horizontal y diseño stateless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#211-domain-driven-design-cuando-orienta-hacia-hexagonal-o-clean-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.11 Domain-Driven Design: cuándo orienta hacia hexagonal o Clean Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-aplica-actividad-practica-guiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aplica: actividad práctica guiada
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Aplica: actividad práctica guiada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-profundizar-la-evaluacion-de-estilos-arquitectonicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Profundizar la evaluación de estilos arquitectónicos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-verificar-escalabilidad-horizontal-con-evidencia-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Verificar escalabilidad horizontal con evidencia real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-verificar-el-diseno-stateless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Verificar el diseño stateless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-evaluar-si-ddd-orienta-hacia-hexagonal-o-clean-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Evaluar si DDD orienta hacia hexagonal o Clean Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-documentar-el-hallazgo-o-la-confirmacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Documentar el hallazgo o la confirmación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-relacionar-con-lp2-y-bd2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Relacionar con LP2 y BD2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-spike-opcional-envolver-productoserviceimpl-con-puertos-hexagonales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Spike opcional: envolver ProductoServiceImpl con puertos hexagonales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crea-actividad-autonoma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crea: actividad autónoma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Crea: actividad autónoma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-actividad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Actividad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proposito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Propósito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indicaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Indicaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Indicaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-estructura-del-informe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Estructura del informe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-criterios-minimos-de-aceptacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Criterios mínimos de aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-preguntas-de-defensa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Preguntas de defensa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-rubrica-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Rúbrica de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bibliografía
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S05_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    BD2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/silabo_bd2_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/silabo_bd2_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Programación y optimización (Oracle XE)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Programación y optimización (Oracle XE)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S01_PLSQL_Aplicado_Negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - PL/SQL aplicado al negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S02_Triggers_DML_Auditoria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - Triggers DML y auditoría
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S03_Excepciones_Robustez/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Manejo de excepciones y robustez
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S04_Optimizacion_Consultas_SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Optimización de consultas SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S05_Indices_Optimizacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Índices para optimización
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S06_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S6 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    LP2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/silabo_lp2_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/silabo_lp2_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisiones de arquitectura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisiones de arquitectura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-001-arquitectura-backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-001 - Arquitectura del backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-002-spring-modulith/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-002 - Spring Modulith
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-003-spring-boot-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-003 - Versión exacta de Spring Boot 4.0.7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-004-jwt-diferido/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-004 - JWT diferido a S10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Base backend REST modular de BomERP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Base backend REST modular de BomERP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S01_Arquitectura_Backend_REST_Profesional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - Arquitectura backend REST profesional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S02_CRUD_REST_Completo_Producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - CRUD REST completo de Producto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S03_Objetos_Relacionados_Categoria_Producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Objetos relacionados Categoria-Producto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S04_Operacion_Cabecera_Detalle_Venta_DetalleVenta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Operación cabecera-detalle Venta-DetalleVenta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S05_Consultas_Empresariales_Reportes_CORS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Consultas empresariales, reportes REST y CORS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S06_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S6 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-presentacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Presentación de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-proposito-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Propósito de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-producto-de-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Producto de sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Metodología
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-motivacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Motivación de la sesión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Motivación de la sesión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-caso-la-decision-que-se-tomo-demasiado-rapido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Caso: la decisión que se tomó demasiado rápido
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-ubicacion-en-el-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Ubicación en el curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-arquitectura-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Arquitectura de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-estilos-arquitectonicos-y-sus-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Estilos arquitectónicos y sus trade-offs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-arquitectura-en-capas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Arquitectura en capas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-arquitectura-hexagonal-puertos-y-adaptadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Arquitectura hexagonal (puertos y adaptadores)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-clean-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Clean Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-monolito-modular" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Monolito modular
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-microservicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Microservicios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-serverless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Serverless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29-microfrontend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.9 Microfrontend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#210-escalabilidad-horizontal-y-diseno-stateless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.10 Escalabilidad horizontal y diseño stateless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#211-domain-driven-design-cuando-orienta-hacia-hexagonal-o-clean-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.11 Domain-Driven Design: cuándo orienta hacia hexagonal o Clean Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-aplica-actividad-practica-guiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aplica: actividad práctica guiada
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Aplica: actividad práctica guiada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-profundizar-la-evaluacion-de-estilos-arquitectonicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Profundizar la evaluación de estilos arquitectónicos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-verificar-escalabilidad-horizontal-con-evidencia-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Verificar escalabilidad horizontal con evidencia real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-verificar-el-diseno-stateless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Verificar el diseño stateless
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-evaluar-si-ddd-orienta-hacia-hexagonal-o-clean-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Evaluar si DDD orienta hacia hexagonal o Clean Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-documentar-el-hallazgo-o-la-confirmacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Documentar el hallazgo o la confirmación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-relacionar-con-lp2-y-bd2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Relacionar con LP2 y BD2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-spike-opcional-envolver-productoserviceimpl-con-puertos-hexagonales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Spike opcional: envolver ProductoServiceImpl con puertos hexagonales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crea-actividad-autonoma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crea: actividad autónoma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Crea: actividad autónoma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-actividad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Actividad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proposito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Propósito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indicaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Indicaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Indicaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-estructura-del-informe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Estructura del informe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-criterios-minimos-de-aceptacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Criterios mínimos de aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-preguntas-de-defensa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Preguntas de defensa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-rubrica-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Rúbrica de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bibliografía
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="s4-arquitecturas-modernas">S4 - Arquitecturas Modernas<a class="headerlink" href="#s4-arquitecturas-modernas" title="Permanent link">&para;</a></h1>
+<h2 id="1-introduccion">1. Introducción<a class="headerlink" href="#1-introduccion" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 20 min.</p>
+<h3 id="11-presentacion-de-la-sesion">1.1 Presentación de la sesión<a class="headerlink" href="#11-presentacion-de-la-sesion" title="Permanent link">&para;</a></h3>
+<p>Elegir un estilo arquitectónico no es una decisión que se tome una sola vez y se dé por cerrada — se propone temprano, con la información disponible en ese momento, y se confirma o se ajusta cuando aparece evidencia real que la pone a prueba. Esta sesión toma esa segunda parte: profundiza en los estilos arquitectónicos modernos (arquitectura en capas, arquitectura hexagonal, Clean Architecture, monolito modular, microservicios, serverless y microfrontend), sus trade-offs, qué significa que un sistema escale horizontalmente y sea <em>stateless</em>, y en qué momento el diseño estratégico de Domain-Driven Design (DDD) empuja la elección hacia hexagonal o Clean Architecture — para justificar con criterio una decisión, no solo nombrarla.</p>
+<h3 id="12-indice">1.2 Índice<a class="headerlink" href="#12-indice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Estilos arquitectónicos: capas, hexagonal, Clean Architecture, monolito modular, microservicios, serverless y microfrontend.</li>
+<li>Trade-offs entre estilos.</li>
+<li>Escalabilidad horizontal y diseño <em>stateless</em>.</li>
+<li>Domain-Driven Design: cuándo orienta hacia hexagonal o Clean Architecture.</li>
+</ol>
+<h3 id="13-proposito-de-aprendizaje">1.3 Propósito de aprendizaje<a class="headerlink" href="#13-proposito-de-aprendizaje" title="Permanent link">&para;</a></h3>
+<p>Al concluir la clase, estarás en condiciones de:</p>
+<ul>
+<li><strong>Comparar</strong> estilos arquitectónicos modernos por sus trade-offs, y <strong>justificar</strong> con evidencia real la elección de un estilo para un proyecto concreto, incluyendo su capacidad de escalar horizontalmente y su diseño <em>stateless</em>.</li>
+</ul>
+<h3 id="14-producto-de-sesion">1.4 Producto de sesión<a class="headerlink" href="#14-producto-de-sesion" title="Permanent link">&para;</a></h3>
+<p>Comparación documentada de los siete estilos arquitectónicos contra BomERP, con trade-offs explícitos, evidencia real de escalabilidad horizontal y diseño <em>stateless</em>, y la justificación formal del estilo elegido (monolito modular con Spring Modulith).</p>
+<h3 id="15-metodologia">1.5 Metodología<a class="headerlink" href="#15-metodologia" title="Permanent link">&para;</a></h3>
+<p><strong>Tabla 1. Metodología de la sesión</strong></p>
+<table>
+<thead>
+<tr>
+<th>Actividades a Realizar en el Periodo</th>
+<th>Orientaciones generales (Orientaciones Metodológicas)</th>
+<th>Material de estudio recomendado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revisión previa individual</td>
+<td>Repasar la Tabla 5 de S1 (evaluación inicial de estilos arquitectónicos) y la vista de despliegue de S2 (Figura 7, escalamiento horizontal de LP2). Trabajo individual, antes de clase.</td>
+<td>S1 (3.4, Tabla 5), S2 (2.7, Figura 7).</td>
+</tr>
+<tr>
+<td>Clase presencial</td>
+<td>Comparación guiada de los siete estilos, evaluación de escalabilidad horizontal y diseño <em>stateless</em> con evidencia real, y análisis de cuándo DDD orienta hacia hexagonal o Clean Architecture. Trabajo individual, siguiendo al docente paso a paso.</td>
+<td>Pasos 3.1 a 3.6 de esta guía (3.7 opcional), ADR-001 y ADR-004 de LP2.</td>
+</tr>
+<tr>
+<td>Evaluación formativa</td>
+<td>Revisión en clase de la tabla de trade-offs y de la justificación documentada. La evidencia se completa y sustenta de forma individual, fuera del aula, según los criterios mínimos de la sección 4.4.</td>
+<td>Indicaciones de entrega (4.3), rúbrica de evaluación (4.6).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="16-motivacion-de-la-sesion">1.6 Motivación de la sesión<a class="headerlink" href="#16-motivacion-de-la-sesion" title="Permanent link">&para;</a></h3>
+<h4 id="161-caso-la-decision-que-se-tomo-demasiado-rapido">1.6.1 Caso: la decisión que se tomó demasiado rápido<a class="headerlink" href="#161-caso-la-decision-que-se-tomo-demasiado-rapido" title="Permanent link">&para;</a></h4>
+<p>Es común que un equipo elija un estilo arquitectónico temprano, con poca información, y después nunca vuelva a cuestionarlo — ni cuando el sistema crece, ni cuando aparece un requisito que el estilo elegido no maneja bien. "Elegimos microservicios porque es lo que se usa en la industria" o "seguimos con el monolito porque ya lo tenemos" son las dos caras del mismo problema: una decisión arquitectónica que dejó de estar justificada por trade-offs reales, y pasó a sostenerse solo por inercia o por moda.</p>
+<p>La forma correcta de evitarlo no es elegir "bien" desde el principio y no volver a tocarlo — es tratar la elección de estilo arquitectónico como algo que se revisita con evidencia: ¿el sistema realmente necesita escalar de la forma que el estilo elegido permite? ¿el equipo y el alcance justifican la complejidad adicional de separar en más piezas? ¿el dominio tiene la complejidad que justificaría una arquitectura hexagonal o Clean Architecture? Esta sesión aplica exactamente esas preguntas.</p>
+<p><strong>Preguntas de análisis</strong></p>
+<p><strong>Activación de conocimientos previos</strong></p>
+<ol>
+<li>¿Alguna vez viste (o usaste) una tecnología o un estilo arquitectónico "porque está de moda", sin evaluar si realmente aplicaba al problema? ¿Qué pasó?</li>
+</ol>
+<p><strong>Comprensión de arquitecturas modernas</strong></p>
+<ol>
+<li>¿Qué diferencia hay entre elegir un estilo arquitectónico por sus trade-offs reales y elegirlo por tendencia?</li>
+</ol>
+<h3 id="17-ubicacion-en-el-curso">1.7 Ubicación en el curso<a class="headerlink" href="#17-ubicacion-en-el-curso" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Unidad: U1 - Arquitectura y Diseño Estructural.</li>
+<li>Producto del curso: Diseño Técnico Profesional Documentado.</li>
+<li>Producto de unidad: arquitectura documentada mediante vistas arquitectónicas y principios de diseño aplicados.</li>
+<li>Avance del producto en esta sesión: estilo arquitectónico confirmado y justificado con trade-offs, escalabilidad horizontal, diseño <em>stateless</em> y orientación DDD.</li>
+</ul>
+<p>Roadmap del producto de la unidad:</p>
+<p><strong>Figura 1. Roadmap del producto de la unidad</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    S1["`**S1:** Fundamentos de arquitectura`"]
+    S2["`**S2:** Modelo C4 y vistas`"]
+    S3["`**S3:** Diseño estructural y SOLID`"]
+    S4["`**S4:** Arquitecturas modernas`"]
+    S5["`**S5:** Producto U1`"]
+
+    S1 --&gt; S2 --&gt; S3 --&gt; S4 --&gt; S5
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class S4 today;</code></pre>
+<h2 id="2-explica">2. Explica<a class="headerlink" href="#2-explica" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 55 min.</p>
+<h3 id="21-arquitectura-de-la-sesion">2.1 Arquitectura de la sesión<a class="headerlink" href="#21-arquitectura-de-la-sesion" title="Permanent link">&para;</a></h3>
+<p><strong>Figura 2. De la propuesta inicial (S1) a la decisión justificada (S4)</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    S1Prop["Propuesta inicial&lt;br/&gt;S1, Tabla 5"]
+    TradeOffs["Trade-offs completos&lt;br/&gt;por estilo"]
+    Escalable["Escalabilidad horizontal&lt;br/&gt;y diseño stateless"]
+    DDD["Orientacion DDD&lt;br/&gt;hexagonal / Clean Architecture?"]
+    Decision["Decision confirmada&lt;br/&gt;y documentada"]
+
+    S1Prop --&gt; TradeOffs --&gt; Escalable --&gt; DDD --&gt; Decision
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class TradeOffs,Escalable,DDD,Decision today;</code></pre>
+<p>Esta sesión no descarta la propuesta de S1 ni empieza de cero — toma esa primera decisión y la somete a un análisis más profundo: trade-offs explícitos, evidencia real de escalabilidad y una pregunta que S1 todavía no se hizo (¿el dominio de BomERP es lo bastante complejo como para justificar hexagonal o Clean Architecture?).</p>
+<h3 id="22-estilos-arquitectonicos-y-sus-trade-offs">2.2 Estilos arquitectónicos y sus trade-offs<a class="headerlink" href="#22-estilos-arquitectonicos-y-sus-trade-offs" title="Permanent link">&para;</a></h3>
+<p>Cada estilo arquitectónico resuelve un problema específico, a cambio de un costo específico — no hay un estilo "mejor" en abstracto, solo un estilo más o menos adecuado para un alcance, un equipo y un momento del proyecto concretos.</p>
+<p>Antes de compararlos, vale la pena ver qué tienen en común los siete estilos de esta sesión: todos aparecieron entre 2003 y 2016, lo que justifica llamarlos "modernos" frente a otros patrones muy anteriores y todavía vigentes.</p>
+<p><strong>Tabla 2. Línea de tiempo de patrones y estilos arquitectónicos relacionados (2003-2016)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Año</th>
+<th>Patrón / estilo</th>
+<th>Origen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2003</td>
+<td>Domain-Driven Design (DDD)</td>
+<td>Eric Evans, libro <em>Domain-Driven Design: Tackling Complexity in the Heart of Software</em>.</td>
+</tr>
+<tr>
+<td>2003</td>
+<td>Event-Driven Architecture (EDA)</td>
+<td>Roy W. Schulte (Gartner), formalizado en <em>Growing Role of Events in Enterprise Applications</em>.</td>
+</tr>
+<tr>
+<td>2005</td>
+<td>Event Sourcing</td>
+<td>Martin Fowler, ensayo que formaliza el patrón (popularizado después por Greg Young).</td>
+</tr>
+<tr>
+<td>2005</td>
+<td>Arquitectura hexagonal</td>
+<td>Alistair Cockburn.</td>
+</tr>
+<tr>
+<td>2008</td>
+<td>Onion Architecture</td>
+<td>Jeffrey Palermo.</td>
+</tr>
+<tr>
+<td>~2010</td>
+<td>CQRS</td>
+<td>Greg Young — lo discute desde ~2006 y lo formaliza en su blog ~2010.</td>
+</tr>
+<tr>
+<td>2011-2012</td>
+<td>Microservicios (el término)</td>
+<td>Taller de arquitectos cerca de Venecia (2011); el nombre se fija en 2012; el artículo que lo popularizó (Fowler y Lewis) es de 2014.</td>
+</tr>
+<tr>
+<td>2012</td>
+<td>Clean Architecture</td>
+<td>Robert C. Martin.</td>
+</tr>
+<tr>
+<td>2012-2014</td>
+<td>Serverless</td>
+<td>Ken Fromm acuña el término (2012); adopción masiva con el lanzamiento de AWS Lambda (2014).</td>
+</tr>
+<tr>
+<td>2016</td>
+<td>Microfrontend</td>
+<td>ThoughtWorks Technology Radar.</td>
+</tr>
+</tbody>
+</table>
+<p>Ninguno de los siete estilos que profundiza esta sesión (capas, hexagonal, Clean Architecture, monolito modular, microservicios, serverless, microfrontend) tiene más de 25 años — y varios, menos de 15. Eso los distingue de patrones mucho más antiguos y todavía vigentes, como MVC (1978-1979, Trygve Reenskaug, Xerox PARC): MVC no es menos válido, pertenece a otra categoría. Organiza la capa de presentación (cómo se estructura una vista y su interacción con el usuario), no cómo se organiza un sistema de backend completo — por eso MVC, MVP y MVVM no compiten con monolito modular, hexagonal o microservicios: resuelven un problema distinto, a otro nivel de la aplicación.</p>
+<p><strong>Tabla 3. Estilos arquitectónicos modernos</strong></p>
+<table>
+<thead>
+<tr>
+<th>Estilo</th>
+<th>Qué es</th>
+<th>Cuándo conviene</th>
+<th>Costo que agrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arquitectura en capas</strong></td>
+<td>El código se organiza en capas horizontales (presentación, negocio, datos), cada una dependiendo solo de la inmediatamente inferior.</td>
+<td>Casi cualquier sistema — es la base sobre la que se aplican los demás estilos.</td>
+<td>Si se usa sola, no impone límites <em>entre módulos de dominio</em>, solo entre capas técnicas.</td>
+</tr>
+<tr>
+<td><strong>Arquitectura hexagonal</strong> (puertos y adaptadores)</td>
+<td>El dominio queda en el centro, aislado de frameworks y tecnología externa mediante puertos (interfaces) y adaptadores (implementaciones).</td>
+<td>El dominio tiene reglas de negocio complejas que deben poder probarse sin levantar infraestructura (base de datos, HTTP).</td>
+<td>Agrega indirección (interfaces, mapeos) que un dominio simple no necesita.</td>
+</tr>
+<tr>
+<td><strong>Clean Architecture</strong></td>
+<td>Generaliza la idea de la arquitectura hexagonal en círculos concéntricos de dependencia (entidades, casos de uso, adaptadores, frameworks), todos apuntando hacia el centro.</td>
+<td>Sistemas grandes donde la lógica de negocio debe sobrevivir a cambios de framework o de tecnología de persistencia.</td>
+<td>Requiere disciplina para no romper la regla de dependencia (nada del centro conoce nada de afuera); cuesta más al equipo que recién empieza.</td>
+</tr>
+<tr>
+<td><strong>Monolito modular</strong></td>
+<td>Un solo ejecutable, dividido internamente en módulos con límites verificables (no solo carpetas por convención).</td>
+<td>Equipo pequeño, un solo despliegue, límites de dominio ya identificados.</td>
+<td>Todo se despliega junto — no se puede escalar ni desplegar un módulo por separado.</td>
+</tr>
+<tr>
+<td><strong>Microservicios</strong></td>
+<td>Cada módulo de negocio es un proceso independiente, con su propia base de datos y su propio ciclo de despliegue.</td>
+<td>Equipos grandes, módulos que necesitan escalar o desplegarse a ritmos distintos.</td>
+<td>Complejidad operacional real: red, descubrimiento de servicios, consistencia entre bases de datos distintas, versionado de contratos.</td>
+</tr>
+<tr>
+<td><strong>Serverless</strong> (FaaS)</td>
+<td>Cada función se despliega y ejecuta por separado, disparada por un evento; el proveedor cloud administra el servidor.</td>
+<td>Cargas esporádicas o con picos impredecibles, sin justificación para un proceso corriendo 24/7.</td>
+<td><em>Cold start</em>, límite de tiempo de ejecución por invocación, y el mismo problema de consistencia que microservicios, más agudo.</td>
+</tr>
+<tr>
+<td><strong>Microfrontend</strong></td>
+<td>Cada fragmento de la interfaz se construye, prueba y despliega por separado; una aplicación contenedora los ensambla.</td>
+<td>Varios equipos de frontend trabajando en la misma aplicación, sin coordinar un release único.</td>
+<td>Complejidad de integración entre fragmentos, duplicación de dependencias, coherencia visual entre equipos.</td>
+</tr>
+</tbody>
+</table>
+<p>Ningún estilo elimina el trade-off del anterior — lo cambia por otro. Monolito modular cambia "no puedo escalar un módulo por separado" por "no tengo que operar red ni bases de datos distribuidas"; microservicios hace exactamente el cambio contrario.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> BomERP usa monolito modular con arquitectura en capas dentro de cada módulo (<code>catalogo/producto/{controller,service,repository,entity}</code>, ver ADR-001 de LP2) — no hexagonal, no microservicios. La razón documentada en el ADR no es "monolito es más fácil" en abstracto: es que el sílabo de LP2 no evalúa despliegue distribuido, el equipo es pequeño, y todo el sistema se despliega como un único ejecutable — el trade-off de microservicios (complejidad operacional) no tendría ninguna ganancia real a cambio, en este proyecto. Microservicios se estudia conceptualmente aquí, en ADS, y se practica de verdad en el curso de Aplicaciones Distribuidas (una etapa posterior de la cadena BomERP), con un proyecto de referencia propio (<code>producto-ms</code>, un reactor Maven multi-módulo) — dos cursos distintos, con el mismo nombre corto de tres letras, pero contenidos y proyectos diferentes.</p>
+<p><strong>Figura 3. Dos ejes independientes: organización interna vs. alcance de despliegue</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Organizacion["Organizacion interna del codigo (dentro de una pieza)"]
+        direction LR
+        Capas["Arquitectura en capas&lt;br/&gt;(base de todas)"] --&gt; Hex["Arquitectura hexagonal"] --&gt; Clean["Clean Architecture"]
+    end
+    subgraph Alcance["Piezas independientes (alcance de despliegue)"]
+        direction LR
+        Mono["Monolito modular&lt;br/&gt;(BomERP, decision actual)"] --&gt; Micro["Microservicios"] --&gt; Server["Serverless&lt;br/&gt;(funciones)"]
+    end
+
+    classDef real fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class Mono real;</code></pre>
+<p>La Figura 3 separa dos preguntas que esta sesión insiste en no mezclar (2.3, "Error frecuente"): cuántas piezas independientes tiene el sistema (eje inferior) y cómo se organiza el código <em>dentro</em> de cada pieza (eje superior). Son ejes independientes entre sí — un monolito modular o un microservicio, cada uno por separado, puede construirse con capas, con hexagonal o con Clean Architecture por dentro (2.7). BomERP está en el primer escalón de ambos ejes — capas como organización interna, monolito modular como alcance —, no porque los demás sean superiores, sino porque el alcance real del proyecto no justifica moverse más a la derecha en ninguno de los dos (todavía).</p>
+<p>Microfrontend no aparece en ninguno de los dos ejes porque no es una decisión sobre el backend — igual que ya se explicó con MVC/MVVM (2.2, Tabla 2), es la misma idea de piezas independientes aplicada a la capa de presentación, no al backend; por eso se trata por separado (2.9).</p>
+<p>La Tabla 3 resume los siete estilos en una fila cada uno — suficiente para compararlos, pero no para reconocer el diagrama típico de cada uno ni para saber dónde se usa en la práctica. Los siguientes siete apartados profundizan uno por uno, en el mismo orden.</p>
+<h3 id="23-arquitectura-en-capas">2.3 Arquitectura en capas<a class="headerlink" href="#23-arquitectura-en-capas" title="Permanent link">&para;</a></h3>
+<p>La arquitectura en capas organiza el código en niveles horizontales — cada capa depende solo de la que tiene inmediatamente debajo, nunca al revés, y nunca se salta una capa para llegar directo a otra más abajo.</p>
+<p><strong>Figura 4. Diagrama típico de arquitectura en capas</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    Vista["Capa de vista&lt;br/&gt;(UI - navegador, SPA)"]
+    Pres["Capa de presentacion&lt;br/&gt;(Controller)"]
+    Neg["Capa de negocio&lt;br/&gt;(Service)"]
+    Datos["Capa de acceso a datos&lt;br/&gt;(Repository)"]
+    BD[("Base de datos")]
+
+    Vista --&gt; Pres --&gt; Neg --&gt; Datos --&gt; BD
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class Pres,Neg,Datos today;</code></pre>
+<p>La capa de vista es la única que no vive dentro del backend — es quien consume la API (un navegador, una SPA, otra aplicación). Las tres capas resaltadas sí son las que Spring Boot organiza como código: <code>Controller</code> (presentación), <code>Service</code> (negocio) y <code>Repository</code> (acceso a datos).</p>
+<p><strong>Dónde se usa en la práctica:</strong> es la base casi universal de cualquier aplicación empresarial — no compite con los otros seis estilos, vive <strong>dentro</strong> de ellos. Un monolito modular tiene capas dentro de cada módulo (como BomERP); un microservicio tiene capas dentro de cada servicio; incluso hexagonal y Clean Architecture son, en el fondo, una forma más estricta de organizar capas, con una regla extra sobre la dirección de las dependencias.</p>
+<p><strong>Error frecuente:</strong> confundir "capas" con "monolito" — son ejes distintos. Capas responde "¿cómo se organiza el código dentro de una pieza?"; monolito modular / microservicios responde "¿cuántas piezas desplegables hay?". BomERP usa las dos a la vez: capas dentro de cada módulo, monolito modular como forma de desplegar todos los módulos juntos.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> <code>catalogo/producto/{controller,service,repository,entity}</code> (LP2, desde S1) sigue este flujo exacto: <code>ProductoController</code> nunca llama a <code>ProductoRepository</code> directo, siempre pasa por <code>ProductoService</code> (ADR-001 de LP2).</p>
+<p><strong>Figura 5. La Figura 4, con las clases reales de LP2</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    Vista["SPA / Swagger / cliente REST"]
+    Pres["ProductoController"]
+    Neg["ProductoServiceImpl"]
+    Datos["ProductoRepository"]
+    BD[("Oracle - BOM_CATALOGO.PRODUCTOS")]
+
+    Vista --&gt; Pres --&gt; Neg --&gt; Datos --&gt; BD
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class Pres,Neg,Datos today;</code></pre>
+<p>Mismo diagrama, mismas cuatro cajas — la única diferencia con la Figura 4 es que acá cada capa tiene su nombre de clase real, no una etiqueta genérica.</p>
+<h3 id="24-arquitectura-hexagonal-puertos-y-adaptadores">2.4 Arquitectura hexagonal (puertos y adaptadores)<a class="headerlink" href="#24-arquitectura-hexagonal-puertos-y-adaptadores" title="Permanent link">&para;</a></h3>
+<p>La arquitectura hexagonal pone el dominio (las reglas de negocio) en el centro, sin que conozca nada de la tecnología que lo rodea. La comunicación con el exterior pasa por <strong>puertos</strong> — <strong>primarios</strong> (interfaces que el exterior invoca, normalmente interfaces de casos de uso) y <strong>secundarios</strong> (interfaces que el dominio define para lo que necesita: un repositorio, un servicio externo) — implementados por <strong>adaptadores</strong> — <strong>primarios</strong> (llaman al dominio: REST, CLI, un listener de eventos) y <strong>secundarios</strong> (implementan lo que el dominio pidió: base de datos, una API externa, correo).</p>
+<p><strong>Figura 6. Diagrama típico de arquitectura hexagonal</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Primarios["Adaptadores primarios (¿como me invocan?)"]
+        RestAdapter["REST Adapter"]
+        CliAdapter["CLI Adapter"]
+        EventAdapter["Event Adapter"]
+    end
+    subgraph Dominio["Nucleo del dominio (no conoce nada de afuera)"]
+        PrimaryPort["Primary Port (interfaz de use case)"]
+        UseCase{{"Use Case + Entidades&lt;br/&gt;Logica de negocio pura"}}
+        SecondaryPort["Secondary Port (interfaz)"]
+        PrimaryPort --&gt; UseCase --&gt; SecondaryPort
+    end
+    subgraph Secundarios["Adaptadores secundarios (¿que necesito?)"]
+        DbAdapter["PostgreSQL Adapter"]
+        ApiAdapter["External API Adapter"]
+        EmailAdapter["Email Adapter"]
+    end
+
+    RestAdapter --&gt; PrimaryPort
+    CliAdapter --&gt; PrimaryPort
+    EventAdapter --&gt; PrimaryPort
+    SecondaryPort --&gt; DbAdapter
+    SecondaryPort --&gt; ApiAdapter
+    SecondaryPort --&gt; EmailAdapter
+
+    classDef dominio fill:#a8e6b0,stroke:#2f7d3c,stroke-width:2px,color:#111;
+    class UseCase dominio;</code></pre>
+<p><em>Nota.</em> Adaptado de SACAViX (2026a, ver Bibliografía), sobre el concepto original de Cockburn (2005); diagrama de elaboración propia.</p>
+<p>La flecha siempre entra al dominio por un puerto primario (invocando un <em>use case</em>) y sale por un puerto secundario (cuando ese <em>use case</em> necesita algo externo) — nunca un adaptador llama directo a un <em>use case</em> saltándose el puerto, y el dominio nunca importa una clase de ningún adaptador, ni primario ni secundario. Eso es lo que permite probar los <em>use cases</em> con pruebas unitarias puras, sin levantar servidor HTTP ni base de datos (con un <code>FakeOrderRepository</code> en vez del adaptador real, por ejemplo), y lo que permite cambiar de tecnología (de PostgreSQL a otro motor, o exponer el mismo <em>use case</em> por REST y por Kafka a la vez) sin tocar el dominio — solo se escribe un adaptador nuevo.</p>
+<p><strong>Trade-offs:</strong></p>
+<ul>
+<li>Más clases y capas que una arquitectura simple — <em>overhead</em> real para sistemas con lógica trivial.</li>
+<li>El límite del dominio es una disciplina activa, no algo que el compilador garantice solo: es fácil romperlo por un atajo bajo presión de fecha de entrega.</li>
+<li><em>Over-engineering</em> para CRUDs simples sin lógica de dominio real — no todo módulo necesita esta estructura (ver 3.4 sobre <code>catalogo/producto</code>).</li>
+<li>Curva de aprendizaje para equipos acostumbrados a arquitectura en capas tradicional (2.3).</li>
+</ul>
+<p><strong>Errores comunes al implementarlo:</strong></p>
+<ul>
+<li>Implementar la estructura de carpetas, pero que el <em>use case</em> llame a JPA/<code>EntityManager</code> directamente — rompe el aislamiento aunque el nombre del paquete diga "dominio".</li>
+<li>Adaptadores con lógica de negocio que debería vivir en el dominio (validaciones, cálculos) — el adaptador debe limitarse a traducir, no a decidir.</li>
+<li>Puertos demasiado genéricos, como una interfaz <code>Repository&lt;T&gt;</code> que no expresa ninguna intención concreta del dominio.</li>
+<li>Aplicar hexagonal a toda la aplicación, incluidos los módulos que son CRUD puro sin reglas de negocio que proteger.</li>
+<li>Poner <code>@Entity</code> en la clase del dominio y llamarlo hexagonal — una sola clase para negocio y persistencia sigue atada a JPA, aunque viva en un paquete llamado <code>dominio</code>; la separación real exige dos clases (una de dominio, una de persistencia) y un mapper entre ellas.</li>
+<li>Llamar "caso de uso" a un método que solo hace <code>repository.save(entidad)</code> — sin ninguna regla de negocio real de por medio, es un CRUD disfrazado de vocabulario hexagonal, no una indirección que proteja algo.</li>
+</ul>
+<p><strong>Dónde se usa en la práctica:</strong> dominios con reglas de negocio genuinamente complejas que deben sobrevivir a cambios de tecnología — cualquier núcleo de negocio que un equipo espera mantener por años, mientras la infraestructura de alrededor (proveedor de pagos, base de datos, mensajería) cambia varias veces sin que el dominio se entere. Thoughtworks (consultora de arquitectura, ver Bibliografía) documenta este mismo criterio con un caso didáctico: separar la lógica de negocio de un pedido (reglas, cálculos) de sus adaptadores externos (pagos, notificaciones, persistencia), justamente para poder cambiar cualquiera de esos proveedores sin tocar la regla de negocio.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> <code>catalogo/producto</code> no tiene esta estructura, y no debería tenerla todavía — <code>ProductoServiceImpl</code> llama directo a <code>ProductoRepository</code> (Spring Data JPA), sin un puerto de por medio. No es un error: es que hoy no hay lógica de negocio compleja que justifique la indirección.</p>
+<p><strong>Figura 7. Cómo quedaría <code>catalogo/producto</code> si se migrara a hexagonal</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Primarios["Adaptadores primarios (infraestructura, reemplazables)"]
+        RestAdapter["Adaptador REST&lt;br/&gt;(ProductoController)"]
+    end
+    subgraph Dominio["Nucleo del dominio (no conoceria nada de afuera)"]
+        PrimaryPort["Primary Port&lt;br/&gt;(interfaz nueva: ProductoUseCase)"]
+        Logica{{"Use Case + Entidades&lt;br/&gt;(ProductoServiceImpl, sin Spring ni JPA)"}}
+        SecPortProducto["Secondary Port Producto&lt;br/&gt;(interfaz nueva: ProductoRepositoryPort)"]
+        SecPortCategoria["Secondary Port Categoria&lt;br/&gt;(interfaz nueva: CategoriaLookupPort)"]
+        PrimaryPort --&gt; Logica
+        Logica --&gt; SecPortProducto
+        Logica --&gt; SecPortCategoria
+    end
+    subgraph Secundarios["Adaptadores secundarios (infraestructura, reemplazables)"]
+        DbAdapter["Adaptador de persistencia Producto&lt;br/&gt;(ProductoRepository)"]
+        CatAdapter["Adaptador de persistencia Categoria&lt;br/&gt;(CategoriaRepository)"]
+    end
+
+    RestAdapter --&gt; PrimaryPort
+    SecPortProducto --&gt; DbAdapter
+    SecPortCategoria --&gt; CatAdapter
+
+    classDef dominio fill:#a8e6b0,stroke:#2f7d3c,stroke-width:2px,color:#111;
+    class Logica dominio;</code></pre>
+<p><code>CategoriaRepository</code> aparece como un segundo adaptador secundario porque <code>ProductoServiceImpl</code> real ya depende de él (para validar <code>categoriaId</code>, LP2 S3, 3.9) — no solo de <code>ProductoRepository</code>. Una migración a hexagonal tendría que aislar esa dependencia también, con su propio <em>secondary port</em> (<code>CategoriaLookupPort</code>).</p>
+<p><code>ProductoServiceImpl</code> hoy cumple <em>aproximadamente</em> el rol del <em>use case</em> de la Figura 6, pero sin los puertos que lo aislarían de verdad. Migrar no movería mucho código: <code>ProductoController</code> y <code>ProductoRepository</code> se quedan donde están, solo pasan a implementar una interfaz nueva en vez de ser llamados/llamar directo.</p>
+<h3 id="25-clean-architecture">2.5 Clean Architecture<a class="headerlink" href="#25-clean-architecture" title="Permanent link">&para;</a></h3>
+<p>Martin (2017, ver Bibliografía) abre el libro que le da nombre a este estilo con una pregunta simple: ¿qué hace que un diseño sea bueno? Su respuesta es una lista de objetivos, no de reglas — minimizar el costo de mantener el software durante toda su vida, facilitar su desarrollo y su mantenimiento, y mantenerlo "suave" (fácil de cambiar) alejando la lógica de negocio de los detalles técnicos que van a cambiar con el tiempo: el framework, la base de datos, el protocolo de red. Clean Architecture es la respuesta concreta a ese último objetivo — generaliza la idea de hexagonal en <strong>círculos concéntricos</strong>: entidades del dominio en el centro, casos de uso alrededor, adaptadores de interfaz más afuera, y frameworks/herramientas en el borde exterior. La regla que lo sostiene todo es la <strong>regla de dependencia</strong>: el código de un círculo solo puede depender de círculos más internos, nunca de uno más externo.</p>
+<p><strong>Figura 8. Diagrama típico de Clean Architecture (círculos concéntricos)</strong></p>
+<p><svg viewBox="0 0 500 540" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;display:block;margin:0 auto;font-family:inherit;">
+<circle cx="250" cy="280" r="240" fill="#fafafa" stroke="#666" stroke-width="2"/>
+<circle cx="250" cy="280" r="180" fill="#eaeaea" stroke="#888" stroke-width="2"/>
+<circle cx="250" cy="280" r="115" fill="#d8d8d8" stroke="#999" stroke-width="2"/>
+<circle cx="250" cy="280" r="55" fill="#a8e6b0" stroke="#2f7d3c" stroke-width="2"/>
+<text x="250" y="60" text-anchor="middle" font-size="14" fill="#444">Frameworks y drivers</text>
+<text x="250" y="78" text-anchor="middle" font-size="12" fill="#444">(mas externo: Spring, JPA, HTTP)</text>
+<text x="250" y="120" text-anchor="middle" font-size="13" fill="#444">Adaptadores de interfaz</text>
+<text x="250" y="137" text-anchor="middle" font-size="11" fill="#444">(Controller, Repository impl.)</text>
+<text x="250" y="185" text-anchor="middle" font-size="13" fill="#333">Casos de uso</text>
+<text x="250" y="202" text-anchor="middle" font-size="11" fill="#333">(logica de aplicacion)</text>
+<text x="250" y="276" text-anchor="middle" font-size="13" font-weight="bold" fill="#1c3d22">Entidades del</text>
+<text x="250" y="294" text-anchor="middle" font-size="13" font-weight="bold" fill="#1c3d22">dominio</text>
+</svg></p>
+<p><em>Nota.</em> Concepto de Clean Architecture (círculos concéntricos) según Martin (2017, ver Bibliografía); diagrama de elaboración propia.</p>
+<p>La flecha de dependencia siempre apunta hacia adentro: Frameworks puede conocer Adaptadores, Adaptadores puede conocer Casos de uso, Casos de uso puede conocer Entidades — pero Entidades no conoce nada de los anillos que la rodean. Es la misma idea de hexagonal (2.4), expresada como niveles en vez de puertos/adaptadores; en la práctica, muchos equipos usan los dos términos de forma casi intercambiable. SACAViX Tech (Yoandy, ver Bibliografía) lo plantea de forma más directa: hexagonal puede verse como un caso concreto de aplicación de Clean Architecture, no como un patrón aparte con reglas propias — los <em>puertos</em> de hexagonal son la forma que toma la <em>regla de dependencia</em> de Clean cuando se expresa como interfaces en vez de círculos.</p>
+<p><strong>La prueba del papel y lápiz, para no confundir Entidad con Caso de uso:</strong> si la regla seguiría siendo cierta en una oficina con papel y lapicero, sin que existiera ningún software, es una <strong>entidad</strong> (una regla del negocio en sí misma). Si la regla solo tiene sentido porque existe el sistema — "registrar un pago vía API", por ejemplo — es un <strong>caso de uso</strong> (una intención concreta de la aplicación). La primera cambia rara vez, y se reutilizaría en cualquier sistema que automatizara el mismo negocio; la segunda cambia con el procedimiento, no con la regla.</p>
+<p><strong>Dónde se usa en la práctica:</strong> sistemas grandes y de vida larga, donde el equipo espera que la lógica de negocio sobreviva a más de un cambio de framework. El caso más verificable es la propia <strong>Guía de arquitectura de apps de Google para Android</strong> (<code>developer.android.com</code>, ver Bibliografía), inspirada explícitamente en Clean Architecture — con un matiz honesto: Google organiza sus capas <code>Presentación → Dominio → Datos</code> (dependencia en un solo sentido), mientras que la Clean Architecture original de Martin invierte también la capa de Datos (<code>Presentación → Dominio ← Datos</code>, la capa de Datos implementa interfaces que define el Dominio). Es una adaptación pragmática de la idea, no una copia literal de la regla de dependencia — y es exactamente el tipo de decisión que esta sesión pide justificar, no copiar sin cuestionar.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> Igual que con hexagonal, BomERP aplica los <em>principios</em> de separación de capas (Tabla 5 de S1: "parcialmente") sin adoptar la estructura formal completa de círculos — el mismo criterio de 2.11 (DDD) decide si algún módulo llega a justificarlo más adelante.</p>
+<p><strong>Figura 9. Dónde caería cada clase real de LP2 en los círculos de Clean Architecture</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Frameworks["Frameworks y drivers: Spring Boot, Spring Data JPA, Oracle (sin cambios)"]
+        subgraph Adapters["Adaptadores de interfaz: ProductoController, ProductoMapper"]
+            subgraph UseCases["Casos de uso: ProductoServiceImpl (hoy acoplado a Spring/JPA)"]
+                Entities["Entidades: Producto, Categoria (hoy son @Entity, acopladas a Hibernate)"]
+            end
+        end
+    end</code></pre>
+<p>Es casi el mismo ejercicio que la Figura 7 (hexagonal) con otro vocabulario — no es casualidad (2.5): Clean Architecture es la misma idea de aislar el dominio, expresada como círculos en vez de puertos y adaptadores. Lo que hoy "no encaja" en el círculo que le tocaría es siempre lo mismo: <code>ProductoServiceImpl</code> (caso de uso) y <code>Producto</code>/<code>Categoria</code> (entidades) todavía dependen de Spring y de Hibernate — la migración movería esa dependencia hacia afuera, no las reescribiría desde cero.</p>
+<h3 id="26-monolito-modular">2.6 Monolito modular<a class="headerlink" href="#26-monolito-modular" title="Permanent link">&para;</a></h3>
+<p>Un monolito modular es <strong>un solo proceso desplegable</strong>, pero organizado por dentro en módulos con límites explícitos — la diferencia con un monolito "a secas" (todo mezclado, sin límites) es justamente esa organización interna, verificada por herramientas, no solo por convención de carpetas.</p>
+<p><strong>Figura 10. Diagrama típico de un monolito modular</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph App["Un solo proceso desplegable"]
+        subgraph Cat["Modulo catalogo"]
+            direction TB
+            CatC["Controller"] --&gt; CatS["Service"] --&gt; CatR["Repository"]
+        end
+        subgraph Ven["Modulo ventas"]
+            direction TB
+            VenC["Controller"] --&gt; VenS["Service"] --&gt; VenR["Repository"]
+        end
+        VenS -.-&gt;|"solo el Service publico"| CatS
+    end
+    DB[("Base de datos&lt;br/&gt;schemas separados por modulo")]
+    CatR --&gt; DB
+    VenR --&gt; DB
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class App today;</code></pre>
+<p>Todos los módulos comparten el mismo proceso y el mismo ciclo de despliegue — cuando se despliega una versión nueva, se despliega el ejecutable completo, no un módulo por separado. La flecha punteada entre <code>ventas</code> y <code>catalogo</code> es la regla clave: un módulo puede llamar al <code>Service</code> público de otro, nunca a su <code>Repository</code> — el mismo límite que impondría un microservicio, pero verificado en tiempo de compilación/prueba (Spring Modulith), no por una llamada de red.</p>
+<p><strong>ACID por defecto: la contraparte de BASE.</strong> Así como en 2.7 el teorema CAP obliga a microservicios a elegir entre Consistencia y Disponibilidad, aquí ocurre lo contrario: al vivir en un solo proceso con una sola base de datos, cualquier operación puede ejecutarse dentro de una transacción <strong>ACID</strong> completa (Atomicidad, Consistencia, Aislamiento, Durabilidad) sin ceder nada a cambio — no hay red que particionar. La alternativa que sí tiene que asumir un sistema distribuido se llama <strong>BASE</strong> (<em>Basically Available, Soft state, Eventually consistent</em>, Pritchett, 2008): disponible casi todo el tiempo, con un estado que no es inmediatamente consistente entre nodos y que converge después. Un monolito modular no necesita elegir BASE — tiene ACID de fábrica.</p>
+<p><strong>Tabla 4. ACID vs. BASE: lo que el monolito modular no tiene que negociar</strong></p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>ACID (monolito modular)</th>
+<th>BASE (lo que asumiría un sistema distribuido)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consistencia</td>
+<td>Fuerte, garantizada por la transacción</td>
+<td>Eventual, converge después de un tiempo</td>
+</tr>
+<tr>
+<td>Disponibilidad</td>
+<td>No es un trade-off — no hay partición de red que resolver</td>
+<td>Se prioriza sobre la consistencia inmediata (2.7, Tabla 5)</td>
+</tr>
+<tr>
+<td>Ejemplo</td>
+<td><code>@Transactional</code> cubre toda la operación en una sola transacción</td>
+<td>Un servicio acepta un dato que puede estar temporalmente desactualizado (2.7, Figura 13)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Límites internos: el Acyclic Dependencies Principle (ADP).</strong> Ganar ACID gratis no significa que un monolito modular pueda organizarse de cualquier forma por dentro — la teoría que gobierna sus límites internos es el <strong>Acyclic Dependencies Principle</strong> (Robert C. Martin, 1996-1997, junto con el Common Closure Principle y el Common Reuse Principle): el grafo de dependencias entre módulos no puede tener ciclos. Si <code>catalogo</code> dependiera de <code>ventas</code> y <code>ventas</code> de <code>catalogo</code>, ningún módulo se podría desplegar, probar ni entender por separado — la "modularidad" sería solo de nombre. ADP es la contraparte de SOLID (ADS S3) a nivel de módulo, en vez de a nivel de clase.</p>
+<p><strong>Figura 11. Grafo de dependencias entre módulos: con ciclo (viola ADP) vs. sin ciclo</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph ConCiclo["Con ciclo (viola ADP)"]
+        direction LR
+        CatA["catalogo"] --&gt; VenA["ventas"]
+        VenA --&gt; CatA
+    end
+    subgraph SinCiclo["Sin ciclo (BomERP)"]
+        direction LR
+        VenB["ventas"] -.-&gt;|"solo el Service publico"| CatB["catalogo"]
+    end</code></pre>
+<p><strong>Trade-offs (SACAViX, 2026b):</strong></p>
+<ul>
+<li>Escalar componentes individualmente es imposible — se escala todo el proceso, aunque solo un módulo esté bajo carga.</li>
+<li>Un bug crítico puede derribar toda la aplicación: sin aislamiento de fallos entre módulos, como sí lo tendría cada microservicio en su propio proceso.</li>
+<li>La disciplina de mantener los límites entre módulos debe ser activa — el código tiende naturalmente al acoplamiento si nadie la vigila.</li>
+<li>Un solo lenguaje y stack tecnológico para todos los módulos — no se puede elegir la herramienta óptima por módulo, como sí podría un microservicio independiente.</li>
+</ul>
+<p><strong>Errores comunes al implementarlo:</strong></p>
+<ul>
+<li>Módulos que acceden a la base de datos o a la lógica interna de otro módulo — rompe el límite aunque el código compile sin errores.</li>
+<li>No definir interfaces públicas explícitas: todo queda accesible a todo, y la "modularidad" es solo de nombre.</li>
+<li>Usar el monolito como excusa para no separar responsabilidades — "total, es un solo proceso" no es una razón válida para mezclar dominios.</li>
+<li>No planificar la eventual extracción cuando el sistema y el equipo escalen — los módulos bien definidos (como los que exige ADP) son justamente los que se pueden extraer a microservicio con bajo esfuerzo el día que haga falta.</li>
+</ul>
+<p><strong>Dónde se usa en la práctica:</strong> equipos pequeños o medianos, productos con un solo ciclo de despliegue, o empresas que empiezan como monolito modular y solo separan un módulo en microservicio el día que un problema real (no anticipado) lo justifica — Shopify es un caso frecuentemente citado en la industria de un monolito modular a gran escala, mantenido así de forma deliberada.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> Esta es exactamente la arquitectura real de BomERP hoy — la Figura 10 no es un ejemplo genérico, es el diagrama de <code>lp2/bomerp-backend</code> (ADR-001 de LP2), con <code>catalogo</code> como único módulo real hasta ahora y <code>ventas</code> previsto para LP2 S4. La ganancia de ACID tampoco es teórica: el bug de <code>LazyInitializationException</code> que corrigió LP2 S3 se resolvió agregando <code>@Transactional</code> a <code>ProductoServiceImpl.crear()</code> — guardar <code>Producto</code>, resolver <code>Categoria</code> y construir la respuesta corren dentro de una única transacción, sin coordinar nada entre procesos porque no hay más de uno. Y el límite entre módulos (ADP) no se sostiene por convención: <code>ModularityTests</code> (LP2, desde S1) ejecuta <code>ApplicationModules.of(BomErpApplication.class).verify()</code> y falla la build si algún módulo introduce un ciclo de dependencias.</p>
+<h3 id="27-microservicios">2.7 Microservicios<a class="headerlink" href="#27-microservicios" title="Permanent link">&para;</a></h3>
+<p>En microservicios, cada módulo de negocio es un <strong>proceso independiente</strong>, con su propia base de datos, su propio ciclo de despliegue y, generalmente, su propio repositorio de código. La comunicación entre servicios es siempre por red (HTTP, mensajería), nunca por llamada directa en memoria.</p>
+<p>La definición es más simple de lo que parece si no se mezcla con otra pregunta distinta: microservicios solo decide <strong>cuántos procesos independientes hay y dónde están sus límites</strong> — no dice nada sobre cómo se organiza el código <em>dentro</em> de cada uno. Cada microservicio, por separado, puede construirse con capas (2.3), con arquitectura hexagonal (2.4), con Clean Architecture (2.5), o incluso sin ninguna disciplina interna — son decisiones independientes. Es común, de hecho, que un microservicio con lógica de negocio compleja use hexagonal por dentro, mientras otro más simple (un CRUD) use solo capas.</p>
+<p><strong>Figura 12. Diagrama típico de microservicios</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    Cliente["Cliente"] --&gt; GW["API Gateway"]
+    GW --&gt; S1["Servicio Catalogo"]
+    GW --&gt; S2["Servicio Ventas"]
+    GW --&gt; S3["Servicio Seguridad"]
+    S1 --&gt; DB1[("BD Catalogo")]
+    S2 --&gt; DB2[("BD Ventas")]
+    S3 --&gt; DB3[("BD Seguridad")]
+    S2 -.-&gt;|"HTTP o mensajeria"| S1</code></pre>
+<p>Cada base de datos le pertenece a un solo servicio — ningún otro servicio la consulta directo, ni siquiera para leer; si <code>Ventas</code> necesita un dato de <code>Catalogo</code>, se lo pide por red (<code>S2 -.-&gt; S1</code>), nunca leyendo la base de <code>Catalogo</code> directamente. Esa regla es la misma que un monolito modular impone entre módulos (2.6) — la diferencia es que acá se aplica por proceso y por red, no dentro de un mismo ejecutable.</p>
+<p><strong>Escalabilidad independiente, la otra cara de separar en procesos.</strong> A diferencia de un monolito modular (2.6), donde toda la aplicación escala junta — más instancias del ejecutable completo —, en microservicios cada servicio escala según su propia carga: si el <code>Servicio Catalogo</code> recibe mil veces más tráfico de lectura que el <code>Servicio Seguridad</code>, se agregan instancias solo de <code>Catalogo</code>, sin tocar el resto. Esa independencia es la ganancia real que compensa la complejidad operacional (2.2, Tabla 3) — sin ella, separar en procesos no tendría sentido.</p>
+<p><strong>El costo real: teorema CAP.</strong> El teorema CAP dice que un sistema distribuido no puede garantizar al mismo tiempo tres propiedades: <strong>Consistencia</strong> (todas las réplicas ven el mismo dato al mismo tiempo), <strong>Disponibilidad</strong> (toda petición recibe una respuesta) y <strong>Tolerancia a particiones</strong> (el sistema sigue funcionando aunque falle la red entre nodos). En microservicios, la partición de red <strong>va a ocurrir</strong> — dos servicios se comunican por red, y la red falla tarde o temprano —, así que la P no es negociable; la decisión real está entre C y A cuando eso pasa.</p>
+<p><strong>Tabla 5. Teorema CAP: la decisión real en microservicios</strong></p>
+<table>
+<thead>
+<tr>
+<th>Si prioriza</th>
+<th>Qué gana</th>
+<th>Qué pierde</th>
+<th>Ejemplo típico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consistencia (CP)</td>
+<td>Todos los servicios ven siempre el mismo dato</td>
+<td>Ante una partición de red, el sistema puede rechazar peticiones hasta poder confirmar el dato real</td>
+<td>Un servicio de inventario que no acepta una venta si no puede confirmar el stock exacto con <code>Catalogo</code> en ese instante</td>
+</tr>
+<tr>
+<td>Disponibilidad (AP)</td>
+<td>El sistema sigue respondiendo aunque haya partición de red</td>
+<td>Los datos pueden quedar temporalmente desactualizados entre servicios</td>
+<td><code>Ventas</code> acepta un pedido con el precio que tenía cacheado de <code>Catalogo</code>, aunque haya cambiado hace unos segundos</td>
+</tr>
+</tbody>
+</table>
+<p>La mayoría de sistemas de microservicios reales eligen AP con <strong>consistencia eventual</strong>: cada servicio sigue respondiendo con los datos que tiene, y la inconsistencia temporal se reconcilia después — por ejemplo, con eventos (<code>Catalogo</code> publica "el precio cambió", <code>Ventas</code> actualiza su copia cuando el evento le llega). El patrón que coordina operaciones que cruzan varios servicios sin una transacción distribuida real se llama <strong>Saga</strong>: una secuencia de pasos locales, cada uno con su propia compensación si algo falla más adelante, en vez de una única transacción ACID sobre varias bases de datos.</p>
+<p><strong>Figura 13. Consistencia fuerte vs. consistencia eventual, si BomERP migrara a microservicios</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Fuerte["Consistencia fuerte (CP): transaccion distribuida"]
+        direction LR
+        V1["Servicio Ventas"] --&gt;|"1. pide bloquear stock"| C1["Servicio Catalogo"]
+        C1 --&gt;|"2. espera confirmar en ambas bases antes de responder"| V1
+        V1 -.-&gt;|"si Catalogo no responde a tiempo"| X1["Pedido rechazado"]
+    end
+    subgraph Eventual["Consistencia eventual (AP): lo que elegiria BomERP, si migrara"]
+        direction LR
+        V2["Servicio Ventas&lt;br/&gt;(precio cacheado localmente)"] --&gt;|"3. confirma el pedido con el dato que tiene"| OK2["Pedido aceptado"]
+        C2["Servicio Catalogo&lt;br/&gt;(el precio cambio)"] -.-&gt;|"4. publica evento 'precio actualizado'"| V2
+    end</code></pre>
+<p><strong>Dónde se usa en la práctica:</strong> organizaciones grandes, con muchos equipos trabajando en paralelo que necesitan desplegar sin coordinarse entre sí, y servicios con necesidades de escala muy distintas entre ellos (por ejemplo, un servicio de búsqueda que recibe mil veces más tráfico que uno de facturación) — casos frecuentemente citados son Netflix, Amazon y Uber, documentados en sus propios blogs de ingeniería.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> BomERP no usa microservicios — el ADR-001 de LP2 lo dice explícitamente: el costo (red, bases de datos distribuidas, versionado de contratos, y ahora también CAP y consistencia eventual) no tiene ninguna ganancia real a cambio en un proyecto de equipo pequeño con un solo ciclo de despliegue. Con una sola Oracle compartida, <code>ProductoServiceImpl</code> y <code>CategoriaServiceImpl</code> (LP2 S3) leen el dato real dentro de la misma transacción — no hay partición de red que resolver, ni necesidad de elegir entre C y A. Esa es la ganancia concreta de no separar en procesos todavía: no es que el equipo no sepa resolver consistencia eventual, es que el proyecto no paga ese costo si no lo necesita.</p>
+<h3 id="28-serverless">2.8 Serverless<a class="headerlink" href="#28-serverless" title="Permanent link">&para;</a></h3>
+<p>Serverless (o <em>Function as a Service</em>, FaaS) lleva la independencia de piezas un paso más allá que microservicios (2.7): en vez de desplegar un proceso que corre todo el tiempo, se despliega una <strong>función individual</strong> que el proveedor cloud ejecuta solo cuando un evento la dispara (una petición HTTP, un mensaje en cola, un archivo subido) — y se apaga apenas termina. El equipo no administra servidores ni contenedores, ni siquiera el ciclo de vida del proceso: solo el código de la función.</p>
+<p><strong>Nube no es sinónimo de serverless.</strong> "Ir a la nube" es una decisión distinta, en un eje que ni la Figura 3 (2.2) cubre: no es "cuántas piezas independientes hay" ni "cómo se organiza el código dentro de una pieza", es <strong>quién opera cada pieza de infraestructura</strong>. Un monolito modular puede desplegarse en la nube sin volverse serverless — el mismo <code>bomerp-backend</code>, el mismo proceso, corriendo en una VM o un contenedor administrado (AWS ECS, Azure App Service, Google Cloud Run) en vez de un servidor propio. Serverless siempre implica nube; nube no implica serverless.</p>
+<p>Dentro de "ir a la nube" hay todavía otra decisión, independiente de la anterior: <strong>IaaS</strong> (la nube solo da la máquina virtual vacía; el equipo instala y opera su propio Kafka, su propia base de datos, su propio Grafana, igual que lo haría on-premise) frente a <strong>servicios administrados</strong> (el proveedor ya tiene Kafka, la base de datos o el <em>gateway</em> como producto — el equipo solo los consume, no los opera). Migrar de un Kafka propio a uno administrado (AWS MSK, Confluent Cloud) reduce la carga operativa, pero cuesta <em>vendor lock-in</em>: portar ese Kafka administrado a otro proveedor no es tan simple como mover una VM de un lado a otro.</p>
+<p><strong>Figura 14. Diagrama típico de serverless (FaaS)</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Eventos["Eventos que disparan funciones"]
+        HTTP["Peticion HTTP"]
+        Cola["Mensaje en cola"]
+        Archivo["Archivo subido"]
+    end
+    HTTP --&gt; F1["Funcion: procesar pedido"]
+    Cola --&gt; F2["Funcion: enviar notificacion"]
+    Archivo --&gt; F3["Funcion: generar miniatura"]
+    F1 --&gt; DB[("Base de datos administrada")]
+    F2 --&gt; Msg[("Servicio de mensajeria")]
+    F3 --&gt; Store[("Almacenamiento de archivos")]</code></pre>
+<p><strong>El costo real: <em>cold start<em> y ejecución acotada.</em>* Cada función se apaga por completo entre invocaciones — si pasó suficiente tiempo desde la última llamada, la siguiente paga un </em></strong>cold start***: el proveedor tiene que aprovisionar el entorno de ejecución desde cero antes de correr el código, lo que puede agregar cientos de milisegundos o varios segundos de latencia. Además, cada función corre con un límite estricto de tiempo de ejecución — no sirve para procesos largos. Y hereda el mismo problema de consistencia que microservicios (2.7) de forma más aguda: como no hay proceso persistente, no hay ni siquiera memoria local entre invocaciones donde cachear nada.</p>
+<p><strong>Dónde se usa en la práctica:</strong> cargas de trabajo esporádicas o con picos impredecibles — procesar una imagen subida, responder a un webhook, correr un job programado — donde pagar por un servidor corriendo 24/7 no tiene sentido. AWS Lambda (2014, ver Tabla 2 y Bibliografía) es el caso más citado y el que popularizó el modelo.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> BomERP no usa serverless, y no le falta hoy: cada endpoint de <code>catalogo/producto</code> corre en un proceso que ya está activo (<code>bomerp-backend</code>), sin picos de carga esporádicos que justifiquen pagar solo por invocación. Si en algún momento apareciera una tarea puntual y poco frecuente (por ejemplo, generar un reporte mensual pesado), sería un candidato razonable para extraerla como función serverless, sin migrar el resto del backend — la misma lógica de "extraer solo lo que lo justifica" que ya aplica microservicios (2.7) o hexagonal (2.4).</p>
+<h3 id="29-microfrontend">2.9 Microfrontend<a class="headerlink" href="#29-microfrontend" title="Permanent link">&para;</a></h3>
+<p>Microfrontend aplica la misma idea de microservicios (2.7) — piezas independientes, con su propio ciclo de despliegue — pero a la <strong>capa de presentación</strong>, no al backend. Cada equipo puede construir, probar y desplegar un fragmento de la interfaz (por ejemplo, "catálogo" y "ventas" como fragmentos separados) que se ensamblan en una sola aplicación visible para el usuario final.</p>
+<p>A diferencia de los otros seis estilos de esta sesión — todos sobre cómo se organiza el backend —, Microfrontend vive del otro lado de la API: es la misma distinción que ya se hizo con MVC/MVVM (2.2, Tabla 2). No compite con monolito modular o microservicios, los complementa desde la capa de presentación.</p>
+<p><strong>Figura 15. Diagrama típico de microfrontend</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    Shell["Aplicacion contenedora (shell)"]
+    Shell --&gt; MF1["Microfrontend: catalogo&lt;br/&gt;(equipo A, su propio despliegue)"]
+    Shell --&gt; MF2["Microfrontend: ventas&lt;br/&gt;(equipo B, su propio despliegue)"]
+    MF1 --&gt; API1["API catalogo"]
+    MF2 --&gt; API2["API ventas"]</code></pre>
+<p><strong>Dónde se usa en la práctica:</strong> organizaciones grandes con varios equipos de frontend trabajando en la misma aplicación, que necesitan desplegar su parte sin coordinar un release único de todo el frontend — Zalando (Project Mosaic), IKEA (composición del catálogo por fragmentos) y Spotify (su cliente de escritorio, con paneles independientes) son casos documentados públicamente en sus propios blogs de ingeniería.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> LP2 no usa microfrontend, y no debería usarlo todavía: la SPA de LP2 (prevista para S7) la construye un solo equipo pequeño, sin necesidad de desplegar fragmentos por separado — coordinar múltiples despliegues de UI solo paga cuando hay varios equipos de frontend compitiendo por el mismo release, que no es el caso de BomERP.</p>
+<h3 id="210-escalabilidad-horizontal-y-diseno-stateless">2.10 Escalabilidad horizontal y diseño <em>stateless</em><a class="headerlink" href="#210-escalabilidad-horizontal-y-diseno-stateless" title="Permanent link">&para;</a></h3>
+<p><strong>Escalabilidad horizontal</strong>: la capacidad de atender más carga agregando más copias idénticas de la aplicación (más instancias), en vez de agregarle más recursos a una sola instancia (escalar verticalmente). Para que escalar horizontalmente funcione, cualquier petición debe poder ser atendida por <strong>cualquier</strong> instancia, indistintamente.</p>
+<p><strong>Diseño <em>stateless</em></strong>: que ninguna instancia guarde en memoria información específica de un cliente entre una petición y la siguiente (por ejemplo, datos de sesión). Si una instancia guardara ese estado, las peticiones de ese cliente tendrían que ir siempre a la misma instancia (<em>sticky session</em>) — lo que rompe la promesa de "cualquier instancia atiende cualquier petición" y limita cuánto se puede escalar.</p>
+<p>Los dos conceptos están relacionados pero no son lo mismo: <em>stateless</em> es una propiedad del diseño (nadie guarda estado por cliente); escalabilidad horizontal es la consecuencia práctica que ese diseño hace posible.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> LP2 ya demostró esto con evidencia real, no como ejercicio teórico: S1 (3.3) levantó dos instancias de <code>bomerp-backend</code> en paralelo (puertos <code>8080</code> y <code>8081</code>), ambas conectadas a la misma Oracle, y verificó que cualquiera de las dos responde <code>/api/v1/hello</code> y <code>/actuator/health</code> sin ninguna coordinación entre ellas. Eso funciona porque el backend nunca guardó estado de cliente en memoria — ni siquiera hay autenticación todavía (JWT se difiere a S10, ver ADR-004 de LP2), así que no hay sesión que sincronizar entre instancias. Cuando JWT llegue en S10, seguirá siendo <em>stateless</em>: un JWT es un token autocontenido que el cliente reenvía en cada petición — ninguna instancia necesita recordar quién inició sesión.</p>
+<p><strong>Figura 16. Por qué el diseño <em>stateless</em> es lo que permite escalar horizontalmente</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph ConEstado["Con estado en memoria (rompe el escalamiento)"]
+        direction LR
+        C1["Cliente"] --&gt;|"peticion 1"| I1["Instancia A - guarda el carrito en memoria"]
+        C1 -.-&gt;|"peticion 2, va a otra instancia"| I2["Instancia B - no conoce el carrito"]
+    end
+    subgraph SinEstado["Stateless (BomERP)"]
+        direction LR
+        C2["Cliente"] --&gt;|"peticion 1"| J1["Instancia A"]
+        C2 --&gt;|"peticion 2, cualquier instancia"| J2["Instancia B"]
+        J1 --&gt; DB[("Oracle - unica fuente de estado")]
+        J2 --&gt; DB
+    end</code></pre>
+<p>En el bloque de arriba, la segunda petición del cliente cae en una instancia distinta que nunca vio la primera — si el estado viviera en memoria, se perdería. En el bloque de abajo (el real), no importa a qué instancia llegue cada petición: la única fuente de estado es Oracle, compartida por todas.</p>
+<h3 id="211-domain-driven-design-cuando-orienta-hacia-hexagonal-o-clean-architecture">2.11 Domain-Driven Design: cuándo orienta hacia hexagonal o Clean Architecture<a class="headerlink" href="#211-domain-driven-design-cuando-orienta-hacia-hexagonal-o-clean-architecture" title="Permanent link">&para;</a></h3>
+<p>DDD (introducido como adelanto en S2, 2.5) distingue el dominio (las reglas de negocio) de todo lo demás (frameworks, base de datos, HTTP). Cuando ese dominio es simple — pocas reglas, poca lógica que no sea CRUD — separar el dominio del resto con puertos y adaptadores (hexagonal) o con círculos concéntricos (Clean Architecture) agrega una indirección que no paga su costo: más interfaces, más mapeos, más código para el mismo resultado.</p>
+<p>La orientación cambia cuando el dominio gana complejidad real: reglas de negocio que no dependen de ninguna tecnología concreta, lógica que debe poder probarse sin levantar base de datos ni servidor HTTP, o un <strong>agregado</strong> (límite de consistencia de DDD) con invariantes que deben protegerse sin importar quién lo modifique. Ahí, aislar el dominio deja de ser indirección innecesaria y pasa a ser lo que hace posible probar y mantener esa lógica sin arrastrar infraestructura.</p>
+<p><strong>¿Y si toca elegir entre las dos?</strong> Hexagonal es el punto de partida más barato: logra el mismo objetivo (aislar el dominio de los detalles técnicos) con menos ceremonia — dos zonas (dominio + adaptadores), sin los cuatro anillos formales de Clean ni la separación explícita entre Entidades y Casos de uso que Clean exige incluso cuando el módulo todavía no la necesita. Clean solo se justifica <em>sobre</em> Hexagonal cuando el volumen de casos de uso crece tanto que separar reglas atómicas del dominio (Entidades) de la orquestación entre varias entidades (Casos de uso) aporta claridad real — y eso, según los Errores comunes de SACAViX (2.4), casi nunca ocurre antes de tener ese volumen.</p>
+<p><strong>Ejemplo de referencia (LP2).</strong> Hoy, <code>catalogo/producto</code> es esencialmente CRUD con una validación de referencia (LP2 S3) — no hay lógica de negocio compleja que aislar del framework todavía. Eso confirma la Tabla 5 de S1: hexagonal y Clean Architecture no aplican "para este corte". Pero <code>ventas/Venta-DetalleVenta</code> (LP2 S4, cabecera-detalle con cálculos y control de stock) es un candidato más real a agregado DDD — si su lógica de cálculo y consistencia creciera lo suficiente, sería el primer módulo de BomERP donde valdría la pena evaluar aislarlo del framework con un puerto explícito. Hoy todavía no se justifica: la complejidad real hay que verla en el código antes de pagar el costo de la indirección, no anticiparla.</p>
+<h2 id="3-aplica-actividad-practica-guiada">3. Aplica: actividad práctica guiada<a class="headerlink" href="#3-aplica-actividad-practica-guiada" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 2h.</p>
+<p><strong>Actividad:</strong> comparación guiada de los siete estilos arquitectónicos contra BomERP, con trade-offs, evidencia de escalabilidad horizontal, diseño <em>stateless</em> y orientación DDD (Producto de la sesión en 1.4).</p>
+<p><strong>Propósito de la actividad:</strong> justificar con evidencia real, no con preferencia, el estilo arquitectónico ya elegido para el proyecto — confirmándolo donde corresponda y documentando explícitamente por qué las alternativas no aplican todavía.</p>
+<p><strong>Orientaciones metodológicas:</strong> en el laboratorio, el docente evalúa cada estilo contra BomERP paso a paso frente a la clase, con el código y los ADR reales de LP2 abiertos, <strong>como ejemplo de referencia</strong> — no todos los equipos llevan LP2 en este ciclo. Los pasos 3.2-3.4 y 3.6 usan LP2 porque ya tiene código real que verificar; si tu equipo no lleva LP2, aplica el mismo criterio ahora mismo sobre tu propio backend (los puntos equivalentes están en 4.1, numerados igual) en vez de esperar a la actividad autónoma.</p>
+<p><strong>Actividades para realizar:</strong></p>
+<ul>
+<li><strong>3.1</strong> Profundizar la evaluación de estilos arquitectónicos.</li>
+<li><strong>3.2</strong> Verificar escalabilidad horizontal con evidencia real.</li>
+<li><strong>3.3</strong> Verificar el diseño <em>stateless</em>.</li>
+<li><strong>3.4</strong> Evaluar si DDD orienta hacia hexagonal o Clean Architecture.</li>
+<li><strong>3.5</strong> Documentar el hallazgo o la confirmación.</li>
+<li><strong>3.6</strong> Relacionar con LP2 y BD2.</li>
+<li><strong>3.7</strong> (opcional) Spike de arquitectura hexagonal.</li>
+</ul>
+<h3 id="31-profundizar-la-evaluacion-de-estilos-arquitectonicos">3.1 Profundizar la evaluación de estilos arquitectónicos<a class="headerlink" href="#31-profundizar-la-evaluacion-de-estilos-arquitectonicos" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> tabla de trade-offs de los siete estilos, aplicada a BomERP.</p>
+<p><strong>Tabla 6. Trade-offs de los siete estilos, aplicados a BomERP</strong></p>
+<table>
+<thead>
+<tr>
+<th>Estilo</th>
+<th>¿Aplica a BomERP hoy?</th>
+<th>Trade-off que se ganaría</th>
+<th>Trade-off que se pagaría</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arquitectura en capas (dentro de cada módulo)</td>
+<td>Sí</td>
+<td>Separación clara controller/service/repository/entity</td>
+<td>No impone límites entre módulos de dominio por sí sola (eso lo da Modulith)</td>
+</tr>
+<tr>
+<td>Arquitectura hexagonal</td>
+<td>No, todavía</td>
+<td>Dominio aislado de framework, más fácil de probar sin infraestructura</td>
+<td>Interfaces y mapeos adicionales que hoy no protegen ninguna lógica compleja</td>
+</tr>
+<tr>
+<td>Clean Architecture</td>
+<td>Parcial (principios, no estructura formal)</td>
+<td>Dominio protegido de cambios de framework a largo plazo</td>
+<td>Disciplina y código adicional que el corte actual de LP2 no evalúa</td>
+</tr>
+<tr>
+<td>Monolito modular</td>
+<td>Sí</td>
+<td>Un solo despliegue, límites verificados por Spring Modulith sin costo operacional</td>
+<td>No se puede escalar ni desplegar un módulo por separado</td>
+</tr>
+<tr>
+<td>Microservicios</td>
+<td>No</td>
+<td>Escalar y desplegar módulos por separado</td>
+<td>Red, bases de datos distribuidas, versionado de contratos — sin equipo ni alcance que lo justifique</td>
+</tr>
+<tr>
+<td>Serverless</td>
+<td>No</td>
+<td>Pagar solo por invocación, sin administrar servidores</td>
+<td><em>Cold start</em>, ejecución acotada — sin cargas esporádicas que lo justifiquen</td>
+</tr>
+<tr>
+<td>Microfrontend</td>
+<td>No</td>
+<td>Despliegue independiente por fragmento de UI</td>
+<td>Complejidad de integración — un solo equipo de frontend, sin necesidad de coordinar releases</td>
+</tr>
+</tbody>
+</table>
+<p>Esta tabla profundiza la Tabla 5 de S1 (que solo respondía sí/no) agregando explícitamente qué se gana y qué se paga en cada caso — la justificación real está en esas dos columnas, no en el sí/no.</p>
+<p>Dos filas no se llenan igual que las demás: la de <strong>Monolito modular</strong> se justifica citando ACID y ADP (2.6), no solo "es más simple"; la de <strong>Microservicios</strong> se justifica citando el teorema CAP (2.7), no solo "más complejidad operacional". Repetir la conclusión sin nombrar el concepto que la sostiene cuenta como trade-off superficial en la rúbrica (4.6).</p>
+<p><strong>Cómo verificar ACID y ADP con evidencia, no solo de memoria:</strong></p>
+<ul>
+<li><strong>ACID</strong>: identifica en el código la operación que escribe más de una entidad relacionada en un mismo caso de uso (en LP2, <code>ProductoServiceImpl.crear()</code>, que guarda <code>Producto</code> y resuelve <code>Categoria</code>) y confirma que está cubierta por <code>@Transactional</code> de principio a fin. Si tu equipo no lleva LP2, aplica el mismo chequeo sobre tu propio service layer: busca el método que más entidades toca en una sola operación y verifica si tu framework la envuelve en una transacción.</li>
+<li><strong>ADP</strong>: en LP2, corre <code>mvnw test -Dtest=ModularityTests</code> y confirma que pasa — esa prueba falla la build si algún módulo introduce un ciclo de dependencias. Si tu proyecto usa Spring Modulith, corre el equivalente; si no tiene una herramienta que lo verifique, revisa manualmente los <code>import</code> de tus paquetes de módulo y confirma que ninguno importa de vuelta a un módulo que ya depende de él.</li>
+</ul>
+<h3 id="32-verificar-escalabilidad-horizontal-con-evidencia-real">3.2 Verificar escalabilidad horizontal con evidencia real<a class="headerlink" href="#32-verificar-escalabilidad-horizontal-con-evidencia-real" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> confirmación de que BomERP escala horizontalmente, con evidencia real de LP2.</p>
+<p>Repasa LP2 S1 (3.3, Figura 7): dos instancias de <code>bomerp-backend</code>, puertos <code>8080</code> y <code>8081</code>, ambas conectadas a la misma Oracle. Si tienes el proyecto de LP2 disponible, reproduce los comandos de 3.3.1-3.3.2 de esa guía y confirma que ambas instancias responden de forma independiente.</p>
+<p>Si tu equipo no lleva LP2, aplica el mismo chequeo ahora sobre tu propio backend: levanta dos instancias en paralelo si tu stack lo permite, o justifica explícitamente por qué no aplica todavía (4.1, punto 2) — no lo dejes para la actividad autónoma.</p>
+<p><strong>Tabla 7. Evidencia de escalabilidad horizontal</strong></p>
+<table>
+<thead>
+<tr>
+<th>Verificación</th>
+<th>Resultado esperado (LP2 S1, 3.3.2)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/v1/hello</code> en el puerto 8080</td>
+<td>Responde, sin depender de la instancia 8081</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/hello</code> en el puerto 8081</td>
+<td>Responde, sin depender de la instancia 8080</td>
+</tr>
+<tr>
+<td><code>GET /actuator/health</code> en ambos puertos</td>
+<td><code>200 OK</code> en los dos, de forma independiente</td>
+</tr>
+<tr>
+<td>Configuración necesaria para que ambas compartan estado</td>
+<td>Ninguna — ambas usan la misma Oracle como única fuente de estado</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-verificar-el-diseno-stateless">3.3 Verificar el diseño <em>stateless</em><a class="headerlink" href="#33-verificar-el-diseno-stateless" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> confirmación explícita de por qué BomERP es <em>stateless</em> hoy.</p>
+<p>Revisa el código real de <code>ProductoServiceImpl</code>/<code>CategoriaServiceImpl</code> (LP2 S1-S3): ningún método guarda datos en un campo de instancia entre peticiones — cada método recibe todo lo que necesita como parámetro, y el único estado que persiste vive en Oracle. Revisa también ADR-004 de LP2: JWT (cuando llegue en S10) es un token autocontenido, verificado en cada petición, sin sesión guardada en el servidor.</p>
+<p>Si tu equipo no lleva LP2, revisa tu propio service layer con el mismo criterio: ¿algún campo de instancia guarda datos de un cliente entre peticiones? (4.1, punto 3).</p>
+<p><strong>Error frecuente</strong>: confundir "no tiene autenticación todavía" con "es <em>stateless</em> por eso". BomERP es <em>stateless</em> por diseño (nada de estado de cliente en memoria), no porque le falte JWT — y seguirá siendo <em>stateless</em> cuando JWT se implemente en S10.</p>
+<h3 id="34-evaluar-si-ddd-orienta-hacia-hexagonal-o-clean-architecture">3.4 Evaluar si DDD orienta hacia hexagonal o Clean Architecture<a class="headerlink" href="#34-evaluar-si-ddd-orienta-hacia-hexagonal-o-clean-architecture" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> evaluación honesta de la complejidad real del dominio de BomERP hoy.</p>
+<p>Revisa <code>catalogo/categoria</code> y <code>catalogo/producto</code> (LP2 S1-S3): CRUD, una validación de referencia, sin reglas de negocio que dependan de cálculos complejos o de invariantes multi-entidad. Compáralo con lo que se anticipa para <code>ventas/Venta-DetalleVenta</code> (LP2 S4, todavía no implementado): cabecera-detalle con cálculos, control de stock y una operación atómica — más cerca de un agregado DDD real.</p>
+<p>Si tu equipo no lleva LP2, aplica el mismo análisis sobre los módulos de tu propio dominio: ¿cuál es hoy el más simple (CRUD) y cuál el más cercano a un agregado real? (4.1, punto 4).</p>
+<p><strong>Tabla 8. ¿El dominio ya justifica hexagonal o Clean Architecture?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Módulo</th>
+<th>Complejidad real hoy</th>
+<th>¿Justifica aislar el dominio?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>catalogo</code> (LP2 S1-S3)</td>
+<td>CRUD + validación de referencia</td>
+<td>No — la indirección no protegería ninguna lógica que hoy no exista</td>
+</tr>
+<tr>
+<td><code>ventas</code> (previsto, LP2 S4)</td>
+<td>Cabecera-detalle, cálculos, control de stock, operación atómica</td>
+<td>Todavía por verse — candidato más real, se evalúa cuando el código exista</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35-documentar-el-hallazgo-o-la-confirmacion">3.5 Documentar el hallazgo o la confirmación<a class="headerlink" href="#35-documentar-el-hallazgo-o-la-confirmacion" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> conclusión documentada, con su justificación.</p>
+<p>A diferencia de S3 (donde el hallazgo esperado era una tensión de diseño), acá el resultado más probable es una <strong>confirmación</strong>: monolito modular con Spring Modulith sigue siendo la elección correcta para BomERP, con evidencia real de escalabilidad horizontal y diseño <em>stateless</em>, y sin que el dominio actual justifique todavía hexagonal o Clean Architecture. Documentar una confirmación bien justificada es tan válido como documentar un hallazgo — lo que se evalúa es la calidad del razonamiento, no que aparezca un problema donde no lo hay.</p>
+<h3 id="36-relacionar-con-lp2-y-bd2">3.6 Relacionar con LP2 y BD2<a class="headerlink" href="#36-relacionar-con-lp2-y-bd2" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> matriz de integración de la sesión.</p>
+<p><strong>Tabla 9. Matriz de integración ADS-LP2-BD2 (S4)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Criterio evaluado</th>
+<th>Evidencia real en LP2</th>
+<th>Relación con BD2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Monolito modular con límites verificados</td>
+<td><code>ModularityTests</code> (LP2, desde S1); ADR-001 y ADR-002</td>
+<td>Un esquema Oracle por módulo funcional (<code>BOM_CATALOGO</code>, <code>BOM_VENTAS</code>), mismo criterio de límite</td>
+</tr>
+<tr>
+<td>Escalabilidad horizontal</td>
+<td>Dos instancias en paralelo (LP2 S1, 3.3)</td>
+<td>Ambas instancias comparten la misma Oracle — la base de datos es el punto de escalabilidad a vigilar, no el backend</td>
+</tr>
+<tr>
+<td>Diseño <em>stateless</em></td>
+<td>Sin sesión en memoria; JWT diferido y autocontenido (ADR-004)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Orientación DDD</td>
+<td><code>catalogo</code> no la justifica todavía; <code>ventas</code> es candidato (LP2 S4)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Sesión equivalente en los otros dos cursos, misma semana: LP2 y BD2 todavía no publican su guía de S4 en este repositorio.</p>
+<p>Esta matriz es específica de BomERP, donde ADS, BD2 y LP2 comparten el mismo repositorio. Si tu equipo trabaja un proyecto distinto, documenta la matriz equivalente entre tus propios artefactos de ADS y el código o la base de datos que tu equipo sí construya — la estructura (criterio, evidencia real, relación con la base de datos) es la que importa, no los nombres de LP2/BD2.</p>
+<p><strong>Evidencia de aprendizaje:</strong></p>
+<ul>
+<li>Tabla de trade-offs de los siete estilos arquitectónicos, aplicada a BomERP.</li>
+<li>Evidencia real de escalabilidad horizontal (LP2 S1, 3.3) verificada.</li>
+<li>Justificación explícita del diseño <em>stateless</em>.</li>
+<li>Evaluación de si DDD orienta hacia hexagonal o Clean Architecture, con al menos un módulo real analizado.</li>
+<li>Conclusión documentada (confirmación o hallazgo), con su justificación.</li>
+<li>Matriz de integración con LP2 y BD2.</li>
+</ul>
+<h3 id="37-spike-opcional-envolver-productoserviceimpl-con-puertos-hexagonales">3.7 Spike opcional: envolver <code>ProductoServiceImpl</code> con puertos hexagonales<a class="headerlink" href="#37-spike-opcional-envolver-productoserviceimpl-con-puertos-hexagonales" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Opcional</p>
+<p>Este paso no forma parte de las tareas obligatorias (3.1-3.6) ni de la rúbrica (4.6). Complétalo solo si te queda tiempo en el laboratorio.</p>
+</div>
+<p><strong>Producto del paso (opcional):</strong> una implementación mínima y descartable de los puertos que bosqueja la Figura 7 (2.4), solo para sentir la indirección real de hexagonal — no se integra al proyecto.</p>
+<p>Si tienes LP2 disponible (o tu propio proyecto tiene una estructura similar controller/service/repository), en una rama descartable: crea una interfaz <code>ProductoUseCase</code> (puerto de entrada) y una interfaz <code>ProductoRepositoryPort</code> (puerto de salida), y haz que <code>ProductoServiceImpl</code> implemente la primera y dependa de la segunda en vez de depender directo de <code>ProductoRepository</code>. No hace falta más que eso — ni pruebas nuevas, ni integrarlo a <code>main</code>.</p>
+<p><strong>Reflexión esperada (2-3 líneas):</strong> ¿Cuánto código cambió realmente? ¿Qué ganaste a cambio de esa indirección, y se sintió proporcional al beneficio para la complejidad real de <code>catalogo/producto</code> hoy (2.11)?</p>
+<h2 id="4-crea-actividad-autonoma">4. Crea: actividad autónoma<a class="headerlink" href="#4-crea-actividad-autonoma" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 2h fuera del aula.</p>
+<h3 id="41-actividad">4.1 Actividad<a class="headerlink" href="#41-actividad" title="Permanent link">&para;</a></h3>
+<p>Evaluación autónoma de estilos arquitectónicos, escalabilidad horizontal, diseño <em>stateless</em> y orientación DDD sobre el proyecto propio del equipo, documentada en evidencia individual.</p>
+<p>Completa y evidencia estas tareas:</p>
+<ol>
+<li>Elaborar la tabla de trade-offs de los siete estilos arquitectónicos, aplicada a tu propio proyecto.</li>
+<li>Verificar (o justificar por qué no aplica todavía) la escalabilidad horizontal de tu backend.</li>
+<li>Justificar explícitamente si tu diseño es <em>stateless</em>, y por qué.</li>
+<li>Evaluar si la complejidad real de tu dominio justifica hexagonal o Clean Architecture en algún módulo.</li>
+<li>Documentar tu conclusión (confirmación o hallazgo), con su justificación.</li>
+</ol>
+<h3 id="42-proposito">4.2 Propósito<a class="headerlink" href="#42-proposito" title="Permanent link">&para;</a></h3>
+<p>Que cada estudiante demuestre, de forma individual y fuera del aula, que puede justificar con evidencia real una decisión arquitectónica, sin el acompañamiento del docente.</p>
+<p>Esta actividad autónoma se desarrolla sobre el proyecto de fin de curso del equipo. El producto de la unidad se construye por acumulación de los avances de cada sesión; por eso, la evidencia de esta sesión debe incorporarse a la documentación del proyecto y quedar trazable en GitHub.</p>
+<h3 id="43-indicaciones">4.3 Indicaciones<a class="headerlink" href="#43-indicaciones" title="Permanent link">&para;</a></h3>
+<p>Entrega un PDF con el siguiente nombre:</p>
+<div class="highlight"><pre><span></span><code>S04_ADS_Equipo##_ApellidoNombre.pdf
+</code></pre></div>
+<p>Cada captura de pantalla del informe debe mostrar, sin recortar, el reloj del sistema (fecha y hora) y tu usuario o foto de perfil (Windows, VS Code o navegador) visibles en pantalla — es lo que permite verificar que la evidencia es tuya y que corresponde al momento real de tu trabajo.</p>
+<h4 id="431-estructura-del-informe">4.3.1 Estructura del informe<a class="headerlink" href="#431-estructura-del-informe" title="Permanent link">&para;</a></h4>
+<p><strong>Datos del estudiante</strong></p>
+<ul>
+<li>Nombre:</li>
+<li>Equipo:</li>
+<li>Sesión: S04 - Arquitecturas Modernas</li>
+<li>Rol o aporte realizado:</li>
+<li>Link de GitHub:</li>
+</ul>
+<p><strong>Evidencia técnica</strong></p>
+<p>Incluye capturas o extractos con una breve explicación debajo de cada uno, organizados en los mismos 4 bloques de la rúbrica (4.6):</p>
+<ol>
+<li><em>Trade-offs de estilos arquitectónicos</em><ul>
+<li>Tabla de trade-offs aplicada a tu proyecto.</li>
+</ul>
+</li>
+<li><em>Escalabilidad horizontal</em><ul>
+<li>Evidencia de verificación (o justificación de por qué no aplica todavía).</li>
+</ul>
+</li>
+<li><em>Diseño stateless</em><ul>
+<li>Justificación explícita, con código real citado.</li>
+</ul>
+</li>
+<li><em>Orientación DDD</em><ul>
+<li>Evaluación de al menos un módulo real de tu proyecto.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Error o hallazgo</strong></p>
+<p>Describe al menos un hallazgo real (no necesariamente un error — puede ser una confirmación bien justificada, como en 3.5).</p>
+<p><strong>Reflexión técnica breve</strong></p>
+<p>Responde en 5 a 8 líneas:</p>
+<div class="highlight"><pre><span></span><code>¿Por qué una decisión arquitectónica tomada al inicio del proyecto necesita
+revisarse con evidencia, en vez de darse por cerrada?
+</code></pre></div>
+<p><strong>Anexo: Feedback de la sesión</strong></p>
+<p>Pega esta página como la última hoja del PDF, con tus respuestas.</p>
+<ol>
+<li>¿Cuál es el aprendizaje más importante que te llevas de la clase de hoy?</li>
+<li>¿Qué punto de la clase te resultó más confuso o te dejó con dudas?</li>
+<li>¿Tienes alguna pregunta que te gustaría que sea respondida la siguiente clase?</li>
+<li>Sobre tu nivel de comprensión de la clase de hoy, marca una opción:<ul>
+<li>¡Entendido! - Lo domino y podría explicarlo.</li>
+<li>Más o menos. - Entendí la idea general, pero tengo dudas.</li>
+<li>Necesito ayuda. - Me siento perdido/a con este tema.</li>
+</ul>
+</li>
+<li>¿Cómo puedo ayudarte a comprender mejor el tema?</li>
+<li>Pensando en tu participación y esfuerzo en la clase de hoy, ¿cómo te autoevaluarías? Marca una opción:<ul>
+<li>Muy Comprometido/a: Me esforcé al máximo.</li>
+<li>Comprometido/a: Sé que podría haberme esforzado un poco más.</li>
+<li>Poco Comprometido/a: Hoy no di mi mejor esfuerzo.</li>
+</ul>
+</li>
+<li>Mi satisfacción con la clase fue... (califica del 1 al 10, donde 1 es insatisfecho y 10 es muy satisfecho).</li>
+</ol>
+<h3 id="44-criterios-minimos-de-aceptacion">4.4 Criterios mínimos de aceptación<a class="headerlink" href="#44-criterios-minimos-de-aceptacion" title="Permanent link">&para;</a></h3>
+<p>La evidencia individual se considera completa si:</p>
+<ul>
+<li>El archivo respeta el nombre solicitado.</li>
+<li>Presenta la tabla de trade-offs de los siete estilos arquitectónicos, aplicada a su propio proyecto.</li>
+<li>Verifica o justifica explícitamente la escalabilidad horizontal.</li>
+<li>Justifica explícitamente el diseño <em>stateless</em> (o su ausencia), con código real citado.</li>
+<li>Evalúa si algún módulo real justifica hexagonal o Clean Architecture, con argumento concreto.</li>
+<li>Incluye una conclusión documentada (confirmación o hallazgo), con su justificación.</li>
+<li>Cada captura de la evidencia técnica muestra el reloj del sistema y el usuario/perfil visible, sin recortar.</li>
+<li>Las fechas y horas de las capturas son coherentes con el historial de commits de su repositorio en GitHub.</li>
+<li>Incluye la reflexión técnica breve solicitada.</li>
+<li>Incluye el Anexo de feedback de la sesión respondido, como última página del PDF.</li>
+</ul>
+<h3 id="45-preguntas-de-defensa">4.5 Preguntas de defensa<a class="headerlink" href="#45-preguntas-de-defensa" title="Permanent link">&para;</a></h3>
+<ol>
+<li>¿Por qué monolito modular y no microservicios, para este proyecto en particular?</li>
+<li>¿Qué evidencia real (no teórica) demuestra que tu backend escala horizontalmente?</li>
+<li>¿Por qué tu backend es (o no es) <em>stateless</em>, y qué relación tiene eso con la escalabilidad horizontal?</li>
+<li>¿Qué tendría que pasar en tu dominio para que valga la pena aislarlo con arquitectura hexagonal?</li>
+<li>¿Por qué "microservicios" y "Aplicaciones Distribuidas" no son lo mismo que esta sesión de ADS?</li>
+<li>¿Por qué un monolito modular tiene ACID por defecto, y qué se pierde exactamente si se separa en microservicios (teorema CAP)?</li>
+<li>¿Qué es el Acyclic Dependencies Principle, y cómo se verifica (o no) en tu propio proyecto?</li>
+</ol>
+<h3 id="46-rubrica-de-evaluacion">4.6 Rúbrica de evaluación<a class="headerlink" href="#46-rubrica-de-evaluacion" title="Permanent link">&para;</a></h3>
+<p><strong>Tabla 10. Rúbrica de evaluación</strong></p>
+<table>
+<thead>
+<tr>
+<th>Criterio</th>
+<th style="text-align: right;">Peso (%)</th>
+<th>A (20 pts)</th>
+<th>B (15 pts)</th>
+<th>C (10 pts)</th>
+<th>D (5 pts)</th>
+<th style="text-align: right;">Nivel obtenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Trade-offs de estilos arquitectónicos*</td>
+<td style="text-align: right;">25</td>
+<td>Tabla completa y correcta, con trade-offs reales aplicados al proyecto propio, citando ACID/ADP y CAP donde corresponda (3.1).</td>
+<td>Tabla correcta, con algún trade-off superficial o sin citar ACID/CAP donde correspondía.</td>
+<td>Tabla incompleta o con trade-offs genéricos.</td>
+<td>No presenta la tabla.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>2. Escalabilidad horizontal*</td>
+<td style="text-align: right;">25</td>
+<td>Evidencia real de verificación, o justificación sólida de por qué no aplica todavía.</td>
+<td>Evidencia o justificación correcta, con detalles menores.</td>
+<td>Evidencia superficial o justificación poco clara.</td>
+<td>No evalúa escalabilidad horizontal.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>3. Diseño stateless*</td>
+<td style="text-align: right;">25</td>
+<td>Justificación explícita y correcta, con código real citado.</td>
+<td>Justificación correcta, con citas parciales.</td>
+<td>Justificación superficial o incorrecta.</td>
+<td>No justifica el diseño stateless.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>4. Orientación DDD*</td>
+<td style="text-align: right;">25</td>
+<td>Evaluación concreta de al menos un módulo real, con argumento sólido.</td>
+<td>Evaluación correcta, con argumento básico.</td>
+<td>Evaluación genérica o poco fundamentada.</td>
+<td>No evalúa orientación DDD.</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>* Agregado manual.</p>
+<p>Nota final = suma de (<code>Peso</code> / 100 × <code>Puntos del nivel obtenido</code>) = ____ / 20.</p>
+<p>Para usar la rúbrica con IA, solicita:</p>
+<div class="highlight"><pre><span></span><code>Evalúa el PDF usando la rúbrica de la sesión.
+Para cada criterio selecciona el nivel obtenido usando la escala A=20, B=15, C=10, D=5 puntos.
+Justifica brevemente cada nivel asignado.
+Verifica que cada captura muestre reloj del sistema y usuario/perfil visible, y que las fechas sean coherentes con el historial de commits de GitHub. Si falta esta evidencia o hay inconsistencias, indícalo explícitamente antes de calificar.
+Calcula la nota final con la fórmula: suma de (Peso/100 × Puntos del nivel obtenido), directamente sobre 20.
+Indica 2 fortalezas y 2 recomendaciones.
+</code></pre></div>
+<h2 id="5-cierre">5. Cierre<a class="headerlink" href="#5-cierre" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 5 min.</p>
+<p><strong>Resumen breve:</strong> hoy la propuesta inicial de S1 (monolito modular con Spring Modulith) se sometió a un análisis más profundo — trade-offs explícitos de los siete estilos, evidencia real de escalabilidad horizontal y diseño <em>stateless</em> (LP2 S1, 3.3), y una evaluación honesta de si el dominio actual de BomERP ya justifica hexagonal o Clean Architecture. La conclusión más probable no es un cambio de rumbo, sino una confirmación bien justificada — y eso también es un resultado válido.</p>
+<p><strong>Dinámica participativa:</strong> en una ronda rápida, cada estudiante comparte en una frase qué estilo arquitectónico le pareció más tentador "por moda" antes de evaluar sus trade-offs reales.</p>
+<p><strong>Metacognición:</strong> cada estudiante responde el Anexo de feedback de la sesión, incluido en su evidencia individual (ver 4.3.1). El docente analiza esas respuestas con IA para identificar temas recurrentes o dudas comunes del equipo, y con esos indicadores construye el cierre real de la sesión — que se entrega al inicio de S5, no al final de esta clase.</p>
+<p><strong>Proyección:</strong> la confirmación (o el ajuste) de estilo arquitectónico de hoy es la base de S5, donde se integra todo lo trabajado en la unidad (vistas arquitectónicas, principios de diseño, estilo arquitectónico) en el Producto U1 de ADS.</p>
+<h2 id="bibliografia">Bibliografía<a class="headerlink" href="#bibliografia" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Amazon Web Services. (2014). <em>AWS Lambda</em> [anuncio de producto]. AWS re:Invent, noviembre de 2014. https://press.aboutamazon.com/2014/11/amazon-web-services-announces-aws-lambda</li>
+<li>BSoft Group. (2026). <em>Arquitecturas modernas</em> [material de curso]. Educate. https://bsoftgroup.com/educate/#/mcontainer/container/mcursos/bcursos/cursos/1736471448631?ARQ=ARQ&amp;JAV=JAV</li>
+<li>Cockburn, A. (2005). <em>Hexagonal Architecture</em>. https://alistair.cockburn.us/hexagonal-architecture/</li>
+<li>Evans, E. (2003). <em>Domain-Driven Design: Tackling Complexity in the Heart of Software</em>. Addison-Wesley.</li>
+<li>Fowler, M. (2015). <em>Microservices</em>. martinfowler.com. https://martinfowler.com/articles/microservices.html</li>
+<li>Fowler, M. (2015). <em>MonolithFirst</em>. martinfowler.com. https://martinfowler.com/bliki/MonolithFirst.html</li>
+<li>Gilbert, S., &amp; Lynch, N. (2002). Brewer's conjecture and the feasibility of consistent, available, partition-tolerant web services. <em>ACM SIGACT News</em>, 33(2), 51-59.</li>
+<li>Google. (2025). <em>Guide to app architecture</em>. Android Developers. https://developer.android.com/topic/architecture</li>
+<li>Jackson, C. (2019). <em>Micro Frontends</em>. martinfowler.com. https://martinfowler.com/articles/micro-frontends.html</li>
+<li>Martin, R. C. (1996). Granularity. <em>C++ Report</em>, 8(10) — origen del Acyclic Dependencies Principle (ADP), Common Closure Principle (CCP) y Common Reuse Principle (CRP).</li>
+<li>Martin, R. C. (2017). <em>Clean Architecture: A Craftsman's Guide to Software Structure and Design</em>. Prentice Hall.</li>
+<li>Pritchett, D. (2008). BASE: An ACID alternative. <em>ACM Queue</em>, 6(3), 48-55. https://queue.acm.org/detail.cfm?id=1394128</li>
+<li>SACAViX. (2026a). <em>Hexagonal Architecture</em>. SACAViX System Design — Patterns. https://systemdesign.sacavix.com/patterns/hexagonal-architecture</li>
+<li>SACAViX. (2026b). <em>Modular Monolith</em>. SACAViX System Design — Patterns. https://systemdesign.sacavix.com/patterns/modular-monolith</li>
+<li>SACAViX Tech (Yoandy). (s.f.). <em>Arquitectura Limpia: Un ejemplo práctico con Spring Boot</em> [video]. YouTube. https://www.youtube.com/watch?v=GDXrdZlzdHg</li>
+<li>Thoughtworks. (2024). <em>Hexagonal architecture explained through a practical example</em>. https://www.thoughtworks.com/insights/blog/architecture/hexagonal-architecture-explained-practical-example</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Angel Sullon @asullom - UPeU 2026
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

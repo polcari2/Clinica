@@ -1,0 +1,3993 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Entorno integrado de desarrollo academico para construir modulos ERP con ADS, BD2 y LP2.">
+      
+      
+        <meta name="author" content="UPeU">
+      
+      
+      
+        <link rel="prev" href="../S02_Triggers_DML_Auditoria/">
+      
+      
+        <link rel="next" href="../S04_Optimizacion_Consultas_SQL/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  
+    <title>BOM ERP - S3 - Manejo de excepciones y robustez</title>
+  
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#s3-manejo-de-excepciones-y-robustez" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="BOM ERP" class="md-header__button md-logo" aria-label="BOM ERP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            BOM ERP
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              S3 - Manejo de excepciones y robustez
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/262ciclo4/bomerp" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    262ciclo4/bomerp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../proyecto-integrador/" class="md-tabs__link">
+          
+  
+  
+  Guía del Proyecto Integrador
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ads/" class="md-tabs__link">
+          
+  
+  
+  ADS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  BD2
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../lp2/" class="md-tabs__link">
+          
+  
+  
+  LP2
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="BOM ERP" class="md-nav__button md-logo" aria-label="BOM ERP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    BOM ERP
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/262ciclo4/bomerp" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    262ciclo4/bomerp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Proyecto Integrador
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guía del Proyecto Integrador
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alineamiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/brief/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brief técnico (plantilla)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Diseño técnico, motor transaccional y backend inicial
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Diseño técnico, motor transaccional y backend inicial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/lp2-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Demo U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Modelado UML, administración Oracle y SPA segura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Modelado UML, administración Oracle y SPA segura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/lp2-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Demo U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Diseño consolidado, operación Oracle y Full-Stack integrado
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Diseño consolidado, operación Oracle y Full-Stack integrado
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/lp2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/checklist-final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checklist final
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/guia-sustentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de sustentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ADS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/silabo_ads_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/silabo_ads_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Arquitectura y Diseño Estructural
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Arquitectura y Diseño Estructural
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/sesiones/S01_Fundamentos_Arquitectura_Software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - Fundamentos de arquitectura de software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/sesiones/S02_Modelo_C4_Vistas_Arquitectonicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - Modelo C4 y vistas arquitectónicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/sesiones/S03_Diseno_Estructural_Principios_SOLID/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Diseño estructural y principios SOLID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/sesiones/S04_Arquitecturas_Modernas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Arquitecturas modernas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ads/sesiones/S05_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    BD2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../silabo_bd2_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../silabo_bd2_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Programación y optimización (Oracle XE)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Programación y optimización (Oracle XE)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S01_PLSQL_Aplicado_Negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - PL/SQL aplicado al negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S02_Triggers_DML_Auditoria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - Triggers DML y auditoría
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Manejo de excepciones y robustez
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Manejo de excepciones y robustez
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-presentacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Presentación de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-proposito-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Propósito de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-producto-de-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Producto de sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Metodología
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-motivacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Motivación de la sesión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Motivación de la sesión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-caso-el-error-que-nadie-explico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Caso: el error que nadie explicó
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-ubicacion-en-el-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Ubicación en el curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-arquitectura-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Arquitectura de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-excepciones-predefinidas-de-plsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Excepciones predefinidas de PL/SQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-excepciones-personalizadas-pragma-exception_init-y-raise_application_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Excepciones personalizadas: PRAGMA EXCEPTION_INIT y RAISE_APPLICATION_ERROR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-registro-de-errores-y-tolerancia-a-fallos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Registro de errores y tolerancia a fallos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-aplica-actividad-practica-guiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aplica: actividad práctica guiada
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Aplica: actividad práctica guiada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-definir-el-alcance-de-errores-a-manejar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Definir el alcance de errores a manejar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-crear-la-tabla-log_errores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Crear la tabla LOG_ERRORES
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-incorporar-excepciones-en-sp_registrar_producto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Incorporar excepciones en SP_REGISTRAR_PRODUCTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-incorporar-una-excepcion-personalizada-en-sp_aplicar_descuento_producto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Incorporar una excepción personalizada en SP_APLICAR_DESCUENTO_PRODUCTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-crear-fn_obtener_precio_producto-con-manejo-de-no_data_found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Crear FN_OBTENER_PRECIO_PRODUCTO con manejo de NO_DATA_FOUND
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-probar-los-tres-con-casos-validos-e-invalidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Probar los tres con casos válidos e inválidos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-relacionar-con-ads-y-lp2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Relacionar con ADS y LP2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crea-actividad-autonoma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crea: actividad autónoma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Crea: actividad autónoma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-actividad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Actividad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proposito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Propósito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indicaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Indicaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Indicaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-estructura-del-informe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Estructura del informe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-criterios-minimos-de-aceptacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Criterios mínimos de aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-preguntas-de-defensa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Preguntas de defensa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-rubrica-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Rúbrica de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bibliografía
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S04_Optimizacion_Consultas_SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Optimización de consultas SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S05_Indices_Optimizacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Índices para optimización
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S06_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S6 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    LP2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/silabo_lp2_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/silabo_lp2_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisiones de arquitectura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisiones de arquitectura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-001-arquitectura-backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-001 - Arquitectura del backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-002-spring-modulith/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-002 - Spring Modulith
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-003-spring-boot-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-003 - Versión exacta de Spring Boot 4.0.7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-004-jwt-diferido/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-004 - JWT diferido a S10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Base backend REST modular de BomERP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Base backend REST modular de BomERP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S01_Arquitectura_Backend_REST_Profesional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - Arquitectura backend REST profesional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S02_CRUD_REST_Completo_Producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - CRUD REST completo de Producto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S03_Objetos_Relacionados_Categoria_Producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Objetos relacionados Categoria-Producto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S04_Operacion_Cabecera_Detalle_Venta_DetalleVenta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Operación cabecera-detalle Venta-DetalleVenta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S05_Consultas_Empresariales_Reportes_CORS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Consultas empresariales, reportes REST y CORS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S06_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S6 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-presentacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Presentación de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-proposito-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Propósito de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-producto-de-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Producto de sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Metodología
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-motivacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Motivación de la sesión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Motivación de la sesión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-caso-el-error-que-nadie-explico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Caso: el error que nadie explicó
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-ubicacion-en-el-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Ubicación en el curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-arquitectura-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Arquitectura de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-excepciones-predefinidas-de-plsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Excepciones predefinidas de PL/SQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-excepciones-personalizadas-pragma-exception_init-y-raise_application_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Excepciones personalizadas: PRAGMA EXCEPTION_INIT y RAISE_APPLICATION_ERROR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-registro-de-errores-y-tolerancia-a-fallos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Registro de errores y tolerancia a fallos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-aplica-actividad-practica-guiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aplica: actividad práctica guiada
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Aplica: actividad práctica guiada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-definir-el-alcance-de-errores-a-manejar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Definir el alcance de errores a manejar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-crear-la-tabla-log_errores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Crear la tabla LOG_ERRORES
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-incorporar-excepciones-en-sp_registrar_producto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Incorporar excepciones en SP_REGISTRAR_PRODUCTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-incorporar-una-excepcion-personalizada-en-sp_aplicar_descuento_producto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Incorporar una excepción personalizada en SP_APLICAR_DESCUENTO_PRODUCTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-crear-fn_obtener_precio_producto-con-manejo-de-no_data_found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Crear FN_OBTENER_PRECIO_PRODUCTO con manejo de NO_DATA_FOUND
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-probar-los-tres-con-casos-validos-e-invalidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Probar los tres con casos válidos e inválidos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-relacionar-con-ads-y-lp2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Relacionar con ADS y LP2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crea-actividad-autonoma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crea: actividad autónoma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Crea: actividad autónoma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-actividad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Actividad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proposito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Propósito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indicaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Indicaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Indicaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-estructura-del-informe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Estructura del informe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-criterios-minimos-de-aceptacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Criterios mínimos de aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-preguntas-de-defensa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Preguntas de defensa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-rubrica-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Rúbrica de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bibliografía
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="s3-manejo-de-excepciones-y-robustez">S3 - Manejo de Excepciones y Robustez<a class="headerlink" href="#s3-manejo-de-excepciones-y-robustez" title="Permanent link">&para;</a></h1>
+<h2 id="1-introduccion">1. Introducción<a class="headerlink" href="#1-introduccion" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 20 min.</p>
+<h3 id="11-presentacion-de-la-sesion">1.1 Presentación de la sesión<a class="headerlink" href="#11-presentacion-de-la-sesion" title="Permanent link">&para;</a></h3>
+<p>Un procedimiento o función PL/SQL que solo funciona cuando recibe datos correctos no está completo — en cualquier sistema real, algo eventualmente falla: una referencia que no existe, un valor fuera de rango, una fila que no aparece. Sin manejo de excepciones, esos fallos llegan crudos hasta quien invocó el procedimiento (un código de error interno de Oracle, sin contexto) y no dejan ningún rastro de que ocurrieron. Esta sesión agrega manejo de excepciones — predefinidas y personalizadas —, registro de errores y tolerancia a fallos a procedimientos y funciones ya construidos, para que cada fallo se capture, se documente y responda con un mensaje claro, en vez de propagar un error interno de Oracle sin explicación.</p>
+<h3 id="12-indice">1.2 Índice<a class="headerlink" href="#12-indice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Excepciones predefinidas de PL/SQL.</li>
+<li>Excepciones personalizadas.</li>
+<li>Registro de errores.</li>
+<li>Tolerancia a fallos.</li>
+</ol>
+<h3 id="13-proposito-de-aprendizaje">1.3 Propósito de aprendizaje<a class="headerlink" href="#13-proposito-de-aprendizaje" title="Permanent link">&para;</a></h3>
+<p>Al concluir la clase, estarás en condiciones de:</p>
+<ul>
+<li><strong>Incorporar</strong> manejo de excepciones predefinidas y personalizadas en procedimientos y funciones PL/SQL reales, registrando cada fallo en una tabla de errores y respondiendo con un mensaje claro en vez de un código Oracle interno sin contexto.</li>
+</ul>
+<h3 id="14-producto-de-sesion">1.4 Producto de sesión<a class="headerlink" href="#14-producto-de-sesion" title="Permanent link">&para;</a></h3>
+<p><code>SP_REGISTRAR_PRODUCTO</code> y <code>SP_APLICAR_DESCUENTO_PRODUCTO</code> (S1) con manejo de excepciones agregado, una función nueva (<code>FN_OBTENER_PRECIO_PRODUCTO</code>) con manejo de <code>NO_DATA_FOUND</code>, y una tabla <code>LOG_ERRORES</code> que registra cada fallo capturado.</p>
+<h3 id="15-metodologia">1.5 Metodología<a class="headerlink" href="#15-metodologia" title="Permanent link">&para;</a></h3>
+<p><strong>Tabla 1. Metodología de la sesión</strong></p>
+<table>
+<thead>
+<tr>
+<th>Actividades a Realizar en el Periodo</th>
+<th>Orientaciones generales (Orientaciones Metodológicas)</th>
+<th>Material de estudio recomendado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revisión previa individual</td>
+<td>Revisar <code>SP_REGISTRAR_PRODUCTO</code> y <code>SP_APLICAR_DESCUENTO_PRODUCTO</code> de S1, y <code>TRG_PRODUCTO_AUDITORIA</code> de S2. Trabajo individual, antes de clase; identificar qué pasa hoy si se llama a <code>SP_REGISTRAR_PRODUCTO</code> con una categoría inexistente.</td>
+<td>S1 (3.5), S2 (Tabla 2), sílabo BD2 U1.</td>
+</tr>
+<tr>
+<td>Clase presencial</td>
+<td>Incorporación guiada de manejo de excepciones y registro de errores sobre los procedimientos reales de S1. Trabajo individual en la propia laptop, siguiendo al docente paso a paso; consulta inmediata ante errores de compilación.</td>
+<td>Script <code>S03_excepciones_robustez.sql</code>.</td>
+</tr>
+<tr>
+<td>Evaluación formativa</td>
+<td>Verificación en clase de cada excepción con un caso que la dispare, y de <code>LOG_ERRORES</code> con los registros generados. La evidencia se completa y sustenta de forma individual, fuera del aula, según los criterios mínimos de la sección 4.4.</td>
+<td>Indicaciones de entrega (4.3), rúbrica de evaluación (4.6).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="16-motivacion-de-la-sesion">1.6 Motivación de la sesión<a class="headerlink" href="#16-motivacion-de-la-sesion" title="Permanent link">&para;</a></h3>
+<h4 id="161-caso-el-error-que-nadie-explico">1.6.1 Caso: el error que nadie explicó<a class="headerlink" href="#161-caso-el-error-que-nadie-explico" title="Permanent link">&para;</a></h4>
+<p>Ejecuta hoy <code>SP_REGISTRAR_PRODUCTO</code> con un <code>p_id_categoria</code> que no existe en <code>CATEGORIAS</code>, y Oracle responde así, sin que el procedimiento haga nada por explicarlo:</p>
+<div class="highlight"><pre><span></span><code>ORA-02291: integrity constraint (BOM_CATALOGO.FK_PRODUCTO_CATEGORIA) violated - parent key not found
+</code></pre></div>
+<p>Quien recibe ese error (otro script, un desarrollador, o en el futuro LP2 si algún día invocara el procedimiento directo) no sabe, sin leer el mensaje interno de Oracle, que el problema es "la categoría no existe" — y no queda ningún registro de que ese intento fallido ocurrió. Esta sesión no cambia la restricción <code>FK_PRODUCTO_CATEGORIA</code> (sigue protegiendo la integridad, igual que en S1) — agrega una capa que <strong>captura</strong> ese fallo, lo <strong>registra</strong>, y responde con un mensaje que sí explica qué pasó.</p>
+<p><strong>Preguntas de análisis</strong></p>
+<p><strong>Activación de conocimientos previos</strong></p>
+<ol>
+<li><code>ORA-02291</code> no es uno de los nombres de excepción predefinidos de PL/SQL (<code>NO_DATA_FOUND</code>, <code>DUP_VAL_ON_INDEX</code>, etc.). ¿Cómo le pondrías nombre a un error de Oracle que no tiene uno ya definido?</li>
+<li>LP2 (S3) ya valida que <code>categoriaId</code> exista <strong>antes</strong> de llamar al repositorio (<code>ProductoServiceImpl.buscarCategoriaOFallar</code>). Si LP2 ya lo previene, ¿por qué esta sesión igual lo maneja en Oracle?</li>
+</ol>
+<p><strong>Comprensión de excepciones</strong></p>
+<ol>
+<li>¿Qué diferencia hay entre una excepción predefinida y una personalizada?</li>
+<li>¿Por qué registrar el error <strong>antes</strong> de volver a lanzarlo (no solo uno de los dos)?</li>
+</ol>
+<h3 id="17-ubicacion-en-el-curso">1.7 Ubicación en el curso<a class="headerlink" href="#17-ubicacion-en-el-curso" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Unidad: U1 - Programación y optimización (Oracle XE).</li>
+<li>Producto del curso: base de datos empresarial Oracle operativa, administrada, optimizada, auditada y resiliente.</li>
+<li>Producto de unidad: motor transaccional Oracle optimizado.</li>
+<li>Avance del producto en esta sesión: manejo de excepciones y registro de errores sobre los procedimientos de <code>BOM_CATALOGO</code>.</li>
+</ul>
+<p>Roadmap del producto de la unidad:</p>
+<p><strong>Figura 1. Roadmap del producto de la unidad</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    S1["`**S1:** PL/SQL aplicado al negocio`"]
+    S2["`**S2:** Triggers DML y auditoría`"]
+    S3["`**S3:** Excepciones y robustez`"]
+    S4["`**S4:** Optimización de consultas`"]
+    S5["`**S5:** Índices`"]
+    S6["`**S6:** Producto U1`"]
+
+    S1 --&gt; S2 --&gt; S3 --&gt; S4 --&gt; S5 --&gt; S6
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class S3 today;</code></pre>
+<h2 id="2-explica">2. Explica<a class="headerlink" href="#2-explica" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 25 min.</p>
+<h3 id="21-arquitectura-de-la-sesion">2.1 Arquitectura de la sesión<a class="headerlink" href="#21-arquitectura-de-la-sesion" title="Permanent link">&para;</a></h3>
+<p><strong>Figura 2. Manejo de excepciones sobre <code>SP_REGISTRAR_PRODUCTO</code></strong></p>
+<pre class="mermaid"><code>flowchart TB
+    Cliente["Cliente (script, LP2, u otro)"]
+    SP["SP_REGISTRAR_PRODUCTO"]
+    Insert["INSERT INTO PRODUCTOS"]
+    FK["FK_PRODUCTO_CATEGORIA (S1)"]
+    Handler["Bloque EXCEPTION"]
+    Log[("LOG_ERRORES")]
+
+    Cliente --&gt; SP --&gt; Insert --&gt; FK
+    FK --&gt;|"viola la restriccion"| Handler
+    Handler --&gt;|"registra"| Log
+    Handler --&gt;|"relanza con mensaje claro"| Cliente
+    FK --&gt;|"pasa"| Cliente</code></pre>
+<p>Lectura del diagrama:</p>
+<ul>
+<li>La restricción <code>FK_PRODUCTO_CATEGORIA</code> (S1) sigue siendo la que impide el dato inválido — esta sesión no la reemplaza, agrega qué pasa <strong>después</strong> de que Oracle la rechaza.</li>
+<li>El bloque <code>EXCEPTION</code> captura el fallo, lo registra en <code>LOG_ERRORES</code>, y recién ahí decide: relanzar con un mensaje claro (tolerancia a fallos con visibilidad) o continuar, según el caso.</li>
+<li>Integración (referencia, no requisito para esta sesión): LP2 (S3) ya previene este caso específico validando <code>categoriaId</code> antes de escribir. Esta capa protege contra cualquier <strong>otro</strong> cliente que no pase por esa validación — mismo criterio que S2 (2.1) usó para los triggers.</li>
+</ul>
+<p>Este diagrama es el mapa que guía el resto de la explicación: cada apartado siguiente desarrolla uno de sus componentes, en el mismo orden del Índice (1.2).</p>
+<h3 id="22-excepciones-predefinidas-de-plsql">2.2 Excepciones predefinidas de PL/SQL<a class="headerlink" href="#22-excepciones-predefinidas-de-plsql" title="Permanent link">&para;</a></h3>
+<p>Oracle ya tiene nombre para los errores más comunes — no hace falta declararlos, solo capturarlos por su nombre en un bloque <code>EXCEPTION</code>.</p>
+<p><strong>Tabla 2. Excepciones predefinidas más comunes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Excepción</th>
+<th>Cuándo ocurre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NO_DATA_FOUND</code></td>
+<td>Un <code>SELECT ... INTO</code> no encuentra ninguna fila.</td>
+</tr>
+<tr>
+<td><code>TOO_MANY_ROWS</code></td>
+<td>Un <code>SELECT ... INTO</code> encuentra más de una fila (esperaba exactamente una).</td>
+</tr>
+<tr>
+<td><code>DUP_VAL_ON_INDEX</code></td>
+<td>Un <code>INSERT</code>/<code>UPDATE</code> viola una restricción <code>UNIQUE</code> o la clave primaria.</td>
+</tr>
+<tr>
+<td><code>VALUE_ERROR</code></td>
+<td>Error de conversión o asignación (por ejemplo, un valor que no cabe en el tipo destino).</td>
+</tr>
+<tr>
+<td><code>ZERO_DIVIDE</code></td>
+<td>División entre cero.</td>
+</tr>
+<tr>
+<td><code>OTHERS</code></td>
+<td>No es una excepción específica — captura <strong>cualquier</strong> error no capturado antes por su nombre. Se usa como red de seguridad, nunca como la única rama.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Error frecuente</strong>: usar <code>WHEN OTHERS THEN NULL</code> — captura el error y no hace nada, ni lo registra ni lo relanza. El fallo desaparece en silencio, sin que nadie se entere de que ocurrió; es peor que no manejarlo, porque simula que todo salió bien.</p>
+<h3 id="23-excepciones-personalizadas-pragma-exception_init-y-raise_application_error">2.3 Excepciones personalizadas: <code>PRAGMA EXCEPTION_INIT</code> y <code>RAISE_APPLICATION_ERROR</code><a class="headerlink" href="#23-excepciones-personalizadas-pragma-exception_init-y-raise_application_error" title="Permanent link">&para;</a></h3>
+<p>No todos los errores de Oracle tienen un nombre predefinido — <code>ORA-02291</code> (violación de llave foránea, el caso de 1.6.1) es uno de ellos. PL/SQL da dos formas de manejar esto, para dos necesidades distintas:</p>
+<p><strong>Tabla 3. Dos formas de excepción personalizada</strong></p>
+<table>
+<thead>
+<tr>
+<th>Forma</th>
+<th>Qué hace</th>
+<th>Cuándo usarla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PRAGMA EXCEPTION_INIT</code></td>
+<td>Le pone nombre a un código de error de Oracle que <strong>ya existe</strong> pero no tiene uno predefinido (como <code>ORA-02291</code>).</td>
+<td>Cuando el error lo genera Oracle mismo (una restricción, una conversión) y solo quieres capturarlo por nombre en vez de por código numérico.</td>
+</tr>
+<tr>
+<td><code>RAISE_APPLICATION_ERROR</code></td>
+<td>Genera un error <strong>nuevo</strong>, propio de tu lógica de negocio, con un código en el rango <code>-20000</code> a <code>-20999</code> (mismo rango que ya usó <code>TRG_PRODUCTO_PRECIO_BU</code> en S2) y un mensaje propio.</td>
+<td>Cuando la regla no la rompe Oracle — la rompe tu propia validación (por ejemplo, un porcentaje de descuento fuera de rango).</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1">-- PRAGMA EXCEPTION_INIT: nombrar un error de Oracle sin nombre predefinido</span>
+<span class="k">DECLARE</span>
+<span class="w">    </span><span class="n">e_categoria_inexistente</span><span class="w"> </span><span class="k">EXCEPTION</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PRAGMA</span><span class="w"> </span><span class="n">EXCEPTION_INIT</span><span class="p">(</span><span class="n">e_categoria_inexistente</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2291</span><span class="p">);</span>
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="k">EXCEPTION</span>
+<span class="w">    </span><span class="k">WHEN</span><span class="w"> </span><span class="n">e_categoria_inexistente</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="k">END</span><span class="p">;</span>
+</code></pre></div>
+<p><code>PRAGMA EXCEPTION_INIT</code> no cambia el comportamiento de Oracle — solo le da un nombre legible a un código que ya existía, para poder escribir <code>WHEN e_categoria_inexistente</code> en vez de comparar <code>SQLCODE = -2291</code> a mano.</p>
+<p><strong>Figura 3. Cómo elegir entre <code>PRAGMA EXCEPTION_INIT</code> y <code>RAISE_APPLICATION_ERROR</code></strong></p>
+<pre class="mermaid"><code>flowchart TD
+    Start["Necesitas manejar un error por nombre"]
+    Q1{"El codigo de error&lt;br/&gt;ya existe en Oracle?"}
+    Pragma["PRAGMA EXCEPTION_INIT&lt;br/&gt;(3.3, ORA-02291)"]
+    Raise["RAISE_APPLICATION_ERROR&lt;br/&gt;(3.4, regla propia)"]
+
+    Start --&gt; Q1
+    Q1 --&gt;|"si, lo genera Oracle"| Pragma
+    Q1 --&gt;|"no, lo genera tu logica"| Raise</code></pre>
+<p>La pregunta de la Figura 3 es la misma que resume la Tabla 3, hecha explícita: si el error ya lo dispara Oracle (una restricción, una conversión), le pones nombre con <code>PRAGMA EXCEPTION_INIT</code>; si el error no existe hasta que tu propia validación lo detecta, lo generas tú con <code>RAISE_APPLICATION_ERROR</code>. Nunca hace falta usar los dos para el mismo caso.</p>
+<h3 id="24-registro-de-errores-y-tolerancia-a-fallos">2.4 Registro de errores y tolerancia a fallos<a class="headerlink" href="#24-registro-de-errores-y-tolerancia-a-fallos" title="Permanent link">&para;</a></h3>
+<p><strong>Registro de errores</strong>: cada excepción capturada se guarda en una tabla propia (<code>LOG_ERRORES</code>), con el mismo criterio de auditoría que <code>PRODUCTO_AUDITORIA</code> (S2) — qué objeto falló, qué código de error, qué mensaje, cuándo y con qué usuario. <code>SQLCODE</code> y <code>SQLERRM</code> (dentro del bloque <code>EXCEPTION</code>) dan el código y el mensaje exacto que Oracle generó, disponibles solo ahí.</p>
+<p><strong>Tolerancia a fallos</strong>: no significa "que el error no pase" — significa que el sistema no se cae en silencio ni deja al que llama sin explicación. El patrón de esta sesión es: <strong>capturar → registrar → relanzar con mensaje claro</strong> (no solo capturar y registrar, ni solo capturar y relanzar sin registrar). Relanzar es importante: si <code>SP_REGISTRAR_PRODUCTO</code> traga la excepción sin relanzarla, quien lo invocó (LP2, otro script) cree que el producto se guardó cuando en realidad no.</p>
+<p><strong>Figura 4. Tolerancia a fallos: patrón correcto vs. error frecuente</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    Error["Excepcion capturada"]
+
+    subgraph Correcto["Patron de esta sesion"]
+        direction LR
+        R1["Registrar en LOG_ERRORES"] --&gt; R2["Relanzar con mensaje claro"]
+    end
+
+    subgraph Incorrecto["Error frecuente: WHEN OTHERS THEN NULL (2.2)"]
+        direction LR
+        I1["No registra"] -.-&gt; I2["No relanza"]
+    end
+
+    Error --&gt; Correcto
+    Error -.-&gt;|"a evitar"| Incorrecto</code></pre>
+<p>El bloque "Incorrecto" es el mismo <code>WHEN OTHERS THEN NULL</code> que 2.2 ya marcó como error frecuente: no registra ni relanza, así que el fallo desaparece sin dejar rastro y quien invocó el procedimiento cree que todo salió bien. El patrón de esta sesión (arriba, "Correcto") siempre hace las dos cosas, en ese orden — invertirlas o saltarse una es la falla que se pide diagnosticar en 4.3.1 ("Error o hallazgo").</p>
+<h2 id="3-aplica-actividad-practica-guiada">3. Aplica: actividad práctica guiada<a class="headerlink" href="#3-aplica-actividad-practica-guiada" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 2h.</p>
+<p><strong>Actividad:</strong> incorporación guiada de manejo de excepciones y registro de errores sobre <code>SP_REGISTRAR_PRODUCTO</code>, <code>SP_APLICAR_DESCUENTO_PRODUCTO</code> (S1) y una función nueva (Producto de la sesión en 1.4).</p>
+<p><strong>Propósito de la actividad:</strong> capturar excepciones predefinidas y personalizadas sobre procedimientos reales, registrar cada fallo en <code>LOG_ERRORES</code>, y verificar que cada caso responde con un mensaje claro en vez de un error interno de Oracle sin contexto.</p>
+<p><strong>Orientaciones metodológicas:</strong> en el laboratorio, el docente incorpora el manejo de excepciones paso a paso frente a la clase, probando cada uno con un caso que lo dispare; los estudiantes replican cada paso en su propio equipo, verificando <code>LOG_ERRORES</code> antes de continuar.</p>
+<p><strong>Actividades para realizar:</strong></p>
+<ul>
+<li><strong>3.1</strong> Definir el alcance de errores a manejar.</li>
+<li><strong>3.2</strong> Crear la tabla <code>LOG_ERRORES</code>.</li>
+<li><strong>3.3</strong> Incorporar excepciones en <code>SP_REGISTRAR_PRODUCTO</code>.</li>
+<li><strong>3.4</strong> Incorporar una excepción personalizada en <code>SP_APLICAR_DESCUENTO_PRODUCTO</code>.</li>
+<li><strong>3.5</strong> Crear <code>FN_OBTENER_PRECIO_PRODUCTO</code> con manejo de <code>NO_DATA_FOUND</code>.</li>
+<li><strong>3.6</strong> Probar los tres con casos válidos e inválidos.</li>
+<li><strong>3.7</strong> Relacionar con ADS y LP2.</li>
+</ul>
+<p><strong>Script completo, listo para ejecutar</strong> (el paso siguiente explica cada bloque): <a href="../../proyecto-integrador/u1/oracle/S03_excepciones_robustez.sql"><code>S03_excepciones_robustez.sql</code></a>.</p>
+<h3 id="31-definir-el-alcance-de-errores-a-manejar">3.1 Definir el alcance de errores a manejar<a class="headerlink" href="#31-definir-el-alcance-de-errores-a-manejar" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> alcance de errores definido.</p>
+<p><strong>Tabla 4. Alcance de errores de esta sesión</strong></p>
+<table>
+<thead>
+<tr>
+<th>Objeto</th>
+<th>Error a manejar</th>
+<th>Tipo de excepción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SP_REGISTRAR_PRODUCTO</code></td>
+<td>Categoría inexistente (<code>ORA-02291</code>)</td>
+<td>Personalizada (<code>PRAGMA EXCEPTION_INIT</code>)</td>
+</tr>
+<tr>
+<td><code>SP_APLICAR_DESCUENTO_PRODUCTO</code></td>
+<td>Porcentaje de descuento fuera de <code>[0, 100]</code></td>
+<td>Personalizada (<code>RAISE_APPLICATION_ERROR</code>)</td>
+</tr>
+<tr>
+<td><code>FN_OBTENER_PRECIO_PRODUCTO</code> (nueva)</td>
+<td>Producto inexistente</td>
+<td>Predefinida (<code>NO_DATA_FOUND</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-crear-la-tabla-log_errores">3.2 Crear la tabla <code>LOG_ERRORES</code><a class="headerlink" href="#32-crear-la-tabla-log_errores" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> tabla <code>LOG_ERRORES</code> operativa en el esquema <code>BOM_CATALOGO</code>.</p>
+<p><strong>Requisito antes de continuar:</strong> conéctate como <code>BOM_CATALOGO</code> (misma conexión de S1, 3.2) — la tabla y los procedimientos de esta sesión son objetos de ese esquema, igual que <code>CATEGORIAS</code>, <code>PRODUCTOS</code> y <code>PRODUCTO_AUDITORIA</code> (S2).</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">LOG_ERRORES</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">ID_LOG</span><span class="w">          </span><span class="nb">NUMBER</span><span class="w"> </span><span class="k">GENERATED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">OBJETO</span><span class="w">          </span><span class="n">VARCHAR2</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">CODIGO_ERROR</span><span class="w">    </span><span class="nb">NUMBER</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MENSAJE_ERROR</span><span class="w">   </span><span class="n">VARCHAR2</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span>
+<span class="w">    </span><span class="n">FECHA_EVENTO</span><span class="w">    </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">SYSTIMESTAMP</span><span class="p">,</span>
+<span class="w">    </span><span class="n">USUARIO_ORACLE</span><span class="w">  </span><span class="n">VARCHAR2</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">USER</span>
+<span class="p">);</span>
+</code></pre></div>
+<p>Mismo criterio que <code>PRODUCTO_AUDITORIA</code> (S2): sin <code>FOREIGN KEY</code> hacia ninguna tabla — un registro de error debe poder guardarse aunque la operación que falló nunca haya llegado a escribir nada.</p>
+<h3 id="33-incorporar-excepciones-en-sp_registrar_producto">3.3 Incorporar excepciones en <code>SP_REGISTRAR_PRODUCTO</code><a class="headerlink" href="#33-incorporar-excepciones-en-sp_registrar_producto" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> <code>SP_REGISTRAR_PRODUCTO</code> captura la categoría inexistente, la registra en <code>LOG_ERRORES</code>, y relanza con un mensaje claro.</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">SP_REGISTRAR_PRODUCTO</span><span class="p">(</span>
+<span class="w">    </span><span class="n">p_id_categoria</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">,</span>
+<span class="w">    </span><span class="n">p_nombre</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">VARCHAR2</span><span class="p">,</span>
+<span class="w">    </span><span class="n">p_precio</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">,</span>
+<span class="w">    </span><span class="n">p_stock</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">,</span>
+<span class="w">    </span><span class="n">p_id_producto</span><span class="w"> </span><span class="k">OUT</span><span class="w"> </span><span class="nb">NUMBER</span>
+<span class="p">)</span><span class="w"> </span><span class="k">IS</span>
+<span class="w">    </span><span class="n">e_categoria_inexistente</span><span class="w"> </span><span class="k">EXCEPTION</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PRAGMA</span><span class="w"> </span><span class="n">EXCEPTION_INIT</span><span class="p">(</span><span class="n">e_categoria_inexistente</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2291</span><span class="p">);</span>
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">PRODUCTOS</span><span class="w"> </span><span class="p">(</span><span class="n">ID_CATEGORIA</span><span class="p">,</span><span class="w"> </span><span class="n">NOMBRE</span><span class="p">,</span><span class="w"> </span><span class="n">PRECIO</span><span class="p">,</span><span class="w"> </span><span class="n">STOCK</span><span class="p">)</span>
+<span class="w">    </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">p_id_categoria</span><span class="p">,</span><span class="w"> </span><span class="n">p_nombre</span><span class="p">,</span><span class="w"> </span><span class="n">p_precio</span><span class="p">,</span><span class="w"> </span><span class="n">p_stock</span><span class="p">)</span>
+<span class="w">    </span><span class="n">RETURNING</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">p_id_producto</span><span class="p">;</span>
+<span class="k">EXCEPTION</span>
+<span class="w">    </span><span class="k">WHEN</span><span class="w"> </span><span class="n">e_categoria_inexistente</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">        </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">LOG_ERRORES</span><span class="w"> </span><span class="p">(</span><span class="n">OBJETO</span><span class="p">,</span><span class="w"> </span><span class="n">CODIGO_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">MENSAJE_ERROR</span><span class="p">)</span>
+<span class="w">        </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'SP_REGISTRAR_PRODUCTO'</span><span class="p">,</span><span class="w"> </span><span class="k">SQLCODE</span><span class="p">,</span><span class="w"> </span><span class="n">SQLERRM</span><span class="p">);</span>
+<span class="w">        </span><span class="n">RAISE_APPLICATION_ERROR</span><span class="p">(</span><span class="o">-</span><span class="mi">20010</span><span class="p">,</span><span class="w"> </span><span class="s1">'La categoria '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">p_id_categoria</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">' no existe. Verifica el id antes de registrar el producto.'</span><span class="p">);</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div>
+<p><code>e_categoria_inexistente</code> captura específicamente <code>ORA-02291</code>; cualquier otro error (uno que esta sesión no anticipó) sigue sin capturarse — y eso es intencional: capturar solo lo que sabes manejar, no todo con <code>WHEN OTHERS</code> (2.2). El <code>INSERT</code> a <code>LOG_ERRORES</code> ocurre <strong>antes</strong> del <code>RAISE_APPLICATION_ERROR</code>: si se invirtiera el orden, el procedimiento terminaría en el <code>RAISE</code> y el registro nunca se ejecutaría.</p>
+<h3 id="34-incorporar-una-excepcion-personalizada-en-sp_aplicar_descuento_producto">3.4 Incorporar una excepción personalizada en <code>SP_APLICAR_DESCUENTO_PRODUCTO</code><a class="headerlink" href="#34-incorporar-una-excepcion-personalizada-en-sp_aplicar_descuento_producto" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> <code>SP_APLICAR_DESCUENTO_PRODUCTO</code> rechaza un porcentaje fuera de rango, con registro y mensaje propio.</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">SP_APLICAR_DESCUENTO_PRODUCTO</span><span class="p">(</span>
+<span class="w">    </span><span class="n">p_precio</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">OUT</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">,</span>
+<span class="w">    </span><span class="n">p_porcentaje_descuento</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">NUMBER</span>
+<span class="p">)</span><span class="w"> </span><span class="k">IS</span>
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="k">IF</span><span class="w"> </span><span class="n">p_porcentaje_descuento</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">p_porcentaje_descuento</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">        </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">LOG_ERRORES</span><span class="w"> </span><span class="p">(</span><span class="n">OBJETO</span><span class="p">,</span><span class="w"> </span><span class="n">CODIGO_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">MENSAJE_ERROR</span><span class="p">)</span>
+<span class="w">        </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'SP_APLICAR_DESCUENTO_PRODUCTO'</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">20011</span><span class="p">,</span><span class="w"> </span><span class="s1">'Porcentaje fuera de rango: '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">p_porcentaje_descuento</span><span class="p">);</span>
+<span class="w">        </span><span class="n">RAISE_APPLICATION_ERROR</span><span class="p">(</span><span class="o">-</span><span class="mi">20011</span><span class="p">,</span><span class="w"> </span><span class="s1">'El porcentaje de descuento debe estar entre 0 y 100. Recibido: '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">p_porcentaje_descuento</span><span class="p">);</span>
+<span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">p_precio</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">p_precio</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">p_precio</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p_porcentaje_descuento</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div>
+<p>A diferencia de 3.3 (donde el error lo genera Oracle y esta sesión solo lo captura), acá el error <strong>no existe hasta que este procedimiento lo crea</strong> — nadie más que esta regla de negocio sabe que un descuento de <code>150%</code> no tiene sentido. Por eso no hace falta <code>PRAGMA EXCEPTION_INIT</code>: no hay ningún código de Oracle que nombrar, se genera uno propio directo con <code>RAISE_APPLICATION_ERROR</code>.</p>
+<h3 id="35-crear-fn_obtener_precio_producto-con-manejo-de-no_data_found">3.5 Crear <code>FN_OBTENER_PRECIO_PRODUCTO</code> con manejo de <code>NO_DATA_FOUND</code><a class="headerlink" href="#35-crear-fn_obtener_precio_producto-con-manejo-de-no_data_found" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> función nueva que consulta el precio de un producto, manejando el caso de id inexistente.</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">FN_OBTENER_PRECIO_PRODUCTO</span><span class="p">(</span>
+<span class="w">    </span><span class="n">p_id_producto</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">NUMBER</span>
+<span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="nb">NUMBER</span><span class="w"> </span><span class="k">IS</span>
+<span class="w">    </span><span class="n">v_precio</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span>
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">PRECIO</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">v_precio</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">PRODUCTOS</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_id_producto</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">RETURN</span><span class="w"> </span><span class="n">v_precio</span><span class="p">;</span>
+<span class="k">EXCEPTION</span>
+<span class="w">    </span><span class="k">WHEN</span><span class="w"> </span><span class="n">NO_DATA_FOUND</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">        </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">LOG_ERRORES</span><span class="w"> </span><span class="p">(</span><span class="n">OBJETO</span><span class="p">,</span><span class="w"> </span><span class="n">CODIGO_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">MENSAJE_ERROR</span><span class="p">)</span>
+<span class="w">        </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'FN_OBTENER_PRECIO_PRODUCTO'</span><span class="p">,</span><span class="w"> </span><span class="k">SQLCODE</span><span class="p">,</span><span class="w"> </span><span class="s1">'Producto no encontrado: '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">p_id_producto</span><span class="p">);</span>
+<span class="w">        </span><span class="n">RAISE_APPLICATION_ERROR</span><span class="p">(</span><span class="o">-</span><span class="mi">20012</span><span class="p">,</span><span class="w"> </span><span class="s1">'No existe un producto con id '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">p_id_producto</span><span class="p">);</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div>
+<p><code>SELECT ... INTO</code> es exactamente el tipo de sentencia donde <code>NO_DATA_FOUND</code> aparece en la práctica: espera <strong>una</strong> fila, y si la consulta no encuentra ninguna, PL/SQL la lanza automáticamente — no hace falta un <code>IF</code> para comprobarlo antes.</p>
+<h3 id="36-probar-los-tres-con-casos-validos-e-invalidos">3.6 Probar los tres con casos válidos e inválidos<a class="headerlink" href="#36-probar-los-tres-con-casos-validos-e-invalidos" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> evidencia de ejecución de los tres casos.</p>
+<p>Caso válido — registrar un producto con categoría real, aplicar un descuento razonable, y consultar su precio:</p>
+<div class="highlight"><pre><span></span><code><span class="k">DECLARE</span>
+<span class="w">    </span><span class="n">v_id_producto</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v_precio</span><span class="w"> </span><span class="nb">NUMBER</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">.</span><span class="mi">00</span><span class="p">;</span>
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">SP_REGISTRAR_PRODUCTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'Teclado de prueba'</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">v_id_producto</span><span class="p">);</span>
+<span class="w">    </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">SP_APLICAR_DESCUENTO_PRODUCTO</span><span class="p">(</span><span class="n">v_precio</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">);</span>
+<span class="w">    </span><span class="n">DBMS_OUTPUT</span><span class="p">.</span><span class="n">PUT_LINE</span><span class="p">(</span><span class="s1">'Producto: '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">v_id_producto</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">', precio con descuento (variable local): '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">v_precio</span><span class="p">);</span>
+<span class="w">    </span><span class="n">DBMS_OUTPUT</span><span class="p">.</span><span class="n">PUT_LINE</span><span class="p">(</span><span class="s1">'Precio real en BD: '</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">FN_OBTENER_PRECIO_PRODUCTO</span><span class="p">(</span><span class="n">v_id_producto</span><span class="p">));</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div>
+<p>Caso inválido 1 — categoría inexistente (debe fallar con <code>ORA-20010</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">DECLARE</span>
+<span class="w">    </span><span class="n">v_id_producto</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span>
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">SP_REGISTRAR_PRODUCTO</span><span class="p">(</span><span class="mi">999999</span><span class="p">,</span><span class="w"> </span><span class="s1">'Producto sin categoria'</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">v_id_producto</span><span class="p">);</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div>
+<p>Caso inválido 2 — porcentaje de descuento fuera de rango (debe fallar con <code>ORA-20011</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">DECLARE</span>
+<span class="w">    </span><span class="n">v_precio</span><span class="w"> </span><span class="nb">NUMBER</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">.</span><span class="mi">00</span><span class="p">;</span>
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">SP_APLICAR_DESCUENTO_PRODUCTO</span><span class="p">(</span><span class="n">v_precio</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">);</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div>
+<p>Caso inválido 3 — producto inexistente (debe fallar con <code>ORA-20012</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">FN_OBTENER_PRECIO_PRODUCTO</span><span class="p">(</span><span class="mi">999999</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">DUAL</span><span class="p">;</span>
+</code></pre></div>
+<p>Verifica que los tres casos inválidos quedaron registrados:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">OBJETO</span><span class="p">,</span><span class="w"> </span><span class="n">CODIGO_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">MENSAJE_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">FECHA_EVENTO</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">BOM_CATALOGO</span><span class="p">.</span><span class="n">LOG_ERRORES</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ID_LOG</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</code></pre></div>
+<p>Salida esperada (tres filas, una por cada caso inválido — el caso válido no genera ningún registro en <code>LOG_ERRORES</code>):</p>
+<div class="highlight"><pre><span></span><code>OBJETO                          CODIGO_ERROR   MENSAJE_ERROR
+------------------------------  ------------   ------------------------------------
+FN_OBTENER_PRECIO_PRODUCTO      100            Producto no encontrado: 999999
+SP_APLICAR_DESCUENTO_PRODUCTO   -20011         Porcentaje fuera de rango: 150
+SP_REGISTRAR_PRODUCTO           -2291          ORA-02291: integrity constraint ...
+</code></pre></div>
+<p><code>SQLCODE</code> de <code>NO_DATA_FOUND</code> es <code>100</code> (no un número negativo <code>-20XXX</code>) — es una de las pocas excepciones predefinidas con código positivo; el resto de errores de Oracle (incluidos los de aplicación con <code>RAISE_APPLICATION_ERROR</code>) son negativos.</p>
+<h3 id="37-relacionar-con-ads-y-lp2">3.7 Relacionar con ADS y LP2<a class="headerlink" href="#37-relacionar-con-ads-y-lp2" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> matriz de integración.</p>
+<p><strong>Tabla 5. Matriz de integración BD2-ADS-LP2 (S3)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Objeto BD2</th>
+<th>Decisión ADS</th>
+<th>Endpoint o servicio LP2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SP_REGISTRAR_PRODUCTO</code> (excepción de categoría)</td>
+<td>Tolerancia a fallos (atributo de calidad, ver ADS S1)</td>
+<td><code>POST /api/v1/productos</code> — LP2 ya previene este caso en <code>ProductoServiceImpl.buscarCategoriaOFallar()</code> (LP2 S3); esta capa protege a cualquier otro cliente.</td>
+</tr>
+<tr>
+<td><code>SP_APLICAR_DESCUENTO_PRODUCTO</code> (rango de descuento)</td>
+<td>Regla de negocio protegida sin importar el cliente (mismo criterio que S2)</td>
+<td>Ninguno directo — LP2 todavía no expone un endpoint de descuento.</td>
+</tr>
+<tr>
+<td><code>LOG_ERRORES</code></td>
+<td>Auditabilidad y diagnóstico (ADS S1)</td>
+<td>Complementa (no reemplaza) los logs con <code>traceId</code> de LP2 (S2, 3.2.2) — <code>LOG_ERRORES</code> registra fallos dentro de Oracle; el <code>traceId</code> rastrea la petición HTTP completa.</td>
+</tr>
+</tbody>
+</table>
+<p>Sesión equivalente en los otros dos cursos, misma semana: <a href="../../../ads/sesiones/S03_Diseno_Estructural_Principios_SOLID/">ADS - S3 Diseño Estructural y Principios SOLID</a> y <a href="../../../lp2/sesiones/S03_Objetos_Relacionados_Categoria_Producto/">LP2 - S3 Objetos Relacionados Categoria-Producto</a>.</p>
+<p><strong>Evidencia de aprendizaje:</strong></p>
+<ul>
+<li>Tabla <code>LOG_ERRORES</code> creada en el esquema <code>BOM_CATALOGO</code>.</li>
+<li><code>SP_REGISTRAR_PRODUCTO</code> con excepción personalizada (<code>PRAGMA EXCEPTION_INIT</code>) probada con caso inválido.</li>
+<li><code>SP_APLICAR_DESCUENTO_PRODUCTO</code> con excepción personalizada (<code>RAISE_APPLICATION_ERROR</code>) probada con caso inválido.</li>
+<li><code>FN_OBTENER_PRECIO_PRODUCTO</code> con manejo de <code>NO_DATA_FOUND</code> probado.</li>
+<li><code>LOG_ERRORES</code> verificado con los tres registros de los casos inválidos.</li>
+<li>Matriz de integración con ADS y LP2.</li>
+</ul>
+<h2 id="4-crea-actividad-autonoma">4. Crea: actividad autónoma<a class="headerlink" href="#4-crea-actividad-autonoma" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 2h fuera del aula.</p>
+<h3 id="41-actividad">4.1 Actividad<a class="headerlink" href="#41-actividad" title="Permanent link">&para;</a></h3>
+<p>Incorporación autónoma de manejo de excepciones (predefinidas y personalizadas) y registro de errores sobre los procedimientos/funciones del proyecto propio del equipo, documentada en evidencia individual.</p>
+<p>Completa y evidencia estas tareas:</p>
+<ol>
+<li>Identificar al menos un error real que hoy no está manejado en tus procedimientos/funciones (S1 propio).</li>
+<li>Crear tu propia tabla de registro de errores.</li>
+<li>Incorporar al menos una excepción predefinida (<code>NO_DATA_FOUND</code>, <code>DUP_VAL_ON_INDEX</code>, u otra).</li>
+<li>Incorporar al menos una excepción personalizada (<code>PRAGMA EXCEPTION_INIT</code> o <code>RAISE_APPLICATION_ERROR</code>).</li>
+<li>Ejecutar un caso válido y uno por cada excepción incorporada.</li>
+<li>Verificar los registros de tu tabla de errores con una consulta.</li>
+</ol>
+<h3 id="42-proposito">4.2 Propósito<a class="headerlink" href="#42-proposito" title="Permanent link">&para;</a></h3>
+<p>Que cada estudiante demuestre, de forma individual y fuera del aula, que puede reproducir el patrón de manejo de excepciones construido en clase sin el acompañamiento del docente.</p>
+<p>Cada estudiante adapta el ejemplo a los procedimientos/funciones de su propio proyecto.</p>
+<h3 id="43-indicaciones">4.3 Indicaciones<a class="headerlink" href="#43-indicaciones" title="Permanent link">&para;</a></h3>
+<p>Entrega un PDF con el siguiente nombre:</p>
+<div class="highlight"><pre><span></span><code>S03_BD2_Equipo##_ApellidoNombre.pdf
+</code></pre></div>
+<p>Cada captura de pantalla del informe debe mostrar, sin recortar, el reloj del sistema (fecha y hora) y tu usuario o foto de perfil (Windows, VS Code o navegador) visibles en pantalla — es lo que permite verificar que la evidencia es tuya y que corresponde al momento real de tu trabajo.</p>
+<h4 id="431-estructura-del-informe">4.3.1 Estructura del informe<a class="headerlink" href="#431-estructura-del-informe" title="Permanent link">&para;</a></h4>
+<p><strong>Datos del estudiante</strong></p>
+<ul>
+<li>Nombre:</li>
+<li>Equipo:</li>
+<li>Sesión: S03 - Manejo de Excepciones y Robustez</li>
+<li>Rol o aporte realizado:</li>
+<li>Link de GitHub:</li>
+</ul>
+<p><strong>Evidencia técnica</strong></p>
+<p>Incluye capturas o salidas con una breve explicación debajo de cada una, organizadas en los mismos 4 bloques de la rúbrica (4.6) — así queda claro qué evidencia corresponde a cada criterio evaluado:</p>
+<ol>
+<li><em>Tabla de registro de errores</em><ul>
+<li>Script SQL de creación de la tabla.</li>
+</ul>
+</li>
+<li><em>Excepción predefinida</em><ul>
+<li>Script del bloque que la maneja, con explicación de cuándo ocurre.</li>
+<li>Caso que la dispara, con el error mostrado.</li>
+</ul>
+</li>
+<li><em>Excepción personalizada</em><ul>
+<li>Script del bloque (<code>PRAGMA EXCEPTION_INIT</code> o <code>RAISE_APPLICATION_ERROR</code>), con explicación de la regla.</li>
+<li>Caso que la dispara.</li>
+</ul>
+</li>
+<li><em>Evidencia de ejecución y registro</em><ul>
+<li>Caso válido ejecutado.</li>
+<li>Consulta a la tabla de errores con los registros generados.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Error o hallazgo</strong></p>
+<p>Describe un error técnico encontrado: excepción no capturada correctamente, <code>WHEN OTHERS</code> mal usado, o un caso donde el registro y el relanzamiento quedaron en el orden incorrecto.</p>
+<p><strong>Reflexión técnica breve</strong></p>
+<p>Responde en 5 a 8 líneas:</p>
+<div class="highlight"><pre><span></span><code>¿Por qué capturar un error y no volver a lanzarlo puede ser peor que no
+manejarlo? Relaciona tu respuesta con el caso de 1.6.1.
+</code></pre></div>
+<h3 id="44-criterios-minimos-de-aceptacion">4.4 Criterios mínimos de aceptación<a class="headerlink" href="#44-criterios-minimos-de-aceptacion" title="Permanent link">&para;</a></h3>
+<p>La evidencia individual se considera completa si:</p>
+<ul>
+<li>El archivo respeta el nombre solicitado.</li>
+<li>Crea una tabla de registro de errores, sin <code>FOREIGN KEY</code> hacia la tabla que audita.</li>
+<li>Incorpora al menos una excepción predefinida, con caso de prueba.</li>
+<li>Incorpora al menos una excepción personalizada, con caso de prueba.</li>
+<li>Cada excepción capturada se registra <strong>antes</strong> de relanzarse (no una sola de las dos acciones).</li>
+<li>No usa <code>WHEN OTHERS THEN NULL</code> como manejo de error.</li>
+<li>Verifica los registros de la tabla de errores con una consulta.</li>
+<li>Cada captura de la evidencia técnica muestra el reloj del sistema y el usuario/perfil visible, sin recortar.</li>
+<li>Las fechas y horas de las capturas son coherentes con el historial de commits de su repositorio en GitHub.</li>
+<li>Incluye un error o hallazgo técnico diagnosticado.</li>
+<li>Incluye la reflexión técnica breve solicitada.</li>
+</ul>
+<h3 id="45-preguntas-de-defensa">4.5 Preguntas de defensa<a class="headerlink" href="#45-preguntas-de-defensa" title="Permanent link">&para;</a></h3>
+<ol>
+<li>¿Qué excepción predefinida usaste y en qué situación real ocurre?</li>
+<li>¿Por qué tu excepción personalizada necesitó <code>PRAGMA EXCEPTION_INIT</code> o <code>RAISE_APPLICATION_ERROR</code> — cuál de los dos, y por qué ese y no el otro?</li>
+<li>¿Qué pasaría si tu procedimiento registrara el error pero no lo relanzara?</li>
+<li>¿Qué diferencia hay entre el código de <code>SQLCODE</code> de una excepción predefinida como <code>NO_DATA_FOUND</code> y uno generado con <code>RAISE_APPLICATION_ERROR</code>?</li>
+</ol>
+<h3 id="46-rubrica-de-evaluacion">4.6 Rúbrica de evaluación<a class="headerlink" href="#46-rubrica-de-evaluacion" title="Permanent link">&para;</a></h3>
+<p><strong>Tabla 6. Rúbrica de evaluación</strong></p>
+<table>
+<thead>
+<tr>
+<th>Criterio</th>
+<th style="text-align: right;">Peso (%)</th>
+<th>A (20 pts)</th>
+<th>B (15 pts)</th>
+<th>C (10 pts)</th>
+<th>D (5 pts)</th>
+<th style="text-align: right;">Nivel obtenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Tabla de registro de errores*</td>
+<td style="text-align: right;">20</td>
+<td>Tabla bien diseñada, sin <code>FOREIGN KEY</code> hacia la tabla auditada.</td>
+<td>Tabla funcional, con algún detalle menor.</td>
+<td>Tabla incompleta o mal diseñada.</td>
+<td>No crea tabla de errores.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>2. Excepción predefinida*</td>
+<td style="text-align: right;">25</td>
+<td>Excepción predefinida correcta, con caso de prueba claro y explicación de cuándo ocurre.</td>
+<td>Excepción funcional, con explicación básica.</td>
+<td>Excepción incompleta o mal aplicada.</td>
+<td>No presenta excepción predefinida.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>3. Excepción personalizada*</td>
+<td style="text-align: right;">25</td>
+<td>Excepción personalizada correcta (forma adecuada al caso), con caso de prueba claro.</td>
+<td>Excepción funcional, con detalles menores.</td>
+<td>Excepción incompleta o forma incorrecta para el caso.</td>
+<td>No presenta excepción personalizada.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>4. Evidencia de ejecución y registro*</td>
+<td style="text-align: right;">30</td>
+<td>Casos válido e inválidos ejecutados, registro verificado con orden correcto (registrar antes de relanzar).</td>
+<td>Evidencia suficiente, con algún detalle menor.</td>
+<td>Evidencia incompleta o orden incorrecto.</td>
+<td>No evidencia ejecución.</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>* Agregado manual.</p>
+<p>Nota final = suma de (<code>Peso</code> / 100 × <code>Puntos del nivel obtenido</code>) = ____ / 20.</p>
+<p>Para usar la rúbrica con IA, solicita:</p>
+<div class="highlight"><pre><span></span><code>Evalúa el PDF usando la rúbrica de la sesión.
+Para cada criterio selecciona el nivel obtenido usando la escala A=20, B=15, C=10, D=5 puntos.
+Justifica brevemente cada nivel asignado.
+Verifica que cada captura muestre reloj del sistema y usuario/perfil visible, y que las fechas sean coherentes con el historial de commits de GitHub. Si falta esta evidencia o hay inconsistencias, indícalo explícitamente antes de calificar.
+Calcula la nota final con la fórmula: suma de (Peso/100 × Puntos del nivel obtenido), directamente sobre 20.
+Indica 2 fortalezas y 2 recomendaciones.
+</code></pre></div>
+<h2 id="5-cierre">5. Cierre<a class="headerlink" href="#5-cierre" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 5 min.</p>
+<p><strong>Resumen breve:</strong> hoy los procedimientos de S1 dejaron de fallar en silencio o con un error interno de Oracle sin contexto — cada fallo anticipado (categoría inexistente, descuento fuera de rango, producto inexistente) se captura, se registra en <code>LOG_ERRORES</code>, y responde con un mensaje claro, sin dejar de propagar el error para que quien invocó el procedimiento sepa que la operación no se completó.</p>
+<p><strong>Dinámica participativa:</strong> en una ronda rápida, cada estudiante comparte en una frase qué error real encontró al probar su propio proyecto antes de manejarlo.</p>
+<p><strong>Metacognición:</strong> cada estudiante responde en voz alta o por escrito: ¿qué parte de la sesión te costó más entender, y cómo la resolviste?</p>
+<p><strong>Proyección:</strong> el registro de errores de hoy es insumo directo para S4 (optimización de consultas) — un <code>LOG_ERRORES</code> con volumen real es también el primer candidato a necesitar un índice propio, y las excepciones bien manejadas evitan que una consulta mal optimizada falle en silencio en vez de reportar el problema.</p>
+<h2 id="bibliografia">Bibliografía<a class="headerlink" href="#bibliografia" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Oracle Corporation. (2024). <em>Oracle Database Free 23ai documentation</em>. https://docs.oracle.com/en/database/oracle/oracle-database/23/</li>
+<li>Oracle Corporation. (2024). <em>Database PL/SQL language reference - Handling PL/SQL Errors</em>. https://docs.oracle.com/en/database/oracle/oracle-database/23/lnpls/</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Angel Sullon @asullom - UPeU 2026
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

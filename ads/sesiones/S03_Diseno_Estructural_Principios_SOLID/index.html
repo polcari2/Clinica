@@ -1,0 +1,4135 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Entorno integrado de desarrollo academico para construir modulos ERP con ADS, BD2 y LP2.">
+      
+      
+        <meta name="author" content="UPeU">
+      
+      
+      
+        <link rel="prev" href="../S02_Modelo_C4_Vistas_Arquitectonicas/">
+      
+      
+        <link rel="next" href="../S04_Arquitecturas_Modernas/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  
+    <title>BOM ERP - S3 - Diseño estructural y principios SOLID</title>
+  
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#s3-diseno-estructural-y-principios-solid" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="BOM ERP" class="md-header__button md-logo" aria-label="BOM ERP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            BOM ERP
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              S3 - Diseño estructural y principios SOLID
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/262ciclo4/bomerp" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    262ciclo4/bomerp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../proyecto-integrador/" class="md-tabs__link">
+          
+  
+  
+  Guía del Proyecto Integrador
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  ADS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../bd2/" class="md-tabs__link">
+          
+  
+  
+  BD2
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../lp2/" class="md-tabs__link">
+          
+  
+  
+  LP2
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="BOM ERP" class="md-nav__button md-logo" aria-label="BOM ERP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    BOM ERP
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/262ciclo4/bomerp" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    262ciclo4/bomerp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Proyecto Integrador
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guía del Proyecto Integrador
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alineamiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/brief/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brief técnico (plantilla)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Diseño técnico, motor transaccional y backend inicial
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Diseño técnico, motor transaccional y backend inicial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u1/lp2-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Demo U1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Modelado UML, administración Oracle y SPA segura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Modelado UML, administración Oracle y SPA segura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u2/lp2-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Demo U2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Diseño consolidado, operación Oracle y Full-Stack integrado
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Diseño consolidado, operación Oracle y Full-Stack integrado
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producto integrado U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/ads-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/bd2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2 Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/lp2-producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2 Producto U3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/checklist-final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checklist final
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proyecto-integrador/u3/guia-sustentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía de sustentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ADS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../silabo_ads_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../silabo_ads_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Arquitectura y Diseño Estructural
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Arquitectura y Diseño Estructural
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S01_Fundamentos_Arquitectura_Software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - Fundamentos de arquitectura de software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S02_Modelo_C4_Vistas_Arquitectonicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - Modelo C4 y vistas arquitectónicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Diseño estructural y principios SOLID
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Diseño estructural y principios SOLID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-presentacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Presentación de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-proposito-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Propósito de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-producto-de-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Producto de sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Metodología
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-motivacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Motivación de la sesión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Motivación de la sesión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-caso-el-service-que-fue-creciendo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Caso: el service que fue creciendo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-ubicacion-en-el-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Ubicación en el curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-arquitectura-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Arquitectura de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-principios-solid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Principios SOLID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-cohesion-y-acoplamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Cohesión y acoplamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-modularidad-y-abstraccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Modularidad y abstracción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-aplica-actividad-practica-guiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aplica: actividad práctica guiada
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Aplica: actividad práctica guiada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-evaluar-responsabilidad-unica-s-por-clase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Evaluar responsabilidad única (S) por clase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-evaluar-abiertocerrado-liskov-e-interfaces-o-l-i" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Evaluar abierto/cerrado, Liskov e interfaces (O, L, I)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-evaluar-inversion-de-dependencias-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Evaluar inversión de dependencias (D)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-evaluar-cohesion-y-acoplamiento-entre-categoria-y-producto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Evaluar cohesión y acoplamiento entre categoria y producto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-evaluar-modularidad-y-abstraccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Evaluar modularidad y abstracción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-documentar-el-hallazgo-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Documentar el hallazgo real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-relacionar-con-lp2-y-bd2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Relacionar con LP2 y BD2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crea-actividad-autonoma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crea: actividad autónoma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Crea: actividad autónoma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-actividad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Actividad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proposito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Propósito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indicaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Indicaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Indicaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-estructura-del-informe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Estructura del informe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-criterios-minimos-de-aceptacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Criterios mínimos de aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-preguntas-de-defensa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Preguntas de defensa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-rubrica-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Rúbrica de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bibliografía
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S04_Arquitecturas_Modernas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Arquitecturas modernas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../S05_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BD2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    BD2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/silabo_bd2_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/silabo_bd2_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Programación y optimización (Oracle XE)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Programación y optimización (Oracle XE)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S01_PLSQL_Aplicado_Negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - PL/SQL aplicado al negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S02_Triggers_DML_Auditoria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - Triggers DML y auditoría
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S03_Excepciones_Robustez/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Manejo de excepciones y robustez
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S04_Optimizacion_Consultas_SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Optimización de consultas SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S05_Indices_Optimizacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Índices para optimización
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bd2/sesiones/S06_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S6 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    LP2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Silabos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/silabo_lp2_2026_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/silabo_lp2_2026_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Silabo 2026-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisiones de arquitectura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisiones de arquitectura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-001-arquitectura-backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-001 - Arquitectura del backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-002-spring-modulith/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-002 - Spring Modulith
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-003-spring-boot-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-003 - Versión exacta de Spring Boot 4.0.7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/adr/ADR-004-jwt-diferido/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-004 - JWT diferido a S10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Base backend REST modular de BomERP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Base backend REST modular de BomERP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S01_Arquitectura_Backend_REST_Profesional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S1 - Arquitectura backend REST profesional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S02_CRUD_REST_Completo_Producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S2 - CRUD REST completo de Producto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S03_Objetos_Relacionados_Categoria_Producto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 - Objetos relacionados Categoria-Producto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S04_Operacion_Cabecera_Detalle_Venta_DetalleVenta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S4 - Operación cabecera-detalle Venta-DetalleVenta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S05_Consultas_Empresariales_Reportes_CORS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S5 - Consultas empresariales, reportes REST y CORS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lp2/sesiones/S06_Evaluacion_Unidad_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S6 - Evaluación de la Unidad I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-presentacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Presentación de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-proposito-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Propósito de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-producto-de-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Producto de sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Metodología
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-motivacion-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Motivación de la sesión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Motivación de la sesión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-caso-el-service-que-fue-creciendo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Caso: el service que fue creciendo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-ubicacion-en-el-curso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Ubicación en el curso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-arquitectura-de-la-sesion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Arquitectura de la sesión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-principios-solid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Principios SOLID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-cohesion-y-acoplamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Cohesión y acoplamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-modularidad-y-abstraccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Modularidad y abstracción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-aplica-actividad-practica-guiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aplica: actividad práctica guiada
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Aplica: actividad práctica guiada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-evaluar-responsabilidad-unica-s-por-clase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Evaluar responsabilidad única (S) por clase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-evaluar-abiertocerrado-liskov-e-interfaces-o-l-i" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Evaluar abierto/cerrado, Liskov e interfaces (O, L, I)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-evaluar-inversion-de-dependencias-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Evaluar inversión de dependencias (D)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-evaluar-cohesion-y-acoplamiento-entre-categoria-y-producto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Evaluar cohesión y acoplamiento entre categoria y producto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-evaluar-modularidad-y-abstraccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Evaluar modularidad y abstracción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-documentar-el-hallazgo-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Documentar el hallazgo real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-relacionar-con-lp2-y-bd2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Relacionar con LP2 y BD2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crea-actividad-autonoma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crea: actividad autónoma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Crea: actividad autónoma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-actividad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Actividad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proposito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Propósito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indicaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Indicaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Indicaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-estructura-del-informe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Estructura del informe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-criterios-minimos-de-aceptacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Criterios mínimos de aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-preguntas-de-defensa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Preguntas de defensa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-rubrica-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Rúbrica de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bibliografía
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="s3-diseno-estructural-y-principios-solid">S3 - Diseño Estructural y Principios SOLID<a class="headerlink" href="#s3-diseno-estructural-y-principios-solid" title="Permanent link">&para;</a></h1>
+<h2 id="1-introduccion">1. Introducción<a class="headerlink" href="#1-introduccion" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 20 min.</p>
+<h3 id="11-presentacion-de-la-sesion">1.1 Presentación de la sesión<a class="headerlink" href="#11-presentacion-de-la-sesion" title="Permanent link">&para;</a></h3>
+<p>En la sesión 2, el equipo definió la estructura del sistema con el modelo C4 (C1-C4), sin cuestionar todavía si esa estructura estaba bien diseñada — solo si estaba bien representada. Esta sesión aplica sobre esa misma estructura un criterio distinto: los cinco principios SOLID, más cohesión, acoplamiento, modularidad y abstracción — el vocabulario que permite distinguir una clase o un módulo bien diseñado de uno que solo se ve ordenado en el diagrama, y que sirve tanto para evaluar código que ya existe como para decidir cómo estructurar el que todavía no se ha escrito.</p>
+<h3 id="12-indice">1.2 Índice<a class="headerlink" href="#12-indice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Principios SOLID.</li>
+<li>Cohesión y acoplamiento.</li>
+<li>Modularidad y abstracción.</li>
+</ol>
+<h3 id="13-proposito-de-aprendizaje">1.3 Propósito de aprendizaje<a class="headerlink" href="#13-proposito-de-aprendizaje" title="Permanent link">&para;</a></h3>
+<p>Al concluir la clase, estarás en condiciones de:</p>
+<ul>
+<li><strong>Evaluar</strong> un módulo de software real contra los cinco principios SOLID, su cohesión, su acoplamiento y su nivel de abstracción, distinguiendo una tensión de diseño justificada de una violación real.</li>
+</ul>
+<h3 id="14-producto-de-sesion">1.4 Producto de sesión<a class="headerlink" href="#14-producto-de-sesion" title="Permanent link">&para;</a></h3>
+<p>Evaluación documentada de <code>catalogo/categoria</code> y <code>catalogo/producto</code> (LP2, código real a la fecha de esta sesión) contra SOLID, cohesión, acoplamiento, modularidad y abstracción, con al menos un hallazgo real identificado y su justificación o su corrección propuesta.</p>
+<h3 id="15-metodologia">1.5 Metodología<a class="headerlink" href="#15-metodologia" title="Permanent link">&para;</a></h3>
+<p><strong>Tabla 1. Metodología de la sesión</strong></p>
+<table>
+<thead>
+<tr>
+<th>Actividades a Realizar en el Periodo</th>
+<th>Orientaciones generales (Orientaciones Metodológicas)</th>
+<th>Material de estudio recomendado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revisión previa individual</td>
+<td>Repasar la vista C3/C4 de S2 (Figuras 11-12) y el código real de <code>lp2/bomerp-backend/.../catalogo/</code>. Trabajo individual, antes de clase; identificar qué clases existen hoy en cada paquete.</td>
+<td>S2 (Tabla 4, Tabla 5), <code>lp2/bomerp-backend/src/main/java/.../catalogo/</code>.</td>
+</tr>
+<tr>
+<td>Clase presencial</td>
+<td>Evaluación guiada de <code>categoria</code> y <code>producto</code> contra los cinco principios SOLID, cohesión, acoplamiento, modularidad y abstracción. Trabajo individual, siguiendo al docente paso a paso; consulta inmediata ante dudas sobre si algo es una violación real o una tensión aceptable.</td>
+<td>Pasos 3.1 a 3.7 de esta guía, código real de LP2.</td>
+</tr>
+<tr>
+<td>Evaluación formativa</td>
+<td>Revisión en clase de la tabla de evaluación SOLID y de los hallazgos identificados. La evidencia se completa y sustenta de forma individual, fuera del aula, según los criterios mínimos de la sección 4.4.</td>
+<td>Indicaciones de entrega (4.3), rúbrica de evaluación (4.6).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="16-motivacion-de-la-sesion">1.6 Motivación de la sesión<a class="headerlink" href="#16-motivacion-de-la-sesion" title="Permanent link">&para;</a></h3>
+<h4 id="161-caso-el-service-que-fue-creciendo">1.6.1 Caso: el service que fue creciendo<a class="headerlink" href="#161-caso-el-service-que-fue-creciendo" title="Permanent link">&para;</a></h4>
+<p>En muchos proyectos reales, un service que "solo hacía una cosa" al inicio termina absorbiendo tareas que no le correspondían: valida datos de entrada, arma el mensaje para un log de auditoría, decide si notificar por correo, y persiste — todo en el mismo método. Cada tarea nueva parece razonable agregarla ahí ("ya está el código, es rápido"), hasta que cambiar una sola regla de negocio obliga a tocar una clase que ahora tiene varias razones distintas para cambiar, y ninguna prueba pequeña la cubre completa.</p>
+<p>Esto no es un problema de sintaxis ni de que el código "no funcione" — funciona. Es un problema de diseño: la clase perdió cohesión (mezcla responsabilidades no relacionadas) y probablemente ganó acoplamiento (otras clases empiezan a depender de sus detalles internos para no duplicar lógica). Los principios SOLID, junto con cohesión, acoplamiento, modularidad y abstracción, son el vocabulario que permite detectar este tipo de problema <strong>antes</strong> de que sea costoso corregirlo — y son exactamente los criterios que esta sesión aplica sobre código real en la sección 3.</p>
+<p><strong>Preguntas de análisis</strong></p>
+<p><strong>Activación de conocimientos previos</strong></p>
+<ol>
+<li>¿Has visto (o escrito) alguna vez una clase o función que terminó "haciendo de todo"? ¿Qué la hizo crecer así?</li>
+<li>De los cinco principios SOLID, ¿cuál crees que es el más fácil de violar sin darte cuenta al agregar una funcionalidad "rápida"?</li>
+</ol>
+<p><strong>Comprensión de SOLID aplicado</strong></p>
+<ol>
+<li>¿Por qué una clase con alta cohesión suele ser más fácil de probar que una con baja cohesión?</li>
+<li>¿Qué diferencia hay entre un acoplamiento aceptable (depender de una interfaz o contrato) y uno problemático (depender de los detalles internos de otra clase)?</li>
+</ol>
+<h3 id="17-ubicacion-en-el-curso">1.7 Ubicación en el curso<a class="headerlink" href="#17-ubicacion-en-el-curso" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Unidad: U1 - Arquitectura y Diseño Estructural.</li>
+<li>Producto del curso: Diseño Técnico Profesional Documentado.</li>
+<li>Producto de unidad: arquitectura documentada mediante vistas arquitectónicas y principios de diseño aplicados.</li>
+<li>Avance del producto en esta sesión: evaluación SOLID/cohesión/acoplamiento de los módulos reales de LP2, con hallazgos documentados.</li>
+</ul>
+<p>Roadmap del producto de la unidad:</p>
+<p><strong>Figura 1. Roadmap del producto de la unidad</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    S1["`**S1:** Fundamentos de arquitectura`"]
+    S2["`**S2:** Modelo C4 y vistas`"]
+    S3["`**S3:** Diseño estructural y SOLID`"]
+    S4["`**S4:** Arquitecturas modernas`"]
+    S5["`**S5:** Producto U1`"]
+
+    S1 --&gt; S2 --&gt; S3 --&gt; S4 --&gt; S5
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class S3 today;</code></pre>
+<h2 id="2-explica">2. Explica<a class="headerlink" href="#2-explica" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 25 min.</p>
+<h3 id="21-arquitectura-de-la-sesion">2.1 Arquitectura de la sesión<a class="headerlink" href="#21-arquitectura-de-la-sesion" title="Permanent link">&para;</a></h3>
+<p><strong>Figura 2. De C3/C4 (S2) a la evaluación SOLID (S3)</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    C3C4["C3/C4 de S2&lt;br/&gt;estructura ya dibujada"]
+    SOLID["Cinco principios SOLID&lt;br/&gt;por clase/interfaz"]
+    CohAcop["Cohesión y acoplamiento&lt;br/&gt;por paquete"]
+    ModAbs["Modularidad y abstracción&lt;br/&gt;por módulo"]
+    Hallazgo["Hallazgo real&lt;br/&gt;justificado o corregido"]
+
+    C3C4 --&gt; SOLID --&gt; CohAcop --&gt; ModAbs --&gt; Hallazgo
+
+    classDef today fill:#ffe08a,stroke:#9a6b00,stroke-width:2px,color:#111;
+    class SOLID,CohAcop,ModAbs,Hallazgo today;</code></pre>
+<p>Esta sesión no dibuja una vista nueva: toma la estructura que C3/C4 (S2) ya documentó y la somete a un criterio de calidad distinto — no "¿está bien dibujado?", sino "¿está bien diseñado?".</p>
+<h3 id="22-principios-solid">2.2 Principios SOLID<a class="headerlink" href="#22-principios-solid" title="Permanent link">&para;</a></h3>
+<p><strong>Tabla 2. Los cinco principios SOLID</strong></p>
+<table>
+<thead>
+<tr>
+<th>Principio</th>
+<th>Pregunta que responde</th>
+<th>Señal de violación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong> — Responsabilidad única (<em>Single Responsibility</em>)</td>
+<td>¿Esta clase tiene una sola razón para cambiar?</td>
+<td>Una clase que valida, persiste y formatea salida al mismo tiempo.</td>
+</tr>
+<tr>
+<td><strong>O</strong> — Abierto/cerrado (<em>Open/Closed</em>)</td>
+<td>¿Puedo extender el comportamiento sin modificar código existente?</td>
+<td>Agregar un caso nuevo obliga a editar un <code>if</code>/<code>switch</code> ya existente en vez de agregar una clase nueva.</td>
+</tr>
+<tr>
+<td><strong>L</strong> — Sustitución de Liskov (<em>Liskov Substitution</em>)</td>
+<td>¿Cualquier implementación de una interfaz puede reemplazar a otra sin romper nada?</td>
+<td>Una implementación que lanza una excepción no documentada por el contrato, o que exige un estado adicional que otras no necesitan.</td>
+</tr>
+<tr>
+<td><strong>I</strong> — Segregación de interfaces (<em>Interface Segregation</em>)</td>
+<td>¿La interfaz expone solo lo que el cliente necesita?</td>
+<td>Una interfaz con métodos que la mayoría de sus clientes no usa nunca.</td>
+</tr>
+<tr>
+<td><strong>D</strong> — Inversión de dependencias (<em>Dependency Inversion</em>)</td>
+<td>¿La clase depende de abstracciones (interfaces) o de implementaciones concretas?</td>
+<td>Un <code>service</code> que hace <code>new AlgoRepositoryImpl()</code> en vez de recibir <code>AlgoRepository</code> inyectado.</td>
+</tr>
+</tbody>
+</table>
+<p>Los cinco principios no son reglas aisladas: <strong>S</strong> evita que una clase crezca sin control, <strong>O</strong>/<strong>L</strong> garantizan que se pueda extender sin romper lo existente, <strong>I</strong> evita interfaces infladas, y <strong>D</strong> es el que hace posible <strong>O</strong> y <strong>L</strong> en la práctica — sin depender de abstracciones, no hay forma de sustituir una implementación por otra sin tocar el código que la usa.</p>
+<p><strong>Ejemplo de referencia.</strong> En <code>catalogo/producto</code> (LP2): <code>ProductoController</code> solo traduce HTTP a llamadas al service, sin persistir ni validar reglas de negocio (S); <code>ProductoService</code> es una interfaz con una única implementación hoy, lista para aceptar una segunda sin que el controller cambie (O/L); y <code>ProductoServiceImpl</code> recibe <code>ProductoRepository</code> y <code>ProductoMapper</code> como interfaces inyectadas por el framework, nunca las crea con <code>new</code> (D). Este código real se evalúa con más detalle en 3.1-3.3.</p>
+<p><strong>Figura 3. Diagrama de clases UML — dependencias reales de <code>ProductoServiceImpl</code></strong></p>
+<pre class="mermaid"><code>classDiagram
+    class ProductoController {
+        -ProductoService productoService
+    }
+    class ProductoService {
+        &lt;&lt;interface&gt;&gt;
+        +listar() List~ProductoResponse~
+        +obtener(id) ProductoResponse
+        +crear(request) ProductoResponse
+    }
+    class ProductoServiceImpl {
+        -ProductoRepository productoRepository
+        -CategoriaRepository categoriaRepository
+        -ProductoMapper productoMapper
+    }
+    class ProductoRepository {
+        &lt;&lt;interface&gt;&gt;
+    }
+    class CategoriaRepository {
+        &lt;&lt;interface&gt;&gt;
+    }
+    class ProductoMapper {
+        &lt;&lt;interface&gt;&gt;
+    }
+
+    ProductoController --&gt; ProductoService : depende de la interfaz, no de la impl. (D)
+    ProductoService &lt;|.. ProductoServiceImpl : implementa el contrato (O, L)
+    ProductoServiceImpl --&gt; ProductoRepository : interfaz inyectada (D)
+    ProductoServiceImpl --&gt; CategoriaRepository : interfaz inyectada (D)
+    ProductoServiceImpl --&gt; ProductoMapper : interfaz inyectada (D)</code></pre>
+<p>Cada flecha de la Figura 3 es evidencia de un principio distinto: la de <code>ProductoController</code> hacia <code>ProductoService</code> y las tres que salen de <code>ProductoServiceImpl</code> apuntan todas a interfaces, nunca a una clase concreta — esa es Inversión de Dependencias (D) hecha visible. La flecha punteada <code>ProductoService &lt;|.. ProductoServiceImpl</code> es la relación de implementación que hace posible O y L: mientras el contrato no cambie, <code>ProductoServiceImpl</code> puede reemplazarse por otra clase sin tocar <code>ProductoController</code>. Responsabilidad única (S) no se ve como una flecha — se ve en lo que <strong>no</strong> aparece dentro de <code>ProductoServiceImpl</code>: ningún método de formateo, envío de correo o logging mezclado con la lógica de <code>Producto</code>. Segregación de interfaces (I) tampoco es una flecha: es que <code>ProductoService</code> solo declara los métodos que <code>ProductoController</code> realmente usa, sin métodos de más.</p>
+<h3 id="23-cohesion-y-acoplamiento">2.3 Cohesión y acoplamiento<a class="headerlink" href="#23-cohesion-y-acoplamiento" title="Permanent link">&para;</a></h3>
+<p><strong>Cohesión</strong>: qué tan relacionado está lo que vive <em>dentro</em> de un mismo paquete o clase. Alta cohesión = todo lo que está junto tiene un propósito común.</p>
+<p><strong>Acoplamiento</strong>: qué tan dependiente es una parte del sistema de los detalles internos de otra. Bajo acoplamiento = un cambio interno en un módulo no obliga a cambiar otro que solo consume su contrato.</p>
+<p><strong>Tabla 3. Cohesión y acoplamiento, en una frase</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Alta cohesión / bajo acoplamiento (deseable)</th>
+<th>Baja cohesión / alto acoplamiento (evitar)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cohesión</td>
+<td>Un paquete que solo contiene clases sobre una misma entidad del dominio.</td>
+<td>Un paquete <code>utils/</code> con validación, formateo de fechas y lógica de negocio mezclados.</td>
+</tr>
+<tr>
+<td>Acoplamiento</td>
+<td>Un controller depende de la interfaz de su service, no de la implementación concreta.</td>
+<td>Un controller construye un repositorio directamente, saltándose el service.</td>
+</tr>
+</tbody>
+</table>
+<p>No son principios independientes de SOLID — son la razón <em>por qué</em> SOLID funciona: <strong>S</strong> produce alta cohesión (una responsabilidad por clase); <strong>D</strong> produce bajo acoplamiento (depender de interfaces, no de implementaciones).</p>
+<p><strong>Ejemplo de referencia.</strong> En LP2: <code>catalogo/producto</code> solo contiene clases sobre <code>Producto</code> (alta cohesión); <code>ProductoController</code> depende de la interfaz <code>ProductoService</code>, nunca de <code>ProductoServiceImpl</code> directamente (bajo acoplamiento). El caso más interesante para evaluar es el acoplamiento <strong>entre</strong> <code>producto</code> y <code>categoria</code> — dos paquetes hermanos del mismo módulo — que se analiza con el código real en 3.4.</p>
+<p>El acoplamiento no es solo un asunto entre clases (una clase que depende de otra) — también aparece <strong>entre contratos</strong>: si el DTO de salida de una entidad reutiliza tal cual el DTO de otra entidad relacionada, el primero queda acoplado a cada cambio que sufra el segundo, aunque ese cambio no tenga nada que ver con lo que el primero necesita mostrar. Introducir un DTO más chico, dedicado solo a lo que se embebe, es la misma estrategia de bajo acoplamiento (Tabla 3) aplicada a contratos en vez de a clases — este caso también se evalúa con código real en 3.4.</p>
+<p><strong>Figura 4. Dos formas de acoplamiento evaluadas en esta sesión</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Clases["Acoplamiento entre clases"]
+        direction TB
+        PSI["ProductoServiceImpl"]
+        CR["CategoriaRepository&lt;br/&gt;(actual)"]
+        CS["CategoriaService&lt;br/&gt;(alternativa)"]
+        PSI --&gt;|"actual"| CR
+        PSI -.-&gt;|"alternativa, mas desacoplada"| CS
+    end
+
+    subgraph Contratos["Acoplamiento entre contratos"]
+        direction TB
+        PR["ProductoResponse"]
+        CRes["CategoriaResumen&lt;br/&gt;(actual)"]
+        CResp["CategoriaResponse&lt;br/&gt;(alternativa: reutilizar)"]
+        PR --&gt;|"actual"| CRes
+        PR -.-&gt;|"alternativa, mas acoplada"| CResp
+    end</code></pre>
+<p>Las dos mitades de la Figura 4 son el mismo patrón en dos niveles distintos, pero con un resultado opuesto — vale la pena notarlo, porque "actual" no significa lo mismo en las dos: en <strong>"Acoplamiento entre clases"</strong> (derecha), lo que el código real hace hoy (<code>ProductoServiceImpl</code> → <code>CategoriaRepository</code>) es la opción <strong>más acoplada</strong> de las dos; la de bajo acoplamiento (<code>CategoriaService</code>) es la alternativa que <strong>no</strong> se implementó — una tensión de diseño real, sin resolver, no un error. En <strong>"Acoplamiento entre contratos"</strong> (izquierda), en cambio, lo que el código real hace hoy (<code>CategoriaResumen</code>) <strong>ya es</strong> la opción de bajo acoplamiento; la alternativa (reutilizar <code>CategoriaResponse</code>) habría sido la más acoplada, y LP2 evitó tomarla. En ambos casos la flecha sólida es el código real y la punteada es la alternativa comparada en la Tabla 5 y la Tabla 6 (3.4) — pero solo uno de los dos casos ya está resuelto del lado del bajo acoplamiento. Ninguna de las dos mitades tiene una alternativa objetivamente "correcta": ambas son tensiones de diseño, no violaciones, y se documentan como tales en 3.6.</p>
+<h3 id="24-modularidad-y-abstraccion">2.4 Modularidad y abstracción<a class="headerlink" href="#24-modularidad-y-abstraccion" title="Permanent link">&para;</a></h3>
+<p><strong>Modularidad</strong>: el sistema se divide en unidades (módulos) con un límite explícito y verificable — no basta con una convención de carpetas; el límite debe poder comprobarse, idealmente de forma automática, para que nadie lo cruce sin darse cuenta.</p>
+<p><strong>Abstracción</strong>: exponer solo lo necesario, ocultando el detalle de implementación. Un DTO es abstracción sobre una entidad (el cliente HTTP nunca ve columnas de la base de datos, solo los campos que el contrato REST decide mostrar); una interfaz de servicio es abstracción sobre su implementación.</p>
+<p><strong>Ejemplo de referencia.</strong> En LP2, el límite de módulo es el paquete bajo <code>pe.edu.upeu.bomerp</code> (<code>catalogo</code>, <code>ventas</code>, ...), verificado automáticamente por Spring Modulith (<code>ModularityTests</code>, ver ADR-002 de LP2): un módulo solo puede llamar al <code>Service</code> público de otro, nunca a su <code>Repository</code> ni a su <code>Entity</code> directamente. <code>categoria</code> y <code>producto</code> (evaluados en esta sesión) son <strong>paquetes dentro del mismo módulo</strong> <code>catalogo</code>, no dos módulos distintos — la regla anterior es la que Spring Modulith verifica <strong>entre módulos</strong> (<code>catalogo</code> vs. <code>ventas</code>), no necesariamente dentro de uno mismo. En abstracción, <code>ProductoResponse</code> embebe <code>CategoriaResumen</code> (<code>id</code> y <code>nombre</code>) en vez de la entidad <code>Categoria</code> completa — el contrato REST expone solo lo que un cliente necesita. Estos dos casos reales se retoman en 3.4 y 3.5.</p>
+<p><strong>Figura 5. Modularidad (límite entre módulos) y abstracción (DTO sobre entidad)</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Mod["Modularidad: limite verificado por Spring Modulith"]
+        direction TB
+        subgraph Catalogo["Modulo catalogo"]
+            direction LR
+            CatPkg["categoria"]
+            ProdPkg["producto"]
+        end
+        Ventas["Modulo ventas (S4, futuro)"]
+        Ventas --&gt;|"permitido: Service publico"| CatPkg
+        Ventas -.-&gt;|"prohibido, ModularityTests lo bloquea"| CatPkg
+    end
+
+    subgraph Abs["Abstraccion: el cliente HTTP nunca ve la entidad"]
+        direction LR
+        Cliente["Cliente HTTP"]
+        DTO["ProductoResponse (DTO)"]
+        Entidad["Producto (entidad JPA / columnas Oracle)"]
+        Cliente --&gt; DTO
+        DTO -.-&gt;|"oculta"| Entidad
+    end</code></pre>
+<p>La mitad "Modularidad" de la Figura 5 muestra por qué <code>producto</code> y <code>categoria</code> (dentro de <code>catalogo</code>) pueden acoplarse entre sí sin que <code>ModularityTests</code> proteste (2.3, 3.4): la regla que sí bloquea es la flecha punteada, cuando un módulo <strong>distinto</strong> (<code>ventas</code>, todavía inexistente) intenta saltarse el <code>Service</code> público de <code>catalogo</code>. La mitad "Abstracción" es el mismo principio de la Figura 4 (derecha) visto un nivel más abajo: el cliente HTTP nunca llega a <code>Producto</code> (la entidad), solo a <code>ProductoResponse</code> — el DTO es la frontera que oculta cada columna interna de la tabla <code>PRODUCTOS</code>.</p>
+<h2 id="3-aplica-actividad-practica-guiada">3. Aplica: actividad práctica guiada<a class="headerlink" href="#3-aplica-actividad-practica-guiada" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 2h.</p>
+<p><strong>Actividad:</strong> evaluación guiada de <code>catalogo/categoria</code> y <code>catalogo/producto</code> (código real de LP2, S1-S3) contra SOLID, cohesión, acoplamiento, modularidad y abstracción (Producto de la sesión en 1.4).</p>
+<p><strong>Propósito de la actividad:</strong> aplicar los criterios de 2.2-2.4 sobre clases reales, no hipotéticas, distinguiendo qué es un diseño correcto, qué es una tensión aceptable, y qué sería una violación real.</p>
+<p><strong>Orientaciones metodológicas:</strong> en el laboratorio, el docente evalúa <code>categoria</code> y <code>producto</code> paso a paso frente a la clase, con el código real de LP2 abierto; los estudiantes replican la misma evaluación sobre el módulo de su propio proyecto (sección 4).</p>
+<p><strong>Actividades para realizar:</strong></p>
+<ul>
+<li><strong>3.1</strong> Evaluar responsabilidad única (S) por clase.</li>
+<li><strong>3.2</strong> Evaluar abierto/cerrado, Liskov e interfaces (O, L, I).</li>
+<li><strong>3.3</strong> Evaluar inversión de dependencias (D).</li>
+<li><strong>3.4</strong> Evaluar cohesión y acoplamiento entre <code>categoria</code> y <code>producto</code>.</li>
+<li><strong>3.5</strong> Evaluar modularidad y abstracción.</li>
+<li><strong>3.6</strong> Documentar el hallazgo real.</li>
+<li><strong>3.7</strong> Relacionar con LP2 y BD2.</li>
+</ul>
+<h3 id="31-evaluar-responsabilidad-unica-s-por-clase">3.1 Evaluar responsabilidad única (S) por clase<a class="headerlink" href="#31-evaluar-responsabilidad-unica-s-por-clase" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> tabla de responsabilidad única sobre las clases reales de <code>producto</code>.</p>
+<p><strong>Tabla 4. Responsabilidad única — <code>catalogo/producto</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Clase</th>
+<th>Responsabilidad única</th>
+<th>¿Cumple?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ProductoController</code></td>
+<td>Traducir HTTP ↔ llamadas al service; aplicar <code>@Valid</code>.</td>
+<td>Sí — no contiene lógica de negocio ni acceso a datos.</td>
+</tr>
+<tr>
+<td><code>ProductoServiceImpl</code></td>
+<td>Orquestar la regla de negocio de <code>Producto</code> (CRUD + validar que la <code>Categoria</code> referenciada exista).</td>
+<td>Sí, con matiz — ver 3.4: validar la referencia es parte de la responsabilidad de <code>Producto</code> ("un producto no puede crearse con una categoría inexistente"), no una responsabilidad ajena.</td>
+</tr>
+<tr>
+<td><code>ProductoRepository</code></td>
+<td>Acceso a datos de <code>Producto</code> vía Spring Data JPA.</td>
+<td>Sí — una interfaz, sin lógica propia.</td>
+</tr>
+<tr>
+<td><code>ProductoMapper</code></td>
+<td>Convertir entre <code>ProductoRequest</code>/<code>Producto</code>/<code>ProductoResponse</code>.</td>
+<td>Sí — MapStruct genera la implementación, cero lógica de negocio dentro.</td>
+</tr>
+<tr>
+<td><code>Producto</code> (entidad)</td>
+<td>Representar los datos persistentes de un producto.</td>
+<td>Sí — sin comportamiento de negocio, solo campos y su mapeo JPA.</td>
+</tr>
+</tbody>
+</table>
+<p>Repite la misma tabla para <code>categoria</code> (<code>CategoriaController</code>, <code>CategoriaServiceImpl</code>, <code>CategoriaRepository</code>, <code>CategoriaMapper</code>, <code>Categoria</code>) — el patrón es idéntico.</p>
+<p><strong>Figura 6. S visto por contraste: hipotético vs. real</strong></p>
+<pre class="mermaid"><code>classDiagram
+    class Hipotetico["ProductoServiceImpl (hipotetico, viola S)"] {
+        +crear(request)
+        +validarFormato(request)
+        +formatearLogAuditoria(producto)
+        +enviarCorreoNotificacion(producto)
+    }
+    class Real["ProductoServiceImpl (real, Tabla 4)"] {
+        +crear(request)
+        +obtener(id)
+        +actualizar(id, request)
+        +eliminar(id)
+    }</code></pre>
+<p>La versión hipotética junta persistencia, formato de logs y envío de correos — tres razones de cambio distintas. La real solo orquesta la regla de negocio de <code>Producto</code>; log y notificación no aparecen porque no son su responsabilidad.</p>
+<h3 id="32-evaluar-abiertocerrado-liskov-e-interfaces-o-l-i">3.2 Evaluar abierto/cerrado, Liskov e interfaces (O, L, I)<a class="headerlink" href="#32-evaluar-abiertocerrado-liskov-e-interfaces-o-l-i" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> análisis de extensibilidad sobre <code>ProductoService</code>/<code>CategoriaService</code>.</p>
+<p><code>ProductoService</code>/<code>CategoriaService</code> son <strong>interfaces</strong>, con una sola implementación cada una (<code>ProductoServiceImpl</code>/<code>CategoriaServiceImpl</code>) hoy. Eso ya deja el diseño <strong>abierto</strong> a extensión: si mañana se necesitara, por ejemplo, una versión con caché (<code>ProductoServiceCacheado implements ProductoService</code>), <code>ProductoController</code> no cambiaría una sola línea — solo cambiaría qué implementación se inyecta.</p>
+<p><strong>Liskov (L):</strong> cualquier implementación futura de <code>ProductoService</code> debe poder sustituir a <code>ProductoServiceImpl</code> sin que <code>ProductoController</code> note la diferencia — mismo contrato (misma firma, mismas excepciones esperadas: <code>ResourceNotFoundException</code> cuando el id no existe). Hoy no hay una segunda implementación, así que L se cumple <strong>por diseño de la interfaz</strong>, no por evidencia de sustitución real todavía.</p>
+<p><strong>Segregación de interfaces (I):</strong> <code>ProductoService</code> expone exactamente <code>listar</code>, <code>obtener</code>, <code>crear</code>, <code>actualizar</code>, <code>eliminar</code>, <code>listarPorCategoria</code> — todos usados por <code>ProductoController</code>. No hay un método "de más" que ningún cliente use. Compara esto con una interfaz hipotética <code>ServicioGenerico&lt;T&gt;</code> con quince métodos: forzaría a <code>ProductoServiceImpl</code> a implementar operaciones que <code>ProductoController</code> nunca llama.</p>
+<p><strong>Figura 7. O y L: interfaz con una implementación real y una hipotética</strong></p>
+<pre class="mermaid"><code>classDiagram
+    class ProductoService {
+        &lt;&lt;interface&gt;&gt;
+        +listar()
+        +obtener(id)
+        +crear(request)
+    }
+    class ProductoServiceImpl["ProductoServiceImpl (real)"]
+    class ProductoServiceCacheado["ProductoServiceCacheado (hipotetico)"]
+
+    ProductoController --&gt; ProductoService
+    ProductoService &lt;|.. ProductoServiceImpl
+    ProductoService &lt;|.. ProductoServiceCacheado</code></pre>
+<p><code>ProductoController</code> solo conoce la interfaz; una segunda implementación (hipotética, en gris) podría sumarse sin tocarlo — eso es O. Que ambas puedan sustituirse sin romper el contrato de <code>ProductoController</code> es L.</p>
+<h3 id="33-evaluar-inversion-de-dependencias-d">3.3 Evaluar inversión de dependencias (D)<a class="headerlink" href="#33-evaluar-inversion-de-dependencias-d" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> verificación de que las dependencias reales van hacia abstracciones, no implementaciones.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@RestController</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ProductoController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ProductoService</span><span class="w"> </span><span class="n">productoService</span><span class="p">;</span><span class="w"> </span><span class="c1">// interfaz, no ProductoServiceImpl</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+
+<span class="nd">@Service</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ProductoServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">ProductoService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ProductoRepository</span><span class="w"> </span><span class="n">productoRepository</span><span class="p">;</span><span class="w">   </span><span class="c1">// interfaz Spring Data JPA</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">CategoriaRepository</span><span class="w"> </span><span class="n">categoriaRepository</span><span class="p">;</span><span class="w"> </span><span class="c1">// interfaz Spring Data JPA</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ProductoMapper</span><span class="w"> </span><span class="n">productoMapper</span><span class="p">;</span><span class="w">           </span><span class="c1">// interfaz MapStruct</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Las tres dependencias de <code>ProductoServiceImpl</code> son interfaces (<code>ProductoRepository</code>, <code>CategoriaRepository</code>, <code>ProductoMapper</code>), inyectadas por Spring vía <code>@RequiredArgsConstructor</code> — ninguna se instancia con <code>new</code>. Esto es Inversión de Dependencias real, no solo declarada: <code>ProductoServiceImpl</code> no sabe (ni le importa) si <code>ProductoRepository</code> lo implementa Spring Data JPA u otra tecnología de persistencia.</p>
+<p><strong>Figura 8. D acotado: las tres dependencias inyectadas de <code>ProductoServiceImpl</code></strong></p>
+<pre class="mermaid"><code>classDiagram
+    class ProductoServiceImpl
+    class ProductoRepository {
+        &lt;&lt;interface&gt;&gt;
+    }
+    class CategoriaRepository {
+        &lt;&lt;interface&gt;&gt;
+    }
+    class ProductoMapper {
+        &lt;&lt;interface&gt;&gt;
+    }
+
+    ProductoServiceImpl --&gt; ProductoRepository : interfaz, no new
+    ProductoServiceImpl --&gt; CategoriaRepository : interfaz, no new
+    ProductoServiceImpl --&gt; ProductoMapper : interfaz, no new</code></pre>
+<p>Mismo recorte de la Figura 3 (2.2), acotado solo a D: ninguna flecha llega a una clase concreta.</p>
+<h3 id="34-evaluar-cohesion-y-acoplamiento-entre-categoria-y-producto">3.4 Evaluar cohesión y acoplamiento entre <code>categoria</code> y <code>producto</code><a class="headerlink" href="#34-evaluar-cohesion-y-acoplamiento-entre-categoria-y-producto" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> justificación explícita del acoplamiento real entre los dos paquetes.</p>
+<p><code>ProductoServiceImpl</code> depende de <code>CategoriaRepository</code> directamente (no de <code>CategoriaService</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="n">Categoria</span><span class="w"> </span><span class="nf">buscarCategoriaOFallar</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">categoriaId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">categoriaRepository</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">categoriaId</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="na">orElseThrow</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceNotFoundException</span><span class="p">(</span><span class="s">"Categoria no encontrada: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">categoriaId</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>¿Es esto una violación?</strong> No, y la razón importa más que la conclusión: <code>categoria</code> y <code>producto</code> son paquetes <strong>dentro del mismo módulo</strong> (<code>catalogo</code>), no dos módulos separados verificados por Spring Modulith (2.4). La regla "solo <code>Service</code> público, nunca <code>Repository</code> ajeno" protege el límite <strong>entre módulos</strong> (para que, por ejemplo, <code>ventas</code> nunca dependa del <code>Repository</code> interno de <code>catalogo</code>) — dentro de un mismo módulo, acoplar dos paquetes hermanos mediante sus repositorios es una decisión de diseño interna, no una violación arquitectónica.</p>
+<p><strong>Dicho eso, es acoplamiento real y vale la pena nombrarlo:</strong> si <code>producto</code> necesita validar contra <code>categoria</code> cada vez con más frecuencia (por ejemplo, en S4 al construir <code>ventas</code>, que también necesitará consultar <code>Producto</code>), la alternativa más desacoplada sería que <code>ProductoServiceImpl</code> dependiera de <code>CategoriaService</code> (la abstracción pública del paquete <code>categoria</code>) en vez de <code>CategoriaRepository</code> directamente — mismo principio de Inversión de Dependencias (2.2), aplicado ahora entre paquetes hermanos, no solo entre capas.</p>
+<p>Esto es <strong>deuda técnica intencional</strong>, no accidental: la deuda accidental aparece sin que nadie la decida ni la documente; la intencional (o "prudente", en el cuadrante de deuda técnica de Fowler — ver Bibliografía) se toma a propósito, con la condición que la haría exigible ya identificada — en este caso, que <code>categoria</code> gane lógica de negocio propia que <code>producto</code> no debería saltarse. Documentar esa condición (como se hizo arriba) es lo que separa una tensión de diseño aceptable de una violación sin justificar.</p>
+<p><strong>Tabla 5. Acoplamiento actual vs. alternativa más desacoplada</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Acoplamiento actual (real, LP2 S3)</th>
+<th>Alternativa (vía <code>CategoriaService</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dependencia de <code>ProductoServiceImpl</code></td>
+<td><code>CategoriaRepository</code> (acceso directo a datos)</td>
+<td><code>CategoriaService.obtener(id)</code> (contrato público)</td>
+</tr>
+<tr>
+<td>Qué expone <code>categoria</code> hacia afuera</td>
+<td>Su capa de persistencia completa</td>
+<td>Solo lo que <code>CategoriaService</code> decide exponer</td>
+</tr>
+<tr>
+<td>Costo de cambiar <code>categoria</code> internamente</td>
+<td>Podría afectar a <code>producto</code> si cambia el <code>Repository</code></td>
+<td><code>producto</code> no se entera mientras el contrato de <code>CategoriaService</code> no cambie</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Figura 9. Acoplamiento entre clases, acotado a este caso</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    PSI["ProductoServiceImpl"]
+    CR["CategoriaRepository (actual)"]
+    CS["CategoriaService (alternativa)"]
+    PSI --&gt;|"actual"| CR
+    PSI -.-&gt;|"alternativa, mas desacoplada"| CS</code></pre>
+<p>La flecha alternativa no elimina la dependencia — la cambia de un detalle interno (<code>CategoriaRepository</code>, acceso a datos) a un contrato público y estable (<code>CategoriaService</code>). Menos acoplamiento no es cero dependencias: es depender de algo que cambia con menos frecuencia.</p>
+<p><strong>Error frecuente al leer este diagrama:</strong> pensar que la alternativa (vía <code>CategoriaService</code>) es "más acoplada" porque <code>CategoriaServiceImpl</code> internamente llama a <code>CategoriaRepository</code> (y quizás a más cosas). Eso no cuenta: el acoplamiento se mide por lo que <code>ProductoServiceImpl</code> conoce <strong>directamente</strong>, no por lo que su dependencia hace por dentro. <code>ProductoServiceImpl</code> nunca ve, importa ni compila contra lo que <code>CategoriaServiceImpl</code> usa internamente — solo contra el contrato de <code>CategoriaService</code>. Si <code>categoria</code> agregara mañana una regla de negocio (por ejemplo, "solo categorías activas"), esa regla llegaría automáticamente a <code>ProductoServiceImpl</code> si depende de <code>CategoriaService</code>, pero <strong>no</strong> si depende de <code>CategoriaRepository</code> directamente — ese es el riesgo real de la opción actual, no al revés.</p>
+<p>No hay una respuesta única "correcta" — es una tensión real de diseño, y documentarla (con el criterio de arriba) es uno de los hallazgos que se espera en 3.6.</p>
+<p><strong>Un segundo caso, esta vez de acoplamiento entre contratos:</strong> <code>ProductoResponse</code> no reutiliza <code>CategoriaResponse</code> (el DTO que ya existe para exponer una categoría) — introduce <code>CategoriaResumen</code>, un DTO más chico, dedicado solo a lo que se embebe en un producto (<code>id</code>, <code>nombre</code>, sin <code>descripcion</code>).</p>
+<p><strong>Tabla 6. Acoplamiento entre contratos: reutilizar vs. desacoplar</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Reutilizar <code>CategoriaResponse</code> en <code>ProductoResponse</code></th>
+<th>Introducir <code>CategoriaResumen</code> (real, LP2 S3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Acoplamiento</td>
+<td>El contrato de <code>/productos</code> cambia de forma cada vez que <code>CategoriaResponse</code> cambia, aunque el cambio no afecte a lo que un producto necesita mostrar.</td>
+<td>El contrato de <code>/productos</code> solo cambia si <code>CategoriaResumen</code> cambia — independiente de <code>CategoriaResponse</code>.</td>
+</tr>
+<tr>
+<td>Costo hoy</td>
+<td>Ninguno — <code>descripcion</code> no es un dato sensible ni voluminoso.</td>
+<td>Una clase más, un método de mapeo más (<code>CategoriaMapper.toResumen</code>).</td>
+</tr>
+<tr>
+<td>Beneficio</td>
+<td>Menos código.</td>
+<td>El contrato de <code>/productos</code> no depende de decisiones futuras de <code>/categorias</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Figura 10. Acoplamiento entre contratos, acotado a este caso</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    PR["ProductoResponse"]
+    CRes["CategoriaResumen (actual)"]
+    CResp["CategoriaResponse (alternativa: reutilizar)"]
+    PR --&gt;|"actual"| CRes
+    PR -.-&gt;|"alternativa, mas acoplada"| CResp</code></pre>
+<p>Igual que el caso anterior, no hay una respuesta única "correcta": con los hechos de hoy (nada sensible en <code>descripcion</code>, sin motivo de ocultamiento), reutilizar <code>CategoriaResponse</code> habría sido igual de válido — la decisión real de introducir <code>CategoriaResumen</code> es explícitamente anticipatoria. Vale la pena nombrarla como tal en el hallazgo (3.6), no presentarla como la única opción correcta.</p>
+<h3 id="35-evaluar-modularidad-y-abstraccion">3.5 Evaluar modularidad y abstracción<a class="headerlink" href="#35-evaluar-modularidad-y-abstraccion" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> confirmación de que el límite de módulo (<code>catalogo</code>) se respeta, y que las abstracciones (DTO, interfaces) cumplen su función.</p>
+<ul>
+<li><strong>Modularidad:</strong> <code>catalogo</code> sigue siendo el único módulo con código real; <code>ModularityTests</code> (LP2) verifica que ningún otro módulo (todavía inexistente: <code>ventas</code> llega en S4) acceda a sus repositorios o entidades directamente. Nada que evaluar todavía más allá de eso — la prueba real es automática, no una opinión de diseño.</li>
+</ul>
+<p><strong>Figura 11. Modularidad, acotada al límite <code>catalogo</code>-<code>ventas</code></strong></p>
+<pre class="mermaid"><code>flowchart LR
+    Ventas["Modulo ventas (S4, futuro)"]
+    CatSvc["categoria.CategoriaService (publico)"]
+    CatRepo["categoria.CategoriaRepository (interno)"]
+    Ventas --&gt;|"permitido"| CatSvc
+    Ventas -.-&gt;|"bloqueado por ModularityTests"| CatRepo</code></pre>
+<ul>
+<li><strong>Abstracción — DTO:</strong> <code>ProductoResponse</code> embebe <code>CategoriaResumen</code>, no la entidad <code>Categoria</code> completa — la abstracción entidad-DTO evita que la API pública dependa de cada campo interno de <code>Categoria</code>. El acoplamiento <strong>entre</strong> <code>CategoriaResumen</code> y <code>CategoriaResponse</code> (dos DTO, no una entidad y un DTO) ya se evaluó con más detalle en 3.4.</li>
+</ul>
+<p><strong>Figura 12. Abstracción, acotada a DTO vs. entidad</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    Cliente["Cliente HTTP"]
+    DTO["ProductoResponse"]
+    Entidad["Producto (entidad)"]
+    Cliente --&gt; DTO
+    DTO -.-&gt;|"oculta"| Entidad</code></pre>
+<ul>
+<li><strong>Abstracción — interfaces de servicio:</strong> ya evaluado en 3.2/3.3; se repite aquí como confirmación de que la abstracción no es solo una interfaz vacía — realmente oculta la implementación (MapStruct, Spring Data JPA) del resto del sistema.</li>
+</ul>
+<h3 id="36-documentar-el-hallazgo-real">3.6 Documentar el hallazgo real<a class="headerlink" href="#36-documentar-el-hallazgo-real" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> al menos un hallazgo real, con su justificación o su corrección propuesta.</p>
+<p>Ejemplo de hallazgo real de esta sesión (documentado en 3.4): <em>"<code>ProductoServiceImpl</code> depende de <code>CategoriaRepository</code> en vez de <code>CategoriaService</code>. No es una violación de <code>ModularityTests</code> (mismo módulo), pero si <code>producto</code> empieza a necesitar más operaciones sobre <code>categoria</code> a medida que el sistema crece, migrar a <code>CategoriaService</code> reduciría el acoplamiento entre ambos paquetes sin costo arquitectónico."</em> Tu evidencia individual (4.3.1) debe incluir un hallazgo equivalente, real, sobre el módulo de tu propio proyecto — no una copia de este.</p>
+<h3 id="37-relacionar-con-lp2-y-bd2">3.7 Relacionar con LP2 y BD2<a class="headerlink" href="#37-relacionar-con-lp2-y-bd2" title="Permanent link">&para;</a></h3>
+<p><strong>Producto del paso:</strong> matriz de integración de la sesión.</p>
+<p><strong>Tabla 7. Matriz de integración ADS-LP2-BD2 (S3)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Criterio evaluado</th>
+<th>Evidencia real en LP2</th>
+<th>Relación con BD2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Responsabilidad única, inversión de dependencias</td>
+<td><code>ProductoServiceImpl</code>/<code>CategoriaServiceImpl</code> (LP2 S3)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Acoplamiento <code>producto</code> → <code>categoria</code></td>
+<td><code>ProductoServiceImpl.buscarCategoriaOFallar()</code> (LP2 S3)</td>
+<td><code>FK_PRODUCTO_CATEGORIA</code> sobre <code>ID_CATEGORIA</code> (BD2 S1) — el acoplamiento a nivel de código refleja una relación real ya existente a nivel de esquema.</td>
+</tr>
+<tr>
+<td>Modularidad</td>
+<td><code>ModularityTests</code> (LP2, desde S1)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Abstracción (DTO)</td>
+<td><code>CategoriaResumen</code>, <code>ProductoResponse</code> (LP2 S3)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Sesión equivalente en los otros dos cursos, misma semana: <a href="../../../lp2/sesiones/S03_Objetos_Relacionados_Categoria_Producto/">LP2 - S3 Objetos Relacionados Categoria-Producto</a> y <a href="../../../bd2/sesiones/S03_Excepciones_Robustez/">BD2 - S3 Manejo de Excepciones y Robustez</a>.</p>
+<p><strong>Evidencia de aprendizaje:</strong></p>
+<ul>
+<li>Tabla de responsabilidad única (S) para <code>categoria</code> y <code>producto</code>.</li>
+<li>Análisis de abierto/cerrado, Liskov e interfaces (O, L, I) sobre <code>ProductoService</code>/<code>CategoriaService</code>.</li>
+<li>Verificación de inversión de dependencias (D) con código real.</li>
+<li>Evaluación justificada de cohesión/acoplamiento entre <code>categoria</code> y <code>producto</code>.</li>
+<li>Al menos un hallazgo real documentado.</li>
+<li>Matriz de integración con LP2 y BD2.</li>
+</ul>
+<h2 id="4-crea-actividad-autonoma">4. Crea: actividad autónoma<a class="headerlink" href="#4-crea-actividad-autonoma" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 2h fuera del aula.</p>
+<h3 id="41-actividad">4.1 Actividad<a class="headerlink" href="#41-actividad" title="Permanent link">&para;</a></h3>
+<p>Evaluación autónoma de los principios SOLID, cohesión, acoplamiento, modularidad y abstracción sobre el módulo del proyecto propio del equipo, documentada en evidencia individual.</p>
+<p>Completa y evidencia estas tareas:</p>
+<ol>
+<li>Elaborar la tabla de responsabilidad única (S) de las clases reales de tu módulo.</li>
+<li>Analizar abierto/cerrado, Liskov e interfaces (O, L, I) sobre tu(s) interfaz(ces) de servicio.</li>
+<li>Verificar inversión de dependencias (D) con tu propio código (constructor injection, sin <code>new</code> de implementaciones concretas).</li>
+<li>Evaluar cohesión y acoplamiento entre dos paquetes relacionados de tu módulo (o justificar por qué no aplica todavía).</li>
+<li>Evaluar modularidad (si tu proyecto ya tiene más de un módulo) y abstracción (DTO vs. entidad).</li>
+<li>Documentar al menos un hallazgo real, con su justificación o corrección propuesta.</li>
+</ol>
+<h3 id="42-proposito">4.2 Propósito<a class="headerlink" href="#42-proposito" title="Permanent link">&para;</a></h3>
+<p>Que cada estudiante demuestre, de forma individual y fuera del aula, que puede aplicar los criterios de evaluación SOLID construidos en clase sin el acompañamiento del docente.</p>
+<p>Esta actividad autónoma se desarrolla sobre el proyecto de fin de curso del equipo. El producto de la unidad se construye por acumulación de los avances de cada sesión; por eso, la evidencia de esta sesión debe incorporarse a la documentación del proyecto y quedar trazable en GitHub.</p>
+<h3 id="43-indicaciones">4.3 Indicaciones<a class="headerlink" href="#43-indicaciones" title="Permanent link">&para;</a></h3>
+<p>Entrega un PDF con el siguiente nombre:</p>
+<div class="highlight"><pre><span></span><code>S03_ADS_Equipo##_ApellidoNombre.pdf
+</code></pre></div>
+<p>Cada captura de pantalla del informe debe mostrar, sin recortar, el reloj del sistema (fecha y hora) y tu usuario o foto de perfil (Windows, VS Code o navegador) visibles en pantalla — es lo que permite verificar que la evidencia es tuya y que corresponde al momento real de tu trabajo.</p>
+<h4 id="431-estructura-del-informe">4.3.1 Estructura del informe<a class="headerlink" href="#431-estructura-del-informe" title="Permanent link">&para;</a></h4>
+<p><strong>Datos del estudiante</strong></p>
+<ul>
+<li>Nombre:</li>
+<li>Equipo:</li>
+<li>Sesión: S03 - Diseño Estructural y Principios SOLID</li>
+<li>Rol o aporte realizado:</li>
+<li>Link de GitHub:</li>
+</ul>
+<p><strong>Evidencia técnica</strong></p>
+<p>Incluye capturas o extractos con una breve explicación debajo de cada uno, organizados en los mismos 5 bloques de la rúbrica (4.6):</p>
+<ol>
+<li><em>Responsabilidad única (S)</em><ul>
+<li>Tabla de responsabilidad única de tus clases reales.</li>
+</ul>
+</li>
+<li><em>Abierto/cerrado, Liskov e interfaces (O, L, I)</em><ul>
+<li>Análisis de extensibilidad de tu(s) interfaz(ces) de servicio.</li>
+</ul>
+</li>
+<li><em>Inversión de dependencias (D)</em><ul>
+<li>Código real mostrando inyección por interfaz, sin <code>new</code> de implementaciones.</li>
+</ul>
+</li>
+<li><em>Cohesión, acoplamiento, modularidad y abstracción</em><ul>
+<li>Evaluación justificada entre dos paquetes relacionados de tu módulo.</li>
+</ul>
+</li>
+<li><em>Hallazgo real</em><ul>
+<li>Hallazgo documentado, con justificación o corrección propuesta.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Error o hallazgo</strong></p>
+<p>Describe al menos un hallazgo real de diseño (no necesariamente un error — puede ser una tensión de diseño justificada, como el de 3.4).</p>
+<p><strong>Reflexión técnica breve</strong></p>
+<p>Responde en 5 a 8 líneas:</p>
+<div class="highlight"><pre><span></span><code>¿Por qué el acoplamiento entre dos paquetes del mismo módulo no es
+automáticamente una violación de diseño, y qué lo diferencia del
+acoplamiento entre dos módulos distintos?
+</code></pre></div>
+<p><strong>Anexo: Feedback de la sesión</strong></p>
+<p>Pega esta página como la última hoja del PDF, con tus respuestas.</p>
+<ol>
+<li>¿Cuál es el aprendizaje más importante que te llevas de la clase de hoy?</li>
+<li>¿Qué punto de la clase te resultó más confuso o te dejó con dudas?</li>
+<li>¿Tienes alguna pregunta que te gustaría que sea respondida la siguiente clase?</li>
+<li>Sobre tu nivel de comprensión de la clase de hoy, marca una opción:<ul>
+<li>¡Entendido! - Lo domino y podría explicarlo.</li>
+<li>Más o menos. - Entendí la idea general, pero tengo dudas.</li>
+<li>Necesito ayuda. - Me siento perdido/a con este tema.</li>
+</ul>
+</li>
+<li>¿Cómo puedo ayudarte a comprender mejor el tema?</li>
+<li>Pensando en tu participación y esfuerzo en la clase de hoy, ¿cómo te autoevaluarías? Marca una opción:<ul>
+<li>Muy Comprometido/a: Me esforcé al máximo.</li>
+<li>Comprometido/a: Sé que podría haberme esforzado un poco más.</li>
+<li>Poco Comprometido/a: Hoy no di mi mejor esfuerzo.</li>
+</ul>
+</li>
+<li>Mi satisfacción con la clase fue... (califica del 1 al 10, donde 1 es insatisfecho y 10 es muy satisfecho).</li>
+</ol>
+<h3 id="44-criterios-minimos-de-aceptacion">4.4 Criterios mínimos de aceptación<a class="headerlink" href="#44-criterios-minimos-de-aceptacion" title="Permanent link">&para;</a></h3>
+<p>La evidencia individual se considera completa si:</p>
+<ul>
+<li>El archivo respeta el nombre solicitado.</li>
+<li>Presenta la tabla de responsabilidad única (S) sobre clases reales de su módulo.</li>
+<li>Analiza abierto/cerrado, Liskov e interfaces (O, L, I) con argumentos concretos, no genéricos.</li>
+<li>Verifica inversión de dependencias (D) con código real (constructor injection por interfaz).</li>
+<li>Evalúa cohesión y acoplamiento entre al menos dos paquetes relacionados, con justificación.</li>
+<li>Incluye al menos un hallazgo real de diseño, justificado o con corrección propuesta.</li>
+<li>Cada captura de la evidencia técnica muestra el reloj del sistema y el usuario/perfil visible, sin recortar.</li>
+<li>Las fechas y horas de las capturas son coherentes con el historial de commits de su repositorio en GitHub.</li>
+<li>Incluye la reflexión técnica breve solicitada.</li>
+<li>Incluye el Anexo de feedback de la sesión respondido, como última página del PDF.</li>
+</ul>
+<h3 id="45-preguntas-de-defensa">4.5 Preguntas de defensa<a class="headerlink" href="#45-preguntas-de-defensa" title="Permanent link">&para;</a></h3>
+<ol>
+<li>¿Qué diferencia hay entre una violación real de SOLID y una tensión de diseño aceptable?</li>
+<li>¿Por qué <code>ProductoController</code> depende de la interfaz <code>ProductoService</code> y no de <code>ProductoServiceImpl</code> directamente?</li>
+<li>¿Qué significa que <code>ProductoService</code> esté "abierto a extensión, cerrado a modificación"?</li>
+<li>¿Por qué el acoplamiento entre <code>producto</code> y <code>categoria</code> no es una violación de <code>ModularityTests</code>?</li>
+<li>¿Qué diferencia hay entre exponer una entidad JPA directamente y exponer un DTO?</li>
+</ol>
+<h3 id="46-rubrica-de-evaluacion">4.6 Rúbrica de evaluación<a class="headerlink" href="#46-rubrica-de-evaluacion" title="Permanent link">&para;</a></h3>
+<p><strong>Tabla 8. Rúbrica de evaluación</strong></p>
+<table>
+<thead>
+<tr>
+<th>Criterio</th>
+<th style="text-align: right;">Peso (%)</th>
+<th>A (20 pts)</th>
+<th>B (15 pts)</th>
+<th>C (10 pts)</th>
+<th>D (5 pts)</th>
+<th style="text-align: right;">Nivel obtenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Responsabilidad única (S)*</td>
+<td style="text-align: right;">20</td>
+<td>Tabla completa y correcta sobre clases reales, con matices bien argumentados.</td>
+<td>Tabla correcta, con algún matiz superficial.</td>
+<td>Tabla incompleta o con responsabilidades mal identificadas.</td>
+<td>No presenta la tabla.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>2. Abierto/cerrado, Liskov e interfaces (O, L, I)*</td>
+<td style="text-align: right;">20</td>
+<td>Análisis concreto y correcto de los tres principios sobre código real.</td>
+<td>Análisis correcto pero genérico en algún principio.</td>
+<td>Análisis superficial o con confusión entre principios.</td>
+<td>No presenta el análisis.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>3. Inversión de dependencias (D)*</td>
+<td style="text-align: right;">20</td>
+<td>Verificación clara con código real, identificando cada dependencia inyectada.</td>
+<td>Verificación correcta, con algún detalle faltante.</td>
+<td>Verificación parcial o poco clara.</td>
+<td>No verifica D.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>4. Cohesión, acoplamiento, modularidad y abstracción*</td>
+<td style="text-align: right;">20</td>
+<td>Evaluación justificada y correcta, distinguiendo acoplamiento aceptable de violación real.</td>
+<td>Evaluación correcta, con justificación básica.</td>
+<td>Evaluación superficial o sin distinguir niveles de acoplamiento.</td>
+<td>No evalúa cohesión/acoplamiento.</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>5. Hallazgo real*</td>
+<td style="text-align: right;">20</td>
+<td>Hallazgo real, bien justificado, con corrección propuesta o argumento sólido de por qué no se corrige.</td>
+<td>Hallazgo real, con justificación básica.</td>
+<td>Hallazgo genérico o poco fundamentado.</td>
+<td>No presenta hallazgo.</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>* Agregado manual.</p>
+<p>Nota final = suma de (<code>Peso</code> / 100 × <code>Puntos del nivel obtenido</code>) = ____ / 20.</p>
+<p>Para usar la rúbrica con IA, solicita:</p>
+<div class="highlight"><pre><span></span><code>Evalúa el PDF usando la rúbrica de la sesión.
+Para cada criterio selecciona el nivel obtenido usando la escala A=20, B=15, C=10, D=5 puntos.
+Justifica brevemente cada nivel asignado.
+Verifica que cada captura muestre reloj del sistema y usuario/perfil visible, y que las fechas sean coherentes con el historial de commits de GitHub. Si falta esta evidencia o hay inconsistencias, indícalo explícitamente antes de calificar.
+Calcula la nota final con la fórmula: suma de (Peso/100 × Puntos del nivel obtenido), directamente sobre 20.
+Indica 2 fortalezas y 2 recomendaciones.
+</code></pre></div>
+<h2 id="5-cierre">5. Cierre<a class="headerlink" href="#5-cierre" title="Permanent link">&para;</a></h2>
+<p>Tiempo: 5 min.</p>
+<p><strong>Resumen breve:</strong> hoy se evaluó el código real de LP2 (<code>catalogo/categoria</code>, <code>catalogo/producto</code>) contra los cinco principios SOLID, cohesión, acoplamiento, modularidad y abstracción — cerrando el vacío que S2 dejó marcado explícitamente (la relación <code>Producto</code>-<code>Categoria</code>), y documentando una tensión de diseño real (el acoplamiento de <code>producto</code> hacia <code>CategoriaRepository</code>) sin forzarla a una corrección automática.</p>
+<p><strong>Dinámica participativa:</strong> en una ronda rápida, cada estudiante comparte en una frase el hallazgo real que encontró en el módulo de su propio proyecto.</p>
+<p><strong>Metacognición:</strong> cada estudiante responde el Anexo de feedback de la sesión, incluido en su evidencia individual (ver 4.3.1). El docente analiza esas respuestas con IA para identificar temas recurrentes o dudas comunes del equipo, y con esos indicadores construye el cierre real de la sesión — que se entrega al inicio de S4, no al final de esta clase.</p>
+<p><strong>Proyección:</strong> la evaluación estructural de hoy es la base de S4, donde se comparan estilos arquitectónicos completos (monolito modular, hexagonal, microservicios) y se retoma la vista de despliegue — un módulo con buena cohesión y bajo acoplamiento es más fácil de migrar entre estilos que uno que ya arrastra violaciones de SOLID.</p>
+<h2 id="bibliografia">Bibliografía<a class="headerlink" href="#bibliografia" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Martin, R. C. (2003). <em>Agile Software Development: Principles, Patterns, and Practices</em>. Prentice Hall.</li>
+<li>Martin, R. C. (2017). <em>Clean Architecture: A Craftsman's Guide to Software Structure and Design</em>. Prentice Hall.</li>
+<li>Baeldung. (2024). <em>SOLID Principles</em>. https://www.baeldung.com/solid-principles</li>
+<li>Fowler, M. (2024). <em>CouplingAndCohesion</em>. martinfowler.com. https://martinfowler.com/ieeeSoftware/coupling.pdf</li>
+<li>Fowler, M. (2019). <em>TechnicalDebtQuadrant</em>. martinfowler.com. https://martinfowler.com/bliki/TechnicalDebtQuadrant.html</li>
+<li>Broadcom Inc. (2025). <em>Spring Framework reference documentation — Dependency Injection</em>. VMware Tanzu. https://docs.spring.io/spring-framework/reference/core/beans/dependencies.html</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Angel Sullon @asullom - UPeU 2026
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
