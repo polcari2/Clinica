@@ -1,0 +1,61 @@
+<div class="app-layout">
+  <header class="topbar">
+    <div class="brand">
+      <a routerLink="/" class="brand-title">OdontoSys</a>
+      <span class="brand-tag">ClinicaDent</span>
+    </div>
+  </header>
+
+  <div class="layout-body">
+    <aside class="sidebar">
+      <!-- Módulo 1: Admisión -->
+      <div class="module-group">
+        <div class="module-title">Admisión</div>
+        <nav class="nav-links">
+          <a routerLink="/admision/pacientes" routerLinkActive="active" class="nav-item">Pacientes</a>
+          <a routerLink="/admision/citas" routerLinkActive="active" class="nav-item">Citas</a>
+        </nav>
+      </div>
+
+      <!-- Módulo 2: Catálogo -->
+      <div class="module-group">
+        <div class="module-title">Catálogo</div>
+        <nav class="nav-links">
+          <a routerLink="/catalogo/especialidades" routerLinkActive="active" class="nav-item">Especialidades</a>
+          <a routerLink="/catalogo/procedimientos" routerLinkActive="active" class="nav-item">Procedimientos</a>
+        </nav>
+      </div>
+
+      <!-- Módulo 3: Clínica -->
+      <div class="module-group">
+        <div class="module-title">Clínica</div>
+        <nav class="nav-links">
+          <a routerLink="/clinica/odontologos" routerLinkActive="active" class="nav-item">Odontólogos</a>
+          <a routerLink="/clinica/atenciones" routerLinkActive="active" class="nav-item">Atenciones</a>
+        </nav>
+      </div>
+
+      <!-- Módulo 4: Caja -->
+      <div class="module-group">
+        <div class="module-title">Caja</div>
+        <nav class="nav-links">
+          <a routerLink="/caja/metodos-pago" routerLinkActive="active" class="nav-item">Métodos de Pago</a>
+          <a routerLink="/caja/pagos" routerLinkActive="active" class="nav-item">Pagos</a>
+      <!-- Transacciones Sesion 9 -->
+      <a routerLink="/ventas/nueva" routerLinkActive="active" style="display:flex; align-items:center; gap:8px; padding:10px 14px; margin:4px 0; border-radius:6px; color:#2b6cb0; text-decoration:none; font-weight:600; background:#ebf8ff;">
+        <span>➕</span> Nueva Venta
+      </a>
+      <a routerLink="/ventas/reporte" routerLinkActive="active" style="display:flex; align-items:center; gap:8px; padding:10px 14px; margin:4px 0; border-radius:6px; color:#2b6cb0; text-decoration:none; font-weight:600; background:#ebf8ff;">
+        <span>📊</span> Reporte Ventas
+      </a>
+        </nav>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
+      

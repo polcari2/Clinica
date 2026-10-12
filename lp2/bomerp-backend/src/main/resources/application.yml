@@ -3,3 +3,4 @@ spring:
     name: bomerp-backend
   profiles:
     active: dev
+

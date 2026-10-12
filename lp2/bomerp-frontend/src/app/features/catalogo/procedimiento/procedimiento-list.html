@@ -1,0 +1,60 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Catálogo: Procedimientos</h2>
+    <a routerLink="/catalogo/procedimientos/nueva" class="btn btn-primary">+ Nuevo Procedimiento</a>
+  </div>
+
+  <div class="card">
+    <div class="filter-bar">
+      <label for="filtroEspecialidad">Filtrar por Especialidad:</label>
+      <select
+        id="filtroEspecialidad"
+        class="form-control"
+        style="max-width: 280px;"
+        #filtro
+        (change)="filtrar(+filtro.value)"
+      >
+        <option value="0">-- Todas las Especialidades --</option>
+        @for (esp of especialidades(); track esp.id) {
+          <option [value]="esp.id">{{ esp.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">ID</th>
+            <th>Procedimiento</th>
+            <th>Especialidad (Padre)</th>
+            <th>Precio Base</th>
+            <th style="width: 160px; text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of procedimientos(); track p.id) {
+            <tr>
+              <td>{{ p.id }}</td>
+              <td><strong>{{ p.nombre }}</strong></td>
+              <td>
+                <span class="badge">{{ p.especialidad?.nombre || 'N/A' }}</span>
+              </td>
+              <td>{{ p.precioBase | currency:'PEN':'S/ ' }}</td>
+              <td style="text-align: right;">
+                <div class="form-actions" style="justify-content: flex-end;">
+                  <a [routerLink]="['/catalogo/procedimientos', p.id, 'editar']" class="btn btn-secondary btn-sm">Editar</a>
+                  <button (click)="eliminar(p.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="empty-cell">No se encontraron procedimientos registrados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

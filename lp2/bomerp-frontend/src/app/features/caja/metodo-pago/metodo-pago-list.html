@@ -1,0 +1,40 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Caja: Métodos de Pago</h2>
+    <a routerLink="/caja/metodos-pago/nueva" class="btn btn-primary">+ Nuevo Método de Pago</a>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">ID</th>
+            <th>Nombre del Método</th>
+            <th>Descripción</th>
+            <th style="width: 160px; text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (m of metodos(); track m.id) {
+            <tr>
+              <td>{{ m.id }}</td>
+              <td><strong>{{ m.nombre }}</strong></td>
+              <td>{{ m.descripcion || 'Sin descripción' }}</td>
+              <td style="text-align: right;">
+                <div class="form-actions" style="justify-content: flex-end;">
+                  <a [routerLink]="['/caja/metodos-pago', m.id, 'editar']" class="btn btn-secondary btn-sm">Editar</a>
+                  <button (click)="eliminar(m.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4" class="empty-cell">No se encontraron métodos de pago registrados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

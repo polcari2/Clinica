@@ -1,0 +1,45 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>{{ id() ? 'Editar Especialidad' : 'Nueva Especialidad' }}</h2>
+  </div>
+
+  <div class="card">
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nombre">Nombre de la Especialidad *</label>
+          <input
+            id="nombre"
+            type="text"
+            class="form-control"
+            formControlName="nombre"
+            placeholder="Ej. Ortodoncia, Endodoncia..."
+          />
+          @if (form.controls.nombre.invalid && form.controls.nombre.touched) {
+            <span class="error-msg">El nombre es obligatorio (máx. 100 caracteres).</span>
+          }
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="descripcion">Descripción</label>
+          <textarea
+            id="descripcion"
+            class="form-control"
+            formControlName="descripcion"
+            placeholder="Breve descripción de la especialidad clínica..."
+          ></textarea>
+          @if (form.controls.descripcion.invalid && form.controls.descripcion.touched) {
+            <span class="error-msg">La descripción no puede exceder 250 caracteres.</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ id() ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <a routerLink="/catalogo/especialidades" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

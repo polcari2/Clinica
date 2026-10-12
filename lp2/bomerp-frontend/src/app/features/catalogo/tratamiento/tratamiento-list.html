@@ -1,0 +1,51 @@
+﻿@if (loading()) {
+  <p>Cargando tratamientos...</p>
+}
+
+@if (error()) {
+  <p class="error" style="color: red;">{{ error() }}</p>
+}
+
+<div style="margin-bottom: 16px; display: flex; gap: 20px; align-items: center;">
+  <a routerLink="/catalogo/tratamientos/nuevo">Nuevo tratamiento</a>
+
+  <label>
+    Filtrar por especialidad:
+    <select #filtro (change)="filtrar(+filtro.value)">
+      <option value="0">Todas</option>
+      @for (esp of especialidades(); track esp.id) {
+        <option [value]="esp.id">{{ esp.nombre }}</option>
+      }
+    </select>
+  </label>
+</div>
+
+<table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th>Tratamiento</th>
+      <th>Especialidad</th>
+      <th>Costo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (t of tratamientos(); track t.id) {
+      <tr>
+        <td>{{ t.nombre }}</td>
+        <td>{{ obtenerNombreEspecialidad(t.idEspecialidad) }}</td>
+        <td>{{ t.precio | currency: 'PEN' : 'S/ ' }}</td>
+        <td>
+          <a [routerLink]="['/catalogo/tratamientos', t.id, 'editar']">Editar</a> |
+          <button (click)="eliminar(t.id)">Eliminar</button>
+        </td>
+      </tr>
+    } @empty {
+      @if (!loading() && !error()) {
+        <tr>
+          <td colspan="4">No hay tratamientos registrados.</td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>

@@ -1,0 +1,64 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Clínica: Atenciones Realizadas</h2>
+    <a routerLink="/clinica/atenciones/nueva" class="btn btn-primary">+ Nueva Atención</a>
+  </div>
+
+  <div class="card">
+    <div class="filter-bar">
+      <label for="filtroOdontologo">Filtrar por Odontólogo:</label>
+      <select
+        id="filtroOdontologo"
+        class="form-control"
+        style="max-width: 320px;"
+        #filtro
+        (change)="filtrar(+filtro.value)"
+      >
+        <option value="0">-- Todos los Odontólogos --</option>
+        @for (odo of odontologos(); track odo.id) {
+          <option [value]="odo.id">Dr(a). {{ odo.apellidos }}, {{ odo.nombres }} (COP: {{ odo.cop }})</option>
+        }
+      </select>
+    </div>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">ID</th>
+            <th>Fecha de Atención</th>
+            <th>Odontólogo (Padre)</th>
+            <th>Diagnóstico</th>
+            <th>Observaciones</th>
+            <th style="width: 160px; text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (a of atenciones(); track a.id) {
+            <tr>
+              <td>{{ a.id }}</td>
+              <td>{{ a.fechaAtencion | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>
+                <span class="badge">
+                  {{ a.odontologo ? ('Dr(a). ' + a.odontologo.apellidos + ', ' + a.odontologo.nombres) : 'N/A' }}
+                </span>
+              </td>
+              <td><strong>{{ a.diagnostico }}</strong></td>
+              <td>{{ a.observaciones || 'Sin observaciones' }}</td>
+              <td style="text-align: right;">
+                <div class="form-actions" style="justify-content: flex-end;">
+                  <a [routerLink]="['/clinica/atenciones', a.id, 'editar']" class="btn btn-secondary btn-sm">Editar</a>
+                  <button (click)="eliminar(a.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="empty-cell">No se encontraron atenciones registradas.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

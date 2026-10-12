@@ -1,0 +1,44 @@
+﻿<h2>Catálogo de Especialidades Odontológicas</h2>
+
+@if (loading()) {
+  <p>Cargando especialidades...</p>
+}
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+<p>
+  <a routerLink="/clinica/especialidades/nueva">+ Registrar Nueva Especialidad</a>
+</p>
+
+<table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (esp of especialidades(); track esp.id) {
+      <tr>
+        <td>{{ esp.id }}</td>
+        <td>{{ esp.nombre }}</td>
+        <td>{{ esp.descripcion }}</td>
+        <td>
+          <a [routerLink]="['/clinica/especialidades', esp.id, 'editar']">Editar</a>
+          &nbsp;|&nbsp;
+          <button (click)="eliminar(esp.id!)">Eliminar</button>
+        </td>
+      </tr>
+    } @empty {
+      @if (!loading() && !error()) {
+        <tr>
+          <td colspan="4">No hay especialidades odontológicas registradas.</td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>

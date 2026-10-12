@@ -1,0 +1,64 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>{{ id() ? 'Editar Procedimiento' : 'Nuevo Procedimiento' }}</h2>
+  </div>
+
+  <div class="card">
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nombre">Nombre del Procedimiento *</label>
+          <input
+            id="nombre"
+            type="text"
+            class="form-control"
+            formControlName="nombre"
+            placeholder="Ej. Limpieza Dental Ultrasónica..."
+          />
+          @if (form.controls.nombre.invalid && form.controls.nombre.touched) {
+            <span class="error-msg">El nombre es obligatorio.</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="precioBase">Precio Base (S/) *</label>
+          <input
+            id="precioBase"
+            type="number"
+            step="0.01"
+            class="form-control"
+            formControlName="precioBase"
+            placeholder="0.00"
+          />
+          @if (form.controls.precioBase.invalid && form.controls.precioBase.touched) {
+            <span class="error-msg">El precio base debe ser mayor o igual a 0.</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="especialidadId">Especialidad (Padre) *</label>
+          <select
+            id="especialidadId"
+            class="form-control"
+            formControlName="especialidadId"
+          >
+            <option [ngValue]="0" disabled>-- Seleccione una Especialidad --</option>
+            @for (esp of especialidades(); track esp.id) {
+              <option [ngValue]="esp.id">{{ esp.nombre }}</option>
+            }
+          </select>
+          @if (form.controls.especialidadId.touched && form.controls.especialidadId.hasError('min')) {
+            <span class="error-msg">Debe seleccionar una especialidad válida.</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ id() ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <a routerLink="/catalogo/procedimientos" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

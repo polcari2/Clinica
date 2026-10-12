@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
 
     @Bean
-    OpenAPI bomErpOpenApi() {
+    OpenAPI odontoSysOpenApi() {
         return new OpenAPI().info(new Info()
-                .title("BomERP API")
-                .version("v1")
-                .description("Contrato REST del backend unico de LP2"));
+                .title("API Clínica Odontológica - OdontoSys")
+                .version("1.0.0")
+                .description("Contrato REST de la plataforma de gestión odontológica OdontoSys"));
     }
 }

@@ -1,0 +1,68 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Admisión: Citas Médicas</h2>
+    <a routerLink="/admision/citas/nueva" class="btn btn-primary">+ Nueva Cita</a>
+  </div>
+
+  <div class="card">
+    <div class="filter-bar">
+      <label for="filtroPaciente">Filtrar por Paciente:</label>
+      <select
+        id="filtroPaciente"
+        class="form-control"
+        style="max-width: 320px;"
+        #filtro
+        (change)="filtrar(+filtro.value)"
+      >
+        <option value="0">-- Todos los Pacientes --</option>
+        @for (pac of pacientes(); track pac.id) {
+          <option [value]="pac.id">{{ pac.apellidos }}, {{ pac.nombres }} ({{ pac.dni }})</option>
+        }
+      </select>
+    </div>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">ID</th>
+            <th>Fecha y Hora</th>
+            <th>Paciente (Padre)</th>
+            <th>Motivo</th>
+            <th>Estado</th>
+            <th style="width: 160px; text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of citas(); track c.id) {
+            <tr>
+              <td>{{ c.id }}</td>
+              <td>{{ c.fechaHora | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>
+                <span class="badge">
+                  {{ c.paciente ? (c.paciente.apellidos + ', ' + c.paciente.nombres) : 'N/A' }}
+                </span>
+              </td>
+              <td>{{ c.motivo }}</td>
+              <td>
+                <span style="font-weight: 600; font-size: 0.8rem; text-transform: uppercase;">
+                  {{ c.estado }}
+                </span>
+              </td>
+              <td style="text-align: right;">
+                <div class="form-actions" style="justify-content: flex-end;">
+                  <a [routerLink]="['/admision/citas', c.id, 'editar']" class="btn btn-secondary btn-sm">Editar</a>
+                  <button (click)="eliminar(c.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="empty-cell">No se encontraron citas registradas.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div style="padding: 1.5rem; max-width: 900px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+  <h2 style="margin-top: 0; margin-bottom: 1rem; color: #2d3748;">Nueva Venta Transaccional</h2>
+
+  @if (error()) {
+    <div style="background: #fed7d7; color: #c53030; padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
+      {{ error() }}
+    </div>
+  }
+
+  <form [formGroup]="form">
+    <table formArrayName="detalles" style="width: 100%; border-collapse: collapse; margin-bottom: 1rem;">
+      <thead>
+        <tr style="border-bottom: 2px solid #e2e8f0; text-align: left;">
+          <th style="padding: 0.5rem;">Producto (Autocomplete con precio)</th>
+          <th style="padding: 0.5rem; width: 140px;">Precio unitario</th>
+          <th style="padding: 0.5rem; width: 100px;">Cantidad</th>
+          <th style="padding: 0.5rem; width: 130px;">Subtotal</th>
+          <th style="padding: 0.5rem; width: 80px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (linea of lineasForm.controls; track linea; let idx = $index) {
+          <tr [formGroupName]="idx" style="border-bottom: 1px solid #edf2f7;">
+            <td style="padding: 0.5rem; position: relative;">
+              <input
+                type="text"
+                formControlName="busqueda"
+                placeholder="Escribe para buscar..."
+                (focus)="abrirMenu(idx)"
+                (blur)="cerrarMenu()"
+                style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.95rem;"
+              />
+              @if (menuAbierto() === idx && (opcionesPorLinea()[idx]?.length ?? 0) > 0) {
+                <div style="position: absolute; left: 0.5rem; right: 0.5rem; top: 100%; z-index: 50; background: white; border: 1px solid #cbd5e0; border-radius: 4px; max-height: 180px; overflow-y: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
+                  @for (prod of opcionesPorLinea()[idx]; track prod.id) {
+                    <div
+                      (mousedown)="seleccionarProducto(idx, prod); $event.preventDefault()"
+                      style="padding: 0.6rem 0.8rem; cursor: pointer; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between;">
+                      <span>{{ prod.nombre }}</span>
+                      <strong style="color: #2b6cb0;">{{ prod.precio | currency: 'PEN' : 'S/ ' }}</strong>
+                    </div>
+                  }
+                </div>
+              }
+            </td>
+            <td style="padding: 0.5rem; font-weight: 500;">
+              {{ preciosUnitarios()[idx] | currency: 'PEN' : 'S/ ' }}
+            </td>
+            <td style="padding: 0.5rem;">
+              <input type="number" step="1" min="1" formControlName="cantidad" style="padding: 0.4rem; width: 80px; border: 1px solid #cbd5e0; border-radius: 4px;" />
+            </td>
+            <td style="padding: 0.5rem; font-weight: 600; color: #2b6cb0;">
+              {{ subtotales()[idx] | currency: 'PEN' : 'S/ ' }}
+            </td>
+            <td style="padding: 0.5rem; text-align: right;">
+              <button type="button" (click)="quitarLinea(idx)" style="background: #e53e3e; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">Quitar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr style="border-top: 2px solid #cbd5e0;">
+          <td colspan="3" style="padding: 0.75rem; font-weight: bold; font-size: 1.1rem; text-align: right;">Total General:</td>
+          <td colspan="2" style="padding: 0.75rem; font-weight: bold; font-size: 1.2rem; color: #276749;">{{ total() | currency: 'PEN' : 'S/ ' }}</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div style="display: flex; gap: 1rem; align-items: center; justify-content: space-between;">
+      <button type="button" (click)="agregarLinea()" style="background: #3182ce; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-weight: 500;">+ Agregar línea</button>
+      <button type="button" (click)="confirmarYGuardar()" [disabled]="loading()" style="background: #38a169; color: white; border: none; padding: 0.6rem 1.8rem; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem;">Registrar Venta</button>
+    </div>
+  </form>
+</div>

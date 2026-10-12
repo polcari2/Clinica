@@ -1,0 +1,71 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>{{ id() ? 'Editar Cita' : 'Nueva Cita' }}</h2>
+  </div>
+
+  <div class="card">
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fechaHora">Fecha y Hora *</label>
+          <input
+            id="fechaHora"
+            type="datetime-local"
+            class="form-control"
+            formControlName="fechaHora"
+          />
+          @if (form.controls.fechaHora.invalid && form.controls.fechaHora.touched) {
+            <span class="error-msg">La fecha y hora son obligatorias.</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="estado">Estado *</label>
+          <select id="estado" class="form-control" formControlName="estado">
+            <option value="PENDIENTE">PENDIENTE</option>
+            <option value="CONFIRMADA">CONFIRMADA</option>
+            <option value="ATENDIDA">ATENDIDA</option>
+            <option value="CANCELADA">CANCELADA</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="pacienteId">Paciente (Padre) *</label>
+          <select
+            id="pacienteId"
+            class="form-control"
+            formControlName="pacienteId"
+          >
+            <option [ngValue]="0" disabled>-- Seleccione un Paciente --</option>
+            @for (pac of pacientes(); track pac.id) {
+              <option [ngValue]="pac.id">{{ pac.apellidos }}, {{ pac.nombres }} ({{ pac.dni }})</option>
+            }
+          </select>
+          @if (form.controls.pacienteId.touched && form.controls.pacienteId.hasError('min')) {
+            <span class="error-msg">Debe seleccionar un paciente válido.</span>
+          }
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="motivo">Motivo de la Cita *</label>
+          <textarea
+            id="motivo"
+            class="form-control"
+            formControlName="motivo"
+            placeholder="Ej. Dolor agudo en molar inferior, revisión general..."
+          ></textarea>
+          @if (form.controls.motivo.invalid && form.controls.motivo.touched) {
+            <span class="error-msg">El motivo es obligatorio (máx. 250 caracteres).</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ id() ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <a routerLink="/admision/citas" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

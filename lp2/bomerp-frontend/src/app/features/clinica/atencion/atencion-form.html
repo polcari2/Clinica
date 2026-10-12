@@ -1,0 +1,75 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>{{ id() ? 'Editar Atención' : 'Nueva Atención Médica' }}</h2>
+  </div>
+
+  <div class="card">
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fechaAtencion">Fecha y Hora de Atención *</label>
+          <input
+            id="fechaAtencion"
+            type="datetime-local"
+            class="form-control"
+            formControlName="fechaAtencion"
+          />
+          @if (form.controls.fechaAtencion.invalid && form.controls.fechaAtencion.touched) {
+            <span class="error-msg">La fecha de atención es obligatoria.</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="odontologoId">Odontólogo Responsable (Padre) *</label>
+          <select
+            id="odontologoId"
+            class="form-control"
+            formControlName="odontologoId"
+          >
+            <option [ngValue]="0" disabled>-- Seleccione un Odontólogo --</option>
+            @for (odo of odontologos(); track odo.id) {
+              <option [ngValue]="odo.id">Dr(a). {{ odo.apellidos }}, {{ odo.nombres }} (COP: {{ odo.cop }})</option>
+            }
+          </select>
+          @if (form.controls.odontologoId.touched && form.controls.odontologoId.hasError('min')) {
+            <span class="error-msg">Debe seleccionar un odontólogo válido.</span>
+          }
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="diagnostico">Diagnóstico Clínico *</label>
+          <input
+            id="diagnostico"
+            type="text"
+            class="form-control"
+            formControlName="diagnostico"
+            placeholder="Ej. Caries de esmalte y dentina en pieza 3.6..."
+          />
+          @if (form.controls.diagnostico.invalid && form.controls.diagnostico.touched) {
+            <span class="error-msg">El diagnóstico es obligatorio (máx. 250 caracteres).</span>
+          }
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="observaciones">Observaciones / Tratamiento Aplicado</label>
+          <textarea
+            id="observaciones"
+            class="form-control"
+            formControlName="observaciones"
+            placeholder="Anotaciones clínicas, receta médica o recomendaciones..."
+          ></textarea>
+          @if (form.controls.observaciones.invalid && form.controls.observaciones.touched) {
+            <span class="error-msg">Las observaciones no pueden exceder 500 caracteres.</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ id() ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <a routerLink="/clinica/atenciones" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

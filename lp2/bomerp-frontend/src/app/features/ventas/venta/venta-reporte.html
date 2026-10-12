@@ -1,0 +1,100 @@
+<div style="padding: 1.5rem; max-width: 1000px; margin: 0 auto;">
+  <h2 style="margin-top: 0; color: #2d3748;">Reporte Transaccional de Ventas</h2>
+
+  @if (loading()) {
+    <p>Cargando reporte...</p>
+  }
+  @if (error()) {
+    <div style="background: #fed7d7; color: #c53030; padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
+      {{ error() }}
+    </div>
+  }
+
+  <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <label>
+      <strong>Estado:</strong>
+      <select #filtro (change)="filtrarPorEstado(filtro.value)" style="margin-left: 0.5rem; padding: 0.4rem; border: 1px solid #cbd5e0; border-radius: 4px;">
+        <option value="">Todos</option>
+        <option value="REGISTRADA">Registrada</option>
+        <option value="ANULADA">Anulada</option>
+      </select>
+    </label>
+
+    <label style="margin-left: 1rem;">
+      <strong>Desde:</strong>
+      <input type="date" #desde style="margin-left: 0.5rem; padding: 0.4rem; border: 1px solid #cbd5e0; border-radius: 4px;" />
+    </label>
+    <label>
+      <strong>Hasta:</strong>
+      <input type="date" #hasta style="margin-left: 0.5rem; padding: 0.4rem; border: 1px solid #cbd5e0; border-radius: 4px;" />
+    </label>
+    <button type="button" (click)="filtrarPorFecha(desde.value, hasta.value)" style="background: #4a5568; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Filtrar por fecha</button>
+  </div>
+
+  @if (!loading() && !error()) {
+    <section style="display: flex; gap: 2rem; margin-bottom: 1.5rem; background: #ebf8ff; border: 1px solid #bee3f8; padding: 1rem; border-radius: 8px;">
+      <p style="margin: 0;"><strong>Total Ventas:</strong> {{ totalVentas() }}</p>
+      <p style="margin: 0;"><strong>Monto Acumulado:</strong> {{ montoTotal() | currency: 'PEN' : 'S/ ' }}</p>
+      <p style="margin: 0;"><strong>Ticket Promedio:</strong> {{ ticketPromedio() | currency: 'PEN' : 'S/ ' }}</p>
+    </section>
+
+    <table class="reporte-ventas">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Líneas</th>
+          <th>Total</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (venta of ventas(); track venta.id) {
+          <tr class="fila-venta">
+            <td>{{ venta.fecha | date: 'short' }}</td>
+            <td>
+              <span [style.color]="venta.estado === 'ANULADA' ? '#e53e3e' : '#38a169'" style="font-weight: bold;">
+                {{ venta.estado }}
+              </span>
+            </td>
+            <td>{{ venta.detalles.length }}</td>
+            <td>{{ venta.total | currency: 'PEN' : 'S/ ' }}</td>
+            <td>
+              @if (venta.estado === 'REGISTRADA') {
+                <button type="button" (click)="anular(venta.id)" style="background: #e53e3e; color: white; border: none; padding: 0.3rem 0.7rem; border-radius: 4px; cursor: pointer;">Anular</button>
+              }
+            </td>
+          </tr>
+          <tr class="fila-detalle">
+            <td colspan="5">
+              <table class="tabla-detalle">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (detalle of venta.detalles; track detalle.productoId) {
+                    <tr>
+                      <td>{{ detalle.nombreProducto }}</td>
+                      <td>{{ detalle.cantidad }}</td>
+                      <td>{{ detalle.precioUnitario | currency: 'PEN' : 'S/ ' }}</td>
+                      <td>{{ detalle.subtotal | currency: 'PEN' : 'S/ ' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 1.5rem; color: #718096;">No hay ventas registradas para este filtro.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

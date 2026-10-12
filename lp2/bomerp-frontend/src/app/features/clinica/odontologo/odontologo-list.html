@@ -1,0 +1,42 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Clínica: Odontólogos</h2>
+    <a routerLink="/clinica/odontologos/nueva" class="btn btn-primary">+ Nuevo Odontólogo</a>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">ID</th>
+            <th>COP</th>
+            <th>Apellidos y Nombres</th>
+            <th>DNI</th>
+            <th style="width: 160px; text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (o of odontologos(); track o.id) {
+            <tr>
+              <td>{{ o.id }}</td>
+              <td><strong>COP: {{ o.cop }}</strong></td>
+              <td>{{ o.apellidos }}, {{ o.nombres }}</td>
+              <td>{{ o.dni }}</td>
+              <td style="text-align: right;">
+                <div class="form-actions" style="justify-content: flex-end;">
+                  <a [routerLink]="['/clinica/odontologos', o.id, 'editar']" class="btn btn-secondary btn-sm">Editar</a>
+                  <button (click)="eliminar(o.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="empty-cell">No se encontraron odontólogos registrados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
