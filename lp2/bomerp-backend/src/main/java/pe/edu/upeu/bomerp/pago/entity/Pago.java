@@ -47,4 +47,7 @@ public class Pago {
     @Column(name = "ESTADO", length = 20, nullable = false)
     @Builder.Default
     private String estado = "COMPLETADO";
+
+    @Column(name = "USUARIO_ID", length = 36)
+    private String usuarioId;
 }

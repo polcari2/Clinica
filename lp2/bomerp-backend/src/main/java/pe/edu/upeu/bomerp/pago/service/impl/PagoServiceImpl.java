@@ -3,6 +3,7 @@ package pe.edu.upeu.bomerp.pago.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pe.edu.upeu.bomerp.exception.AccesoDenegadoException;
 import pe.edu.upeu.bomerp.exception.ResourceNotFoundException;
 import pe.edu.upeu.bomerp.pago.dto.PagoRequest;
 import pe.edu.upeu.bomerp.pago.dto.PagoResponse;
@@ -35,14 +36,29 @@ public class PagoServiceImpl implements PagoService {
     @Override
     @Transactional(readOnly = true)
     public PagoResponse findById(Long id) {
-        return repository.findById(id)
-                .map(PagoResponse::fromEntity)
+        return findById(id, null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PagoResponse findById(Long id, String usuarioId) {
+        Pago pago = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pago no encontrado con id: " + id));
+        if (usuarioId != null && pago.getUsuarioId() != null && !usuarioId.equals(pago.getUsuarioId())) {
+            throw new AccesoDenegadoException("No tienes acceso a este pago");
+        }
+        return PagoResponse.fromEntity(pago);
     }
 
     @Override
     @Transactional
     public PagoResponse create(PagoRequest request) {
+        return create(request, null);
+    }
+
+    @Override
+    @Transactional
+    public PagoResponse create(PagoRequest request, String usuarioId) {
         Pago entity = Pago.builder()
                 .fechaPago(request.fechaPago())
                 .monto(request.monto())
@@ -50,6 +66,7 @@ public class PagoServiceImpl implements PagoService {
                 .metodoPagoId(request.metodoPagoId())
                 .citaId(request.citaId())
                 .estado(request.estado() != null && !request.estado().isBlank() ? request.estado() : "COMPLETADO")
+                .usuarioId(usuarioId)
                 .build();
         return PagoResponse.fromEntity(repository.save(entity));
     }

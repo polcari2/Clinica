@@ -12,7 +12,8 @@ public record PagoResponse(
     String numeroOperacion,
     Long metodoPagoId,
     Long citaId,
-    String estado
+    String estado,
+    String usuarioId
 ) {
     public static PagoResponse fromEntity(Pago p) {
         return new PagoResponse(
@@ -22,7 +23,8 @@ public record PagoResponse(
             p.getNumeroOperacion(),
             p.getMetodoPagoId(),
             p.getCitaId(),
-            p.getEstado()
+            p.getEstado(),
+            p.getUsuarioId()
         );
     }
 }

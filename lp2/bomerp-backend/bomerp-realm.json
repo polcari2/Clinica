@@ -1,0 +1,121 @@
+{
+  "realm": "bomerp",
+  "enabled": true,
+  "displayName": "BomERP",
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "accessTokenLifespan": 3600,
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN",
+        "description": "Administrador con acceso total"
+      },
+      {
+        "name": "SUPERVISOR",
+        "description": "Supervisor de operaciones"
+      },
+      {
+        "name": "VENDEDOR",
+        "description": "Vendedor / Operador restringido"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "bomerp-frontend",
+      "name": "BomERP Frontend SPA",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "rootUrl": "http://localhost:4200",
+      "baseUrl": "http://localhost:4200",
+      "redirectUris": [
+        "http://localhost:4200/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200",
+        "+"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@bomerp.com",
+      "firstName": "Admin",
+      "lastName": "Uno",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Bomerp2026!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "ADMIN"
+      ]
+    },
+    {
+      "username": "supervisor",
+      "email": "supervisor@bomerp.com",
+      "firstName": "Supervisor",
+      "lastName": "Uno",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Bomerp2026!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "SUPERVISOR"
+      ]
+    },
+    {
+      "username": "vendedor1",
+      "email": "vendedor1@bomerp.com",
+      "firstName": "Vendedor",
+      "lastName": "Uno",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Bomerp2026!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "VENDEDOR"
+      ]
+    },
+    {
+      "username": "vendedor2",
+      "email": "vendedor2@bomerp.com",
+      "firstName": "Vendedor",
+      "lastName": "Dos",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Bomerp2026!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "VENDEDOR"
+      ]
+    }
+  ]
+}

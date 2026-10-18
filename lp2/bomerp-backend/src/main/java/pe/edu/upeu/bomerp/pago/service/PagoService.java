@@ -8,7 +8,9 @@ import java.util.List;
 public interface PagoService {
     List<PagoResponse> findAll(Long metodoPagoId, Long citaId);
     PagoResponse findById(Long id);
+    PagoResponse findById(Long id, String usuarioId);
     PagoResponse create(PagoRequest request);
+    PagoResponse create(PagoRequest request, String usuarioId);
     PagoResponse update(Long id, PagoRequest request);
     void delete(Long id);
 }
